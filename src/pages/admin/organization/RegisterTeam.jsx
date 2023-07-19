@@ -78,7 +78,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/register/?user_type=TEAM", requestOptions)
+            fetch("http://65.1.123.138:8000/register/?user_type=TEAM", requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
@@ -99,7 +99,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/get_team_profile/", requestOptions)
+            fetch("http://65.1.123.138:8000/get_team_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

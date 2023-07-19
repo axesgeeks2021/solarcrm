@@ -46,7 +46,7 @@ function CreateOrders() {
     const createOrders = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://65.0.45.255:8000/order/";
+            const url = "http://65.1.123.138:8000/order/";
 
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)

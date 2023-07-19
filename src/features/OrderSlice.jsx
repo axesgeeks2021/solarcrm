@@ -10,7 +10,7 @@ const initialState = {
 export const fetchingOrders = createAsyncThunk(
   "orders/fetchOrders",
   async (token) => {
-    const response = await axios.get("http://65.0.45.255:8000/get_order/", {
+    const response = await axios.get("http://65.1.123.138:8000/get_order/", {
       headers: {
         Authorization: `Token ${token}`,
       },

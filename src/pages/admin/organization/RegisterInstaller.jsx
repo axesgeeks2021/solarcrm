@@ -103,7 +103,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/register/?user_type=INSTALLER", requestOptions)
+            fetch("http://65.1.123.138:8000/register/?user_type=INSTALLER", requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
@@ -124,7 +124,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/get_installer_profile/", requestOptions)
+            fetch("http://65.1.123.138:8000/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

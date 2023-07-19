@@ -76,7 +76,7 @@ function OtherComponentOrders() {
               redirect: 'follow'
             };
             
-            fetch(`http://65.0.45.255:8000/other_component/${data.state.ele.id}/`, requestOptions)
+            fetch(`http://65.1.123.138:8000/other_component/${data.state.ele.id}/`, requestOptions)
               .then(response => response.text())
               .then(result => {
                 setTimeout(() => {

@@ -32,7 +32,7 @@ function CallSupport() {
   const sendRequest = async (e) => {
     e.preventDefault();
     const res = await axios.post(
-      "http://3.111.192.129:8000/api/cust-request/",
+      "http://65.1.123.138:8000/api/cust-request/",
       body,
       {
         headers: {

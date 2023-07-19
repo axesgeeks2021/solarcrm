@@ -79,7 +79,7 @@ function PreSiteRiskAssessment() {
     formdata.append("safety_concerns_comment", safetyComment);
 
     const res = await axios.put(
-      "http://65.0.45.255:8000/presite_risk/1/",
+      "http://65.1.123.138:8000/presite_risk/1/",
       formdata,
       {
         headers: {

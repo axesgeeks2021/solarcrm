@@ -100,7 +100,7 @@ function RegisterNonAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/get_none_admin_profile/", requestOptions)
+            fetch("http://65.1.123.138:8000/get_none_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

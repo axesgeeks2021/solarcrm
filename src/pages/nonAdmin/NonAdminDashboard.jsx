@@ -78,7 +78,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/get_order_list/", requestOptions)
+            fetch("http://65.1.123.138:8000/get_order_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {
@@ -125,7 +125,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/order/", requestOptions)
+            fetch("http://65.1.123.138:8000/order/", requestOptions)
                 .then(response => response.json())
                 .then(result => console.log('done', result))
                 .catch(error => console.log('error', error));
@@ -135,7 +135,7 @@ function NonAdminDashboard() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'http://65.0.45.255:8000/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'http://65.1.123.138:8000/inverter_module/')
         return setInverterList(requestInverter)
     }
 

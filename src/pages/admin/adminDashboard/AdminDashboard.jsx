@@ -64,7 +64,7 @@ function AdminDashboard() {
         try {
 
             setLoading(true)
-            const url = "http://65.0.45.255:8000/order/"
+            const url = "http://65.1.123.138:8000/order/"
 
             const headers = new Headers()
 
@@ -118,7 +118,7 @@ function AdminDashboard() {
               redirect: 'follow'
             };
             
-            fetch("http://65.0.45.255:8000/order/", requestOptions)
+            fetch("http://65.1.123.138:8000/order/", requestOptions)
               .then(response => response.json())
               .then(result => console.log(result))
               .catch(error => console.log('error', error));
@@ -139,7 +139,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.0.45.255:8000/username_list/", requestOptions)
+            fetch("http://65.1.123.138:8000/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)

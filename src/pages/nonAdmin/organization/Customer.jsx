@@ -92,7 +92,7 @@ function Customer() {
               redirect: 'follow'
             };
             
-            fetch("http://65.0.45.255:8000/register/?user_type=CUSTOMER", requestOptions)
+            fetch("http://65.1.123.138:8000/register/?user_type=CUSTOMER", requestOptions)
               .then(response => response.json())
               .then(result => console.log(result))
               .catch(error => console.log('error', error));
@@ -113,7 +113,7 @@ function Customer() {
               redirect: 'follow'
             };
             
-            fetch("http://65.0.45.255:8000/cust-profile/", requestOptions)
+            fetch("http://65.1.123.138:8000/cust-profile/", requestOptions)
               .then(response => response.json())
               .then(result => 
                 {

@@ -12,7 +12,7 @@ export const fetchGridConnection = createAsyncThunk(
   "grid/fetchGridConnection",
   async (token) => {
     try {
-      const res = await axios.get("http://65.0.45.255:8000/grid_approval", {
+      const res = await axios.get("http://65.1.123.138:8000/grid_approval", {
         headers: {
           Authorization: `Token ${token}`,
         },

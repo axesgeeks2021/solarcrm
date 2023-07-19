@@ -14,7 +14,7 @@ export const fetchInvoice = createAsyncThunk(
   "invoice/fetchInvoice",
   async (token) => {
     try {
-      const res = await axios.get("http://65.0.45.255:8000/invoice", {
+      const res = await axios.get("http://65.1.123.138:8000/invoice", {
         headers: {
           Authorization: `Token ${token}`,
         },

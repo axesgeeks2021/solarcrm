@@ -11,7 +11,7 @@ const initialState = {
 export const fetchLoginData = createAsyncThunk(
   "login/fetchLoginData",
   async (body) => {
-    const res = await axios.post("http://3.111.192.129:8000/api/login/", body, {
+    const res = await axios.post("http://65.1.123.138:8000/api/login/", body, {
       withCredentials: true,
       credentials: "include",
     });

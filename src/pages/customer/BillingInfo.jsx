@@ -19,7 +19,7 @@ function BillingInfo() {
   const fetchInvoiceHistory = () => {
     try {
       const res = axios
-        .get("http://3.111.192.129:8000/invoice_hist", {
+        .get("http://65.1.123.138:8000/invoice_hist", {
           headers: {
             Authorization: `Token ${cookies.Authorization}`,
           },
