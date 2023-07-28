@@ -1,143 +1,20 @@
-import React, { useState } from 'react'
-import FormInput from '../../../components/inputsfield/FormInput'
+import React, { useEffect, useState } from 'react'
+import Navigation from "./Menu/InstallationTeamNavigation"
+import Button from '../../components/Button/Button'
+import { useCookies } from 'react-cookie'
 
-import Button from "../../../components/Button/Button";
+function Dashboard() {
 
-import Heading from "../../../components/heading/Heading"
-import { useCookies } from "react-cookie";
-import { useEffect } from 'react';
-import NonAdminSideNavigation from '../menu/NonAdminSideNavigation';
-import { toast } from 'react-toastify';
+    const [cookies] = useCookies()
+    const [orderList, setOrderList] = useState([])
+    const [loading, setLoading] = useState(false)
 
-function Customer() {
-
-    const [cookies] = useCookies();
-
-    const [showForm, setShowForm] = useState(false)
-
-    const [customerList, setCustomerList] = useState([])
-
-    const [file, setFile] = useState(null)
-
-    const [value, setValue] = useState({
-        firstname: "",
-        lastname: "",
-        phone: "",
-        email: "",
-        alternatephone: "",
-        lookingfor: "",
-        projectcapacity: "",
-        utilitybill: "",
-        assignto: "",
-        supply: "",
-        rooftype: "",
-        floor: "",
-        remarks: "",
-        buyingoptions: "",
-        followsup1: "",
-        followsup2: "",
-        street: "",
-        state: "",
-        addressline: "",
-        city: "",
-        postcode: "",
-        country: ""
-    })
-
-    const { firstname, lastname, phone, email, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, city, country, postcode, state, street } = value
-
-    const handleChange = e => {
-        setValue({ ...value, [e.target.name]: e.target.value })
-    }
-
-    const handlefile = e => {
-        setFile(e.target.files[0])
-    }
-
-    const registerCustomer = async (e) => {
-        e.preventDefault()
+    const fetchOrder = () => {
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
-            // myHeaders.append("Content-Type", "application/json")
-
-            var formdata = new FormData();
-            formdata.append("first_name", firstname);
-            formdata.append("last_name", lastname);
-            formdata.append("phone", phone);
-            formdata.append("email", email);
-            formdata.append("profile_pic", file);
-            formdata.append("alternate_phone", alternatephone);
-            formdata.append("looking_for", lookingfor);
-            formdata.append("project_capacity", projectcapacity);
-            formdata.append("utility_bill", utilitybill);
-            // formdata.append("assign_to", assignto);
-            formdata.append("supply", supply);
-            formdata.append("roof_type", rooftype);
-            formdata.append("floor", floor);
-            formdata.append("remarks", remarks);
-            formdata.append("buying_options", buyingoptions);
-            formdata.append("follows_up_1", followsup1);
-            formdata.append("follows_up_2", followsup2);
-            formdata.append("street", street);
-            formdata.append("state", state);
-            formdata.append("address_line", addressline);
-            formdata.append("city", city);
-            formdata.append("postcode", postcode);
-            formdata.append("country", country);
-
-            const requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: formdata,
-                redirect: 'follow'
-            };
-
-            fetch("http://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    if(result.messsage === 'Success'){
-                        fetchData()
-                        toast.success('Customer created successfully')
-                        setShowForm(false)
-                        setValue({
-                            firstname: "",
-                            lastname: "",
-                            addressline: "",
-                            alternatephone: "",
-                            assignto: "",
-                            buyingoptions: "",
-                            city: "",
-                            country: '',
-                            email: "",
-                            floor: '',
-                            followsup1: '',
-                            followsup2: '',
-                            lookingfor: "",
-                            phone: '',
-                            postcode: "",
-                            projectcapacity: "",
-                            remarks: "",
-                            rooftype: '',
-                            state: "",
-                            street: '',
-                            supply: '',
-                            utilitybill: ''
-                        })
-                    }
-                    console.log(result)
-                })
-                .catch(error => console.log('error', error));
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const fetchData = () => {
-        try {
-            const myHeaders = new Headers();
-            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
-            myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+            myHeaders.append("Content-Type", "application/json");
 
             const requestOptions = {
                 method: 'GET',
@@ -145,11 +22,12 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/cust-profile/", requestOptions)
+            fetch("http://solar365.co.in/order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    setLoading(false)
                     console.log(result)
-                    setCustomerList(result)
+                    setOrderList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -158,20 +36,19 @@ function Customer() {
     }
 
     useEffect(() => {
-        const subscribe = fetchData()
+        const subscribe = fetchOrder()
 
-        return () => subscribe
+        return () => [subscribe]
     }, [])
-
 
     return (
         <>
             <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
                 <div>
-                    <NonAdminSideNavigation />
+                    <Navigation />
                 </div>
                 <div style={{ width: '100%', padding: '20px 10px' }}>
-                    <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
+                    {/* <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} /> */}
                     <ul className="responsive-table">
                         <li className="table-header">
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
@@ -182,7 +59,7 @@ function Customer() {
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
                         </li>
                         {
-                            customerList?.map((ele, idx) => {
+                            orderList?.map((ele, idx) => {
                                 return (
                                     <li className="table-row" key={idx}>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
@@ -197,7 +74,7 @@ function Customer() {
                         }
                     </ul>
                 </div>
-                {
+                {/* {
                     showForm &&
                     <div style={{ width: "100%", display: 'flex', position: 'absolute', background: 'white', justifyContent: "center", alignItems: 'center', flexDirection: 'column' }}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
@@ -222,7 +99,7 @@ function Customer() {
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" />
-                                {/* <FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" /> */}
+                                <FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <FormInput placeholder="Supply..." onChange={handleChange} value={supply} name="supply" />
@@ -257,10 +134,10 @@ function Customer() {
                             </div>
                         </form>
                     </div>
-                }
+                } */}
             </div>
         </>
     )
 }
 
-export default Customer
+export default Dashboard

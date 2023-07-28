@@ -23,7 +23,7 @@ function OtherComponent() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://65.1.123.138:8000/other_component/"
+            const url = "http://solar365.co.in/other_component/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)

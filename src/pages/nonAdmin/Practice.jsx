@@ -39,7 +39,7 @@ function Practice() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/inverter_module/", requestOptions)
+            fetch("http://solar365.co.in/inverter_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {  
                     console.log(result)

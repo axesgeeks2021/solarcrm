@@ -93,7 +93,7 @@ function Customer() {
               redirect: 'follow'
             };
             
-            fetch("http://65.1.123.138:8000/register/?user_type=CUSTOMER", requestOptions)
+            fetch("http://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
               .then(response => response.json())
               .then(result => console.log(result))
               .catch(error => console.log('error', error));
@@ -115,7 +115,7 @@ function Customer() {
               redirect: 'follow'
             };
             
-            fetch("http://65.1.123.138:8000/get_customer_profile/", requestOptions)
+            fetch("http://solar365.co.in/get_customer_profile/", requestOptions)
               .then(response => response.json())
               .then(result => {
                 console.log(result)

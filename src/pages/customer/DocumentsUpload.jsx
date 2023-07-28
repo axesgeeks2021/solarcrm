@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDocumnets } from "../../features/DocumentSubmissionSlice";
 import axios from "axios";
 
+import Loading from "../../components/loading/Loading";
+
 function DocumentsUpload() {
   const [cookies] = useCookies();
 
@@ -14,11 +16,17 @@ function DocumentsUpload() {
 
   const document = useSelector((state) => state.document);
 
+  const [loading, setLoading] = useState(false)
+
   const [modal, setModal] = useState(false);
 
   const [uploadImage, setUploadImage] = useState(null);
 
   const [formDataField, setFormDataField] = useState("");
+
+  const [allStatus, setAllStatus] = useState({})
+
+  console.log('all status', allStatus)
 
   const fileUpload = (e) => {
     setFormDataField(e.target.name);
@@ -33,7 +41,7 @@ function DocumentsUpload() {
     formdata.append(formDataField, uploadImage);
 
     const res = await axios.put(
-      "http://65.1.123.138:8000/upload_meter_docs/4/",
+      "http://solar365.co.in/upload_meter_docs/4/",
       formdata,
       {
         headers: {
@@ -47,9 +55,45 @@ function DocumentsUpload() {
     dispatch(fetchDocumnets(cookies.Authorization));
   };
 
+  const getStatus = () => {
+    try {
+      setLoading(true)
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("http://solar365.co.in/get_docs/", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setLoading(false)
+          setAllStatus(result)
+          // console.log('status',result)
+        } )
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    dispatch(fetchDocumnets('Token d474ba4ec903b9c7c2d827beba2a3d74422a088d'));
+    const subscribe = getStatus()
+
+    return () => subscribe
+    // dispatch(fetchDocumnets(`${cookies.Authorization}`));
   }, []);
+
+  if(loading){
+    return(
+      <div style={{width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     <>
@@ -365,15 +409,19 @@ function DocumentsUpload() {
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
-              {/* <div
+              <div
                 className={`status ${
-                  document.data[0]?.contract_status === "Completed"
+                  allStatus?.contract?.contract_status === "Completed"
                     ? "status"
                     : "pending"
                 }`}
               >
-                <p> {document.data[0]?.contract_status}</p>
-              </div> */}
+                 {allStatus?.contract?.map((ele,idx) => {
+                  return(
+                    <p key={idx}>{ele?.contract_status}</p>
+                  )
+                })}
+              </div>
               <div className="uploading">
                 <div className="container">
                   <div className="file-upload-wrapper">
@@ -671,20 +719,24 @@ function DocumentsUpload() {
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
-              {/* <div
+              <div
                 className={`status ${
-                  document.data[0]?.meter_status === "Completed"
+                  allStatus?.meter?.meter_status === "Completed"
                     ? "status"
                     : "pending"
                 }`}
               >
-                <p> {document.data[0]?.meter_status}</p>
-              </div> */}
+                 {allStatus?.meter?.map((ele,idx) => {
+                  return(
+                    <p key={idx}>{ele?.meter_status}</p>
+                  )
+                })}
+              </div>
               <div className="uploading">
                 <div className="container">
                   <div
                     className="file-upload-wrapper"
-                    // data-text="Select your file!"
+                  // data-text="Select your file!"
                   >
                     <input
                       name="meter_box"
@@ -980,20 +1032,24 @@ function DocumentsUpload() {
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
-              {/* <div
+              <div
                 className={`status ${
-                  document.data[0]?.electricity_status === "Completed"
+                  allStatus?.electricity?.electricity_status === "Completed"
                     ? "status"
                     : "pending"
                 }`}
               >
-                <p>{document.data[0]?.electricity_status}</p>
-              </div> */}
+                  {allStatus?.electricity?.map((ele,idx) => {
+                  return(
+                    <p key={idx}>{ele?.electricity_status}</p>
+                  )
+                })}
+              </div>
               <div className="uploading">
                 <div className="container">
                   <div
                     className="file-upload-wrapper"
-                    // data-text="Select your file!"
+                  // data-text="Select your file!"
                   >
                     <input
                       name="electricity_bill"
@@ -1289,20 +1345,24 @@ function DocumentsUpload() {
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
-              {/* <div
+              <div
                 className={`status ${
-                  document.data[0]?.council_status === "Completed"
+                  allStatus?.council?.council_status === "Completed"
                     ? "status"
                     : "pending"
                 }`}
               >
-                <p> {document.data[0]?.council_status}</p>
-              </div> */}
+                 {allStatus?.council?.map((ele,idx) => {
+                  return(
+                    <p key={idx}>{ele?.council_status}</p>
+                  )
+                })}
+              </div>
               <div className="uploading">
                 <div className="container">
                   <div
                     className="file-upload-wrapper"
-                    // data-text="Select your file!"
+                  // data-text="Select your file!"
                   >
                     <input
                       name="council_rate"
@@ -1598,20 +1658,24 @@ function DocumentsUpload() {
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
-              {/* <div
+              <div
                 className={`status ${
-                  document.data[0]?.misxcellaneous_status === "Completed"
+                  allStatus?.miscellaneous?.miscellaneous_status === "Completed"
                     ? "status"
                     : "pending"
                 }`}
               >
-                <p> {document.data[0]?.misxcellaneous_status}</p>
-              </div> */}
+                {allStatus?.miscellaneous?.map((ele,idx) => {
+                  return(
+                    <p key={idx}>{ele?.miscellaneous_status}</p>
+                  )
+                })}
+              </div>
               <div className="uploading">
                 <div className="container">
                   <div
                     className="file-upload-wrapper"
-                    // data-text="Select your file!"
+                  // data-text="Select your file!"
                   >
                     <input
                       name="misxcellaneous_file"

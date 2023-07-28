@@ -51,7 +51,7 @@ function AdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://65.1.123.138:8000/get_admin_profile/1/?query=ADMIN", requestOptions)
+      fetch("http://solar365.co.in/get_admin_profile/1/?query=ADMIN", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -85,7 +85,7 @@ function AdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://65.1.123.138:8000/forgot-password/", requestOptions)
+      fetch("http://solar365.co.in/forgot-password/", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -116,7 +116,7 @@ function AdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://65.1.123.138:8000/change-password/", requestOptions)
+      fetch("http://solar365.co.in/change-password/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)

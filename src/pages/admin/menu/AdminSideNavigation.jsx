@@ -30,7 +30,7 @@ function AdminSideNavigation() {
         elemBefore: () => <AiOutlineHome />,
       },
       {
-        title: 'Create Profiles',
+        title: 'Profiles',
         itemId: '',
         elemBefore: () => <BiUserCheck />,
         subNav: [
@@ -84,7 +84,7 @@ function AdminSideNavigation() {
         elemBefore: () => <CgProfile />,
       },
       {
-        title: 'Un Approved Company',
+        title: 'Un-Approved Company',
         itemId: '/unapproved-company',
         elemBefore: () => <HiBuildingOffice2 />,
       },

@@ -28,7 +28,7 @@ function ApprovedCompany() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/get_none_admin_profile", requestOptions)
+            fetch("http://solar365.co.in/get_none_admin_profile", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

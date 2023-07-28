@@ -64,7 +64,7 @@ function AdminDashboard() {
         try {
 
             setLoading(true)
-            const url = "http://65.1.123.138:8000/order/"
+            const url = "http://solar365.co.in/order/"
 
             const headers = new Headers()
 
@@ -118,7 +118,7 @@ function AdminDashboard() {
               redirect: 'follow'
             };
             
-            fetch("http://65.1.123.138:8000/order/", requestOptions)
+            fetch("http://solar365.co.in/order/", requestOptions)
               .then(response => response.json())
               .then(result => console.log(result))
               .catch(error => console.log('error', error));
@@ -139,7 +139,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/username_list/", requestOptions)
+            fetch("http://solar365.co.in/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
@@ -181,7 +181,7 @@ function AdminDashboard() {
             </div>
             <div className="container py-5">
                 <div className='py-2 flex justify-end'>
-                    <Button title="Create New Panel" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                 </div>
                 <ul className="responsive-table">
                     <li className="table-header">

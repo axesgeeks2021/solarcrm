@@ -9,10 +9,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+import Loading from "../../components/loading/Loading"
+
 function Login() {
   const navigate = useNavigate();
 
   const [cookie, setCookie] = useCookies();
+
+  const [loading, setLoading] = useState(false)
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -35,60 +39,55 @@ function Login() {
   const getLogin = async (e) => {
     e.preventDefault();
     try {
-      var myHeaders = new Headers();
+      setLoading(true)
+      const myHeaders = new Headers();
       myHeaders.append("Cookie", "csrftoken=fNiUPJtpHuwOF0mTvC7UBQ7AxmXSMAg3eKqclbKGPCbnEsvvpiu4Bz6f9FWDOrEr; sessionid=frqid0r3440wl6wpg6696ldn0g6man6o");
 
-      var formdata = new FormData();
-      formdata.append("username", "SR40258736");
-      formdata.append("password", "887630");
+      const formdata = new FormData();
+      formdata.append("username", username);
+      formdata.append("password", password);
 
-      var requestOptions = {
+      const requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: formdata,
         redirect: 'follow'
       };
 
-      fetch("http://65.1.123.138:8000/login/", requestOptions)
+      fetch("http://solar365.co.in/login/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
+          setLoading(false)
           setCookie("Authorization", result.token);
 
           localStorage.setItem('auth', JSON.stringify(result))
-          console.log(result)
-          // console.log(data.token)
           if (result.user?.user_type === 'CUSTOMER') {
             return navigate("/");
           }
           if (result.user?.user_type === 'ADMIN') {
             return navigate("/admin");
           }
-          if (result.user?.user_type === 'NON_ADMIN') {
+          if (result.user?.admin?.user?.user_type === 'NON_ADMIN') {
             return navigate("/non-admin");
           }
+          // if (result.user?.user_type === 'TEAM') {
+          //   return navigate("/team-dashboard");
+          // }
         })
         .catch(error => console.log('error', error));
     } catch (error) {
       console.log(error)
     }
-    // const res = await axios.post(`http://65.0.45.255:8000/login/`, body);
-    // const data = await res.data;
-    // setCookie("Authorization", data.token);
-
-    // localStorage.setItem('auth', JSON.stringify(data))
-    // console.log(data)
-    // // console.log(data.token)
-    // if(data?.user?.user_type === 'CUSTOMER'){
-    //   return navigate("/");
-    // }
-    // if(data?.user?.user_type === 'ADMIN'){
-    //   return navigate("/admin");
-    // }
-    // if(data?.user?.user_type === 'NON_ADMIN'){
-    //   return navigate("/non-admin");
-    // }
   };
+
+  if(loading){
+    return(
+      <div style={{width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     <>

@@ -5,6 +5,8 @@ import OrderListing from "../../components/Listing/OrderListing";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchingOrders } from "../../features/OrderSlice";
 
+import Loading from "../../components/loading/Loading";
+
 import { useCookies } from "react-cookie";
 
 function OrderDetails() {
@@ -20,13 +22,14 @@ function OrderDetails() {
     dispatch(fetchingOrders(cookies.Authorization));
   }, []);
 
-  if (loading) {
-    return <h1>Loading....</h1>;
+  if(loading){
+    return(
+      <div style={{width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+        <Loading />
+      </div>
+    )
   }
 
-  if (error) {
-    return <h1>{error}</h1>;
-  }
   return (
     <>
       <section className="w-screen">
@@ -45,7 +48,7 @@ function OrderDetails() {
           />
         </div>
         <PageHeading heading1="Quotation" heading2="Complete" />
-        <div className="listing">
+        <div className="listing" >
           <OrderListing data={data} />
         </div>
       </section>

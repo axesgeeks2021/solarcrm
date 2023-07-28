@@ -9,6 +9,8 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 
 
@@ -16,13 +18,11 @@ function RegisterTeam() {
 
     const [cookies] = useCookies();
 
-
     const [installerList, setInstallerList] = useState([])
 
     const [showForm, setShowForm] = useState(false)
 
     const [file, setFile] = useState()
-
     const [file2, setFile2] = useState()
     const [file3, setFile3] = useState()
 
@@ -65,11 +65,15 @@ function RegisterTeam() {
         setFile3(e.target.files[0])
     }
 
+    const hello = () => {
+        toast.success('hello world')
+    }
+
 
     const registerTeam = async (e) => {
         e.preventDefault();
         try {
-
+            const loadingToast = toast.loading('Please wait')
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
@@ -103,9 +107,40 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/register/?user_type=INSTALLER", requestOptions)
+            fetch("http://solar365.co.in/register/?user_type=INSTALLER", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then(result => {
+                    if(result.messsage === 'Success'){
+                        toast.update(loadingToast, {render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true})
+                        setValue({
+                            firstname: "",
+                            lastname: "",
+                            phone: "",
+                            email: "",
+                            address: "",
+                            alternatephone: "",
+                            department: "",
+                            ecfile: "",
+                            ecnumber: "",
+                            elfile: "",
+                            elnumber: "",
+                            abnnumber: "",
+                            acnnumber: "",
+                            tfnnumber: "",
+                            addressline: "",
+                            street: "",
+                            city: "",
+                            state: "",
+                            postcode: "",
+                            country: ""
+                        })
+                        setFile()
+                        setFile2()
+                        setFile3()
+                        setShowForm(false)
+                        return fetchData()
+                    }
+                })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -124,7 +159,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/get_installer_profile/", requestOptions)
+            fetch("http://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -140,6 +175,7 @@ function RegisterTeam() {
         const subscribe = fetchData()
 
         return () => subscribe
+
     }, [])
 
     return (
@@ -161,7 +197,8 @@ function RegisterTeam() {
                     {
                         installerList?.map((ele, idx) => {
                             return (
-                                <li className="table-row" key={idx}>
+                                <Link key={idx} to="/installer-profile">
+                                <li className="table-row" >
                                     <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                     <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                     <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
@@ -169,6 +206,7 @@ function RegisterTeam() {
                                     <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
                                     <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
                                 </li>
+                                </Link>
                             )
                         })
                     }
@@ -225,7 +263,7 @@ function RegisterTeam() {
                             <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" color="white"/>
+                            <Button title="Submit" background="orange" color="white" type="submit"/>
                             <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
                         </div>
                     </form>

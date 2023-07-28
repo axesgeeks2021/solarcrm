@@ -32,7 +32,7 @@ function CallSupport() {
   const sendRequest = async (e) => {
     e.preventDefault();
     const res = await axios.post(
-      "http://65.1.123.138:8000/api/cust-request/",
+      "http://solar365.co.in/api/cust-request/",
       body,
       {
         headers: {

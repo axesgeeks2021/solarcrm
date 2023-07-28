@@ -5,8 +5,10 @@ import Button from "../../../components/Button/Button";
 
 import Heading from "../../../components/heading/Heading"
 import AdminSideNavigation from '../menu/AdminSideNavigation';
+import Loading from '../../../components/loading/Loading';
 
 import { useCookies } from "react-cookie";
+import { toast } from 'react-toastify';
 
 
 function RegisterTeam() {
@@ -14,6 +16,7 @@ function RegisterTeam() {
     const [cookies] = useCookies();
 
     const [showForm, setShowForm] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [teamList, setTeamList] = useState([])
 
@@ -50,7 +53,7 @@ function RegisterTeam() {
     const registerTeam = async (e) => {
         e.preventDefault()
         try {
-
+            setLoading(true)
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
@@ -78,9 +81,38 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/register/?user_type=TEAM", requestOptions)
+            fetch("http://solar365.co.in/register/?user_type=TEAM", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then(result => {
+                    if(result.messsage === "Success"){
+                        setLoading(false)
+                        toast.success('Team member created successfully')
+                        setShowForm(false)
+                        setValue({
+                            addressline: "",
+                            alternatephone: "",
+                            city: '',
+                            country: '',
+                            department: '',
+                            description: '',
+                            email: '',
+                            firstname: '',
+                            isonline: '',
+                            lastname: '',
+                            phone: '',
+                            postcode: '',
+                            state: '',
+                            street:''
+                        })
+                        return fetchData()
+                    }
+
+                    // if(result.error === true){
+                    //     setLoading(false)
+                    //     return toast.warning(result.errors.user_errors.email[0])
+                    // }
+                    console.log(result)
+                })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -99,7 +131,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/get_team_profile/", requestOptions)
+            fetch("http://solar365.co.in/get_team_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -116,6 +148,10 @@ function RegisterTeam() {
 
         return () => subscribe
     }, [])
+
+    if (loading) {
+        return <Loading />
+    }
 
 
     return (
@@ -152,8 +188,8 @@ function RegisterTeam() {
             </div>
             {
                 showForm &&
-                <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column' }}>
-                    <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <div style={{ width: "95%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column' , position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.3), -2px -2px 10px 2px rgba(0,0,0,0.3)'}}>
+                    <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', background: 'white' }}>
                         <Heading heading="Create or Register Team" size="36px" weight="600" />
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerTeam}>
@@ -189,7 +225,7 @@ function RegisterTeam() {
                             <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" />
+                            <Button title="Submit" background="orange" type="submit" />
                             <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
                         </div>
                     </form>

@@ -73,7 +73,7 @@ function InverterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://65.1.123.138:8000/inverter_module/${data.state.ele.id}/`, requestOptions)
+            fetch(`http://solar365.co.in/inverter_module/${data.state.ele.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {

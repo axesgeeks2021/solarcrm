@@ -76,7 +76,7 @@ function RegisterAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/register/?user_type=ADMIN", requestOptions)
+            fetch("http://solar365.co.in/register/?user_type=ADMIN", requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
@@ -99,7 +99,7 @@ function RegisterAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://65.1.123.138:8000/get_admin_profile/", requestOptions)
+            fetch("http://solar365.co.in/get_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

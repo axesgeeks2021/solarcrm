@@ -71,7 +71,7 @@ function PanlesOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://65.1.123.138:8000/module/${data.state.ele.id}/`, requestOptions)
+            fetch(`http://solar365.co.in/module/${data.state.ele.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {

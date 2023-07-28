@@ -6,6 +6,8 @@ import "./style/style.css";
 
 import "react-widgets/styles.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-calendar/dist/Calendar.css';
+
 
 import Homepage from "./pages/customer/Homepage";
 import Login from "./pages/authentication/CustomerLogin";
@@ -45,7 +47,7 @@ import UpdateProfile from "./pages/admin/user/UpdateProfile";
 import AdminSideNavigation from "./pages/admin/menu/AdminSideNavigation";
 import NonAdminRegisterForm from "./pages/nonAdmin/NonAdminRegisterForm";
 import NonAdminDashboard from "./pages/nonAdmin/NonAdminDashboard";
-import Calendar from "./pages/customer/Calendar";
+import Calendar from "./pages/Calendar/Calendar";
 import UnapprovedCompany from "./pages/admin/approval/UnapprovedCompany";
 import ApprovedCompany from "./pages/admin/approval/ApprovedCompany";
 import AdminProfile from "./pages/admin/profile/AdminProfile";
@@ -54,9 +56,9 @@ import Accordian from "./components/Accordian";
 
 import NonAdminCustomer from "./pages/nonAdmin/organization/Customer"
 import NonAdminOrders from "./pages/nonAdmin/orders/NonAdminOrders"
-import NonAdminCalendar from "./pages/nonAdmin/calendar/Calender"
-import Practice from "./pages/Practice";
 import NonAdminUpdateProfile from "./pages/nonAdmin/user/UpdateProfile"
+import InstallerProfile from "./pages/admin/organization/InstallerProfile"
+import Dashboard from "./pages/Team/Dashboard";
 
 
 function App() {
@@ -127,6 +129,7 @@ function App() {
       </>
     )
   }
+  
   if (auth?.user?.user_type === "ADMIN") {
     return (
       <>
@@ -148,6 +151,7 @@ function App() {
           <Route path="/register-customer" element={<Customer />} />
           <Route path="/register-team" element={<RegisterTeam />} />
           <Route path="/register-installer" element={<RegisterInstaller />} />
+          <Route path="/installer-profile" element={<InstallerProfile />} />
           <Route path="/register-admin" element={<RegisterAdmin />} />
           <Route path="/register-non-admin" element={<RegisterNonAdmin />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
@@ -160,21 +164,34 @@ function App() {
     )
   }
 
-  if (auth?.user?.user_type === "NON_ADMIN") {
+  if (auth?.user?.admin?.user?.user_type === 'NON_ADMIN') {
     return (
       <Routes>
-        {
+        {/* {
           cookies.Authorization && auth?.user?.user_type === "ADMIN" ? <AdminSideNavigation /> : null
-        }
+        } */}
         <Route path="/non-admin-registration" element={<NonAdminRegisterForm />} />
         <Route path="/non-admin-profile" element={<NonAdminProfile />} />
         <Route path="/non-admin" element={<NonAdminDashboard />} />
         <Route path="/register-non-admin" element={<RegisterNonAdmin />} />
         <Route path="/non-admin/register-customer" element={<NonAdminCustomer />} />
         <Route path="/non-admin/orders" element={<NonAdminOrders />} />
-        <Route path="/non-admin/calendar" element={<NonAdminCalendar />} />
-        <Route path="/non-admin/practice" element={<Practice />} />
+        <Route path="/non-admin/calendar" element={<Calendar />} />
         <Route path="/non-admin/update-profile" element={<NonAdminUpdateProfile />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    )
+  }
+
+  if (auth?.user?.user_type === "TEAM") {
+    return (
+      <Routes>
+        {/* {
+          cookies.Authorization && auth?.user?.user_type === "TEAM" ? 
+          <Route path="/" element={<AdminSideNavigation />} />
+           : null
+        } */}
+        <Route path="/team-dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )
@@ -182,6 +199,7 @@ function App() {
 
   return(
     <Login />
+    // <Calendar />
   )
 }
 
