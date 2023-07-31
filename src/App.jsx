@@ -59,6 +59,7 @@ import NonAdminOrders from "./pages/nonAdmin/orders/NonAdminOrders"
 import NonAdminUpdateProfile from "./pages/nonAdmin/user/UpdateProfile"
 import InstallerProfile from "./pages/admin/organization/InstallerProfile"
 import Dashboard from "./pages/Team/Dashboard";
+import AssignedJobs from "./pages/Team/AssignedJobs";
 
 
 function App() {
@@ -183,7 +184,7 @@ function App() {
     )
   }
 
-  if (auth?.user?.user_type === "TEAM") {
+  if (auth?.user?.department === "team") {
     return (
       <Routes>
         {/* {
@@ -192,6 +193,7 @@ function App() {
            : null
         } */}
         <Route path="/team-dashboard" element={<Dashboard />} />
+        <Route path="/team/assigned-jobs" element={<AssignedJobs />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )

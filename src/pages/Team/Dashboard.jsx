@@ -2,12 +2,28 @@ import React, { useEffect, useState } from 'react'
 import Navigation from "./Menu/InstallationTeamNavigation"
 import Button from '../../components/Button/Button'
 import { useCookies } from 'react-cookie'
+import { toast } from 'react-toastify'
+import { BiLogOut } from "react-icons/bi"
+import { useNavigate } from 'react-router-dom'
+
 
 function Dashboard() {
 
-    const [cookies] = useCookies()
+    const navigate = useNavigate()
+
+    const [cookies, setCookies, removeCookies] = useCookies();
     const [orderList, setOrderList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [pendingList, setPendingList] = useState([])
+
+    const [value, setValue] = useState('')
+
+    const [modal, setModal] = useState(false)
+
+    const handleChange = e => {
+        setModal(true)
+        setValue(e.target.value)
+    }
 
     const fetchOrder = () => {
         try {
@@ -26,7 +42,7 @@ function Dashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    console.log(result)
+                    // console.log(result)
                     setOrderList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -35,10 +51,74 @@ function Dashboard() {
         }
     }
 
+    const fetchPendingOrder = () => {
+        try {
+            setLoading(true)
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("http://solar365.co.in/new-order-list/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setLoading(false)
+                    console.log(result)
+                    setPendingList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchUpdateAssignOrder = () => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            var formdata = new FormData();
+            formdata.append("assign_to", value.split(',')[1]);
+            formdata.append("order_status", "Completed");
+
+            var requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
+            };
+
+            fetch(`http://solar365.co.in/team-update-order/${value.split(',')[0]}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    if (result.messsage === "Success") {
+                        toast.success('Order successfully assigned')
+                        setModal(false)
+                        return fetchPendingOrder()
+                    }
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const logout = () => {
+        removeCookies('Authorization')
+        return navigate('/login')
+    }
     useEffect(() => {
         const subscribe = fetchOrder()
 
-        return () => [subscribe]
+        const subscribe1 = fetchPendingOrder()
+
+        return () => [subscribe, subscribe1]
     }, [])
 
     return (
@@ -46,28 +126,47 @@ function Dashboard() {
             <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
                 <div>
                     <Navigation />
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
+                        <BiLogOut />
+                        <Button title="Logout" onclick={logout} />
+                    </div>
+                </div>
+
+                <div style={{ zIndex: 1000, width: '40%', background: '#fff', position: 'fixed', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', height: '30%', display: modal ? 'flex' : 'none', justifyContent: 'space-between', boxShadow: '2px 2px 20px 2px rgba(0,0,0,0.3), -2px -2px 20px 2px rgba(0,0,0,0.3)', borderRadius: '5px', backfaceVisibility: 'hidden', alignItems: 'center', flexDirection: 'column' }}>
+                    <p style={{ fontSize: '1.1rem', margin: '5% 2%', alignSelf: 'flex-start' }}>Please assing to installer or electician</p>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                        <button style={{ background: 'green', color: 'white', fontWeight: '600', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px' }} onClick={fetchUpdateAssignOrder}>Confirm</button>
+                        <button onClick={() => setModal(false)} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
+                    </div>
                 </div>
                 <div style={{ width: '100%', padding: '20px 10px' }}>
                     {/* <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} /> */}
                     <ul className="responsive-table">
                         <li className="table-header">
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Project</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Customer Name</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Building Type</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Panels Qty</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Status</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Assign</div>
                         </li>
                         {
-                            orderList?.map((ele, idx) => {
+                            pendingList?.map((ele, idx) => {
                                 return (
                                     <li className="table-row" key={idx}>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.project}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.building_Type}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.panels_quantity}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</div>
+                                        <div className={`col col-2 text-center`}>
+                                            <select onChange={handleChange}>
+                                                <option>Select</option>
+                                                <option value={[ele?.id, '1']}>Admin</option>
+                                                <option value={[ele?.id, '2']}>Installer</option>
+                                                <option value={[ele?.id, '3']}>Electrician</option>
+                                            </select>
+                                        </div>
                                     </li>
                                 )
                             })

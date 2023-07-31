@@ -33,7 +33,8 @@ function NonAdminSideNavigation() {
         elemBefore: () => <MdHardware />
       },
       {
-        title: "Assign To",
+        title: "Assigned Jobs",
+        itemId: '/team/assigned-jobs',
         elemBefore: () => <BiUserCheck />
       },
       {

@@ -84,8 +84,8 @@ function RegisterTeam() {
             fetch("http://solar365.co.in/register/?user_type=TEAM", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    setLoading(false)
                     if(result.messsage === "Success"){
-                        setLoading(false)
                         toast.success('Team member created successfully')
                         setShowForm(false)
                         setValue({

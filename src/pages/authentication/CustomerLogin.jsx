@@ -71,9 +71,9 @@ function Login() {
           if (result.user?.admin?.user?.user_type === 'NON_ADMIN') {
             return navigate("/non-admin");
           }
-          // if (result.user?.user_type === 'TEAM') {
-          //   return navigate("/team-dashboard");
-          // }
+          if (result.user?.department === 'team') {
+            return navigate("/team-dashboard");
+          }
         })
         .catch(error => console.log('error', error));
     } catch (error) {
