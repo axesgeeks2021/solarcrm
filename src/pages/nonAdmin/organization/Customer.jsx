@@ -148,7 +148,7 @@ function Customer() {
             fetch("http://solar365.co.in/cust-profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                    console.log('customer resutl',result)
                     setCustomerList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -185,12 +185,12 @@ function Customer() {
                             customerList?.map((ele, idx) => {
                                 return (
                                     <li className="table-row" key={idx}>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
+                                        {/* <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div> */}
+                                        {/* <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div> */}
                                     </li>
                                 )
                             })
