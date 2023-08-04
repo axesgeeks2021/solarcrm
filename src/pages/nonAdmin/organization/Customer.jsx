@@ -199,7 +199,7 @@ function Customer() {
                 </div> */}
                 <div class="container__table">
             <div className='py-2 flex justify-end'>
-                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                    <Button title="Create Customer" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                 </div>
                 <table class="responsive-table">
                     {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
@@ -209,7 +209,7 @@ function Customer() {
                             <th scope="col">Email</th>
                             <th scope="col">Mobile</th>
                             <th scope="col">City / State</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">NMI</th>
                             <th scope="col">Apporved Status</th>
                             {/* <th scope="col">Budget</th> */}
                         </tr>
@@ -223,11 +223,11 @@ function Customer() {
                                             <th scope="row">{ele?.to_address?.user?.first_name}</th>
                                             <td data-title="Released">{ele?.to_address?.user?.email}</td>
                                             <td data-title="Studio">{ele?.to_address?.user?.phone}</td>
-                                            {/* <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
+                                            <td data-title="Worldwide Gross" data-type="currency">{ele?.to_address?.city} {ele?.to_address?.state} {ele?.to_address?.country} {ele?.to_address?.postcode}</td>
                                             <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
                                             <td data-title="International Gross" data-type="currency">
                                             <Button title="In Process" background="green" color="white"  />
-                                            </td> */}
+                                            </td>
                                             {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
                                         </tr>
                                     // </Link>

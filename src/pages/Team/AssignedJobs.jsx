@@ -35,8 +35,6 @@ function AssignedJobs() {
         }
     }
 
-
-   
     useEffect(() => {
         const subscribe = fetchOrder()
 
@@ -92,12 +90,12 @@ function AssignedJobs() {
                     {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">City / State</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Apporved Status</th>
+                            <th scope="col">Project</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Building Type</th>
+                            <th scope="col">Panels Qty</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Assign To</th>
                             {/* <th scope="col">Budget</th> */}
                         </tr>
                     </thead>
@@ -107,15 +105,20 @@ function AssignedJobs() {
                                 return (
                                     // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
                                         <tr>
-                                            <th scope="row">{ele?.to_address?.user?.first_name}</th>
-                                            <td data-title="Released">{ele?.to_address?.user?.email}</td>
-                                            <td data-title="Studio">{ele?.to_address?.user?.phone}</td>
-                                            {/* <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
-                                            <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
+                                            <th scope="row">{ele?.project}</th>
+                                            <td data-title="Released">{ele?.to_address?.user?.first_name}</td>
+                                            <td data-title="Studio">{ele?.building_Type}</td>
+                                            <td data-title="Worldwide Gross" data-type="currency">{ele?.panels_quantity}</td>
+                                            <td data-title="Domestic Gross" data-type="currency">{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
                                             <td data-title="International Gross" data-type="currency">
-                                            <Button title="In Process" background="green" color="white"  />
-                                            </td> */}
-                                            {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
+                                            {
+                                                ele?.assign_to?.map((ele, idx) => {
+                                                    return(
+                                                        <p key={idx}>{ele?.user_type}</p>
+                                                    )
+                                                })
+                                            }
+                                            </td>
                                         </tr>
                                     // </Link>
                                 )

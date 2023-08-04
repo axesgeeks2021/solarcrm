@@ -9,7 +9,8 @@ function Button(props) {
         background: props.background,
         margin: props.margin,
         padding: props.padding,
-        alignSelf: props.alignSelf
+        alignSelf: props.alignSelf,
+        cursor: props.cursor
       }}
       className={`button ${props.classname}`}
       type={props.type || 'button'}

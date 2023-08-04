@@ -290,6 +290,10 @@ function NonAdminDashboard() {
     //     }
     // }
 
+    const goToOrders = (url, data) => {
+        return navigate(url, data)
+    }
+
     useEffect(() => {
         const subscribe = fetchOrder()
 
@@ -316,37 +320,6 @@ function NonAdminDashboard() {
                     <Button title="Logout" onclick={logout} />
                 </div>
             </div>
-            {/* <div className="container py-5">
-                <div className='py-2 flex justify-end'>
-                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
-                </div>
-                <ul className="responsive-table">
-                    <li className="table-header">
-                        <div className="col col-1 text-center text-slate-50 text-base font-bold">Id</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Project Id</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Customer Name</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Panels qty</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Building Type</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Nmi No.</div>
-                    </li>
-                    {
-                        ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
-                            return (
-                                <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                    <OrderList
-                                        Id={idx + 1}
-                                        Project={ele.project}
-                                        CustomerName={ele?.customer_name}
-                                        SystemSize={ele?.panels_quantity}
-                                        BuildingType={ele.building_Type}
-                                        NmiNo={ele.nmi_no}
-                                    />
-                                </Link>
-                            )
-                        })
-                    }
-                </ul>
-            </div> */}
             <div class="container__table">
             <div className='py-2 flex justify-end'>
                     <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
@@ -369,14 +342,14 @@ function NonAdminDashboard() {
                             ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
                                 return (
                                     // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                        <tr>
+                                        <tr onClick={() => goToOrders('/non-admin/orders', {state: ele})} style={{cursor: 'pointer'}}>
                                             <th scope="row">{ele.project}</th>
                                             <td data-title="Released">{ele?.customer_name}</td>
                                             <td data-title="Studio">{ele?.panels_quantity}</td>
                                             <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
                                             <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
                                             <td data-title="International Gross" data-type="currency">
-                                            <Button title="In Process" background="green" color="white"  />
+                                            <Button title="In Process" background="green" color="white"  cursor="none"/>
                                             </td>
                                             {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
                                         </tr>

@@ -25,8 +25,6 @@ function Dashboard() {
     const [selectedValue, setSelectedValue] = useState('')
     const [orderId, setOrderId] = useState('')
 
-    console.log('order id', orderId, 'and userid ',selectedValue)
-
     const handleChange = (userId, orderId) => {
         setModal(true)
         setSelectedValue(userId)
@@ -170,7 +168,6 @@ function Dashboard() {
                         <button onClick={() => setModal(false)} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
                     </div>
                 </div>
-
                 {/* <div style={{ width: '100%', padding: '20px 10px' }}>
                     <ul className="responsive-table">
                         <li className="table-header">
@@ -201,7 +198,7 @@ function Dashboard() {
                                                         {
                                                             installerList?.Electrician?.map((eles, idx) => {
                                                                 return (
-                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}> 
+                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
                                                                         {
                                                                             eles?.admin?.user?.first_name
                                                                         }
@@ -235,47 +232,82 @@ function Dashboard() {
                         }
                     </ul>
                 </div> */}
-
-<div class="container__table">
-            <div className='py-2 flex justify-end'>
-                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
-                </div>
-                <table class="responsive-table">
-                    {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
-                    <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">City / State</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Apporved Status</th>
-                            {/* <th scope="col">Budget</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            pendingList?.length < 1 ? <h2>There is no order available right now...</h2> : pendingList?.map((ele, idx) => {
-                                return (
-                                    // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
+                <div class="container__table">
+                    <div className='py-2 flex justify-end'>
+                        <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                    </div>
+                    <table class="responsive-table">
+                        {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
+                        <thead>
+                            <tr>
+                                <th scope="col">Project</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Building Type</th>
+                                <th scope="col">Panels Qty</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Assign</th>
+                                {/* <th scope="col">Budget</th> */}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                pendingList?.length < 1 ? <h2>There is no order available right now...</h2> : pendingList?.map((ele, idx) => {
+                                    return (
+                                        // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
                                         <tr>
-                                            <th scope="row">{ele?.to_address?.user?.first_name}</th>
-                                            <td data-title="Released">{ele?.to_address?.user?.email}</td>
-                                            <td data-title="Studio">{ele?.to_address?.user?.phone}</td>
-                                            {/* <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
-                                            <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
+                                            <th scope="row">{ele?.project}</th>
+                                            <td data-title="Released">{ele?.to_address?.user?.first_name}</td>
+                                            <td data-title="Studio">{ele?.building_Type}</td>
+                                            <td data-title="Worldwide Gross" data-type="currency">{ele?.panels_quantity}</td>
+                                            <td data-title="Domestic Gross" data-type="currency">{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
                                             <td data-title="International Gross" data-type="currency">
-                                            <Button title="In Process" background="green" color="white"  />
-                                            </td> */}
+                                                <Dropdown
+                                                    title='Assign To'
+                                                >
+                                                    <Dropdown.Item
+                                                    >
+                                                        Electrician
+                                                        <Dropdown.Submenu>
+                                                            {
+                                                                installerList?.Electrician?.map((eles, idx) => {
+                                                                    return (
+                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+                                                                            {
+                                                                                eles?.admin?.user?.first_name
+                                                                            }
+                                                                        </Dropdown.Item>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Dropdown.Submenu>
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item >
+                                                        Installer
+                                                        <Dropdown.Submenu>
+                                                            {
+                                                                installerList?.Installer?.map((eles, idx) => {
+                                                                    return (
+                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+                                                                            {
+                                                                                eles?.admin?.user?.first_name
+                                                                            }
+                                                                        </Dropdown.Item>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Dropdown.Submenu>
+                                                    </Dropdown.Item>
+                                                </Dropdown>
+                                            </td>
                                             {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
                                         </tr>
-                                    // </Link>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
-            </div>
+                                        // </Link>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </>
     )
