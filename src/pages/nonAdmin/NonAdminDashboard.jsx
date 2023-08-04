@@ -76,8 +76,8 @@ function NonAdminDashboard() {
         batteries: ""
     })
 
-    const { addressline, batteries, buildingType, city, country,descritpion,email,firstname,inverter,inverterQuantity,lastname,meterNumber,meterPhase,nmiNo,packingSlipReason,
-    panelLayoutReason,panels,panelsQuantity,phone,postcode,state,switchBoardReason,systemSize,westernPowerReason} = text
+    const { addressline, batteries, buildingType, city, country, descritpion, email, firstname, inverter, inverterQuantity, lastname, meterNumber, meterPhase, nmiNo, packingSlipReason,
+        panelLayoutReason, panels, panelsQuantity, phone, postcode, state, switchBoardReason, systemSize, westernPowerReason } = text
 
     const handleChange = e => {
         setText({ ...text, [e.target.name]: e.target.value })
@@ -97,7 +97,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/get_order_list/", requestOptions)
+            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {
@@ -119,7 +119,7 @@ function NonAdminDashboard() {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Content-Type", "application/json");
-            
+
             var formdata = new FormData();
             formdata.append("first_name", firstname);
             formdata.append("last_name", lastname);
@@ -131,7 +131,7 @@ function NonAdminDashboard() {
             formdata.append("meter_Number", meterNumber);
             formdata.append("packing_slip", packingSlipFile);
             formdata.append("western_power", weternPowerFile);
-            formdata.append("switch_board",switchBoardFile);
+            formdata.append("switch_board", switchBoardFile);
             formdata.append("panel_layout", panelLayoutFile);
             formdata.append("extras", extrasFile);
             formdata.append("packing_slip_reason", packingSlipReason);
@@ -151,20 +151,20 @@ function NonAdminDashboard() {
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
             formdata.append("batteries", batteries);
-            
+
             var requestOptions = {
-              method: 'POST',
-              headers: myHeaders,
-              body: formdata,
-              redirect: 'follow'
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
             };
-            
+
             fetch("http://solar365.co.in/non-admin-order/", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                console.log(result)
-            })
-              .catch(error => console.log('error', error));
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                })
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -187,7 +187,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/get_order_list/", requestOptions)
+            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -211,7 +211,7 @@ function NonAdminDashboard() {
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             // myHeaders.append("Content-Type", "application/json");
-            
+
             const formdata = new FormData();
             formdata.append("first_name", firstname);
             formdata.append("last_name", lastname);
@@ -223,7 +223,7 @@ function NonAdminDashboard() {
             formdata.append("meter_Number", meterNumber);
             formdata.append("packing_slip", packingSlipFile);
             formdata.append("western_power", weternPowerFile);
-            formdata.append("switch_board",switchBoardFile);
+            formdata.append("switch_board", switchBoardFile);
             formdata.append("panel_layout", panelLayoutFile);
             formdata.append("extras", extrasFile);
             formdata.append("packing_slip_reason", packingSlipReason);
@@ -243,25 +243,25 @@ function NonAdminDashboard() {
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
             formdata.append("batteries", batteries);
-            
+
             const requestOptions = {
-              method: 'POST',
-              headers: myHeaders,
-              body: formdata,
-              redirect: 'follow'
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
             };
-            
+
             fetch("http://solar365.co.in/non-admin-order/", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                if(result.messsage === 'Success'){
-                    toast.success('Order created successfully')
-                    setShowForm(false)
-                    return fetchOrder()
-                }
-                console.log(result)
-            })
-              .catch(error => console.log('error', error));
+                .then(response => response.json())
+                .then(result => {
+                    if (result.messsage === 'Success') {
+                        toast.success('Order created successfully')
+                        setShowForm(false)
+                        return fetchOrder()
+                    }
+                    console.log(result)
+                })
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -316,7 +316,7 @@ function NonAdminDashboard() {
                     <Button title="Logout" onclick={logout} />
                 </div>
             </div>
-            <div className="container py-5">
+            {/* <div className="container py-5">
                 <div className='py-2 flex justify-end'>
                     <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                 </div>
@@ -328,12 +328,6 @@ function NonAdminDashboard() {
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Panels qty</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Building Type</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Nmi No.</div>
-                        {/* <div className="col col-1 text-center">Panels</div>
-                        <div className="col col-1 text-center">Inverter</div> */}
-                        {/* <div className="col col-1 text-center">Meter Phase</div> */}
-                        {/* <div className="col col-1 text-center">Order Status</div> */}
-                        {/* <div className="col col-1 text-center">Manufacturer</div> */}
-                        {/* <div className="col col-1 text-center">Smart Meter</div> */}
                     </li>
                     {
                         ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
@@ -342,24 +336,56 @@ function NonAdminDashboard() {
                                     <OrderList
                                         Id={idx + 1}
                                         Project={ele.project}
-                                        CustomerName={ele?.to_address?.user?.first_name + ele?.to_address?.user?.last_name}
+                                        CustomerName={ele?.customer_name}
                                         SystemSize={ele?.panels_quantity}
                                         BuildingType={ele.building_Type}
                                         NmiNo={ele.nmi_no}
-                                    // Panels={ele.panels}
-                                    // Inverter={ele.inverter}
-                                    // MeterPhase={ele.meter_Phase}
-                                    // OrderStatus={ele.order_status}
-                                    // Manufacturer={ele.other_component.map((ele , idx) => {
-                                    //     return ele.manufacturer
-                                    // })}
-                                    // SmartMeter={ele.other_component[0].smart_meter} 
                                     />
                                 </Link>
                             )
                         })
                     }
                 </ul>
+            </div> */}
+            <div class="container__table">
+            <div className='py-2 flex justify-end'>
+                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                </div>
+                <table class="responsive-table">
+                    {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
+                    <thead>
+                        <tr>
+                            <th scope="col">Project Number</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Panels Quantity</th>
+                            <th scope="col">Building Type</th>
+                            <th scope="col">NMI No</th>
+                            <th scope="col">Status</th>
+                            {/* <th scope="col">Budget</th> */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
+                                return (
+                                    // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
+                                        <tr>
+                                            <th scope="row">{ele.project}</th>
+                                            <td data-title="Released">{ele?.customer_name}</td>
+                                            <td data-title="Studio">{ele?.panels_quantity}</td>
+                                            <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
+                                            <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
+                                            <td data-title="International Gross" data-type="currency">
+                                            <Button title="In Process" background="green" color="white"  />
+                                            </td>
+                                            {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
+                                        </tr>
+                                    // </Link>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
             {
                 showForm && <FormsContainer flexDirection="column" height="80vh" overflow="scroll" justifyContent="flex-start">
@@ -380,11 +406,11 @@ function NonAdminDashboard() {
                                     }
                                 </select>
                             </div> */}
-                            
-                            <div style={{ width: '90%', display: 'flex' }}>
+
+                        <div style={{ width: '90%', display: 'flex' }}>
                             <FormInput placeholder="First name" value={firstname} name="firstname" onChange={handleChange} />
-                                <FormInput placeholder="Last name" value={lastname} name="lastname" onChange={handleChange} />    
-                            </div>
+                            <FormInput placeholder="Last name" value={lastname} name="lastname" onChange={handleChange} />
+                        </div>
                         {/* </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
@@ -432,35 +458,35 @@ function NonAdminDashboard() {
                             <FormInput placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange}  />
-                            <FormInput placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange}  />
+                            <FormInput placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
+                            <FormInput placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange}  />
-                            <FormInput placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange}  />
+                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <FormInput placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange}  />
-                            <FormInput placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange}  />
+                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <FormInput placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange}  />
-                            <FormInput placeholder="Description" value={descritpion} name="descritpion" onChange={handleChange}  />
+                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <FormInput placeholder="Description" value={descritpion} name="descritpion" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange}  />
-                            <FormInput placeholder="Panels" value={panels} name="panels" onChange={handleChange}  />
+                            <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
+                            <FormInput placeholder="Panels" value={panels} name="panels" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange}  />
-                            <FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange}  />
+                            <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
+                            <FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange}  />
-                            <FormInput placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange}  />
+                            <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
+                            <FormInput placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Battries" value={batteries} name="batteries" onChange={handleChange}  />
+                            <FormInput placeholder="Battries" value={batteries} name="batteries" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" type="submit" background="orange" color="white" />

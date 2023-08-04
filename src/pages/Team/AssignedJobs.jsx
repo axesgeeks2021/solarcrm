@@ -22,7 +22,7 @@ function AssignedJobs() {
               redirect: 'follow'
             };
             
-            fetch("http://solar365.co.in/completed-order-list/", requestOptions)
+            fetch("http://solar365.co.in/pending-order-list/", requestOptions)
               .then(response => response.json())
               .then(result => {
                 setLoading(false)
@@ -39,7 +39,6 @@ function AssignedJobs() {
    
     useEffect(() => {
         const subscribe = fetchOrder()
-
 
         return () => [subscribe]
     }, [])

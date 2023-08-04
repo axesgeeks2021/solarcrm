@@ -60,6 +60,7 @@ import NonAdminUpdateProfile from "./pages/nonAdmin/user/UpdateProfile"
 import InstallerProfile from "./pages/admin/organization/InstallerProfile"
 import Dashboard from "./pages/Team/Dashboard";
 import AssignedJobs from "./pages/Team/AssignedJobs";
+import Practice from "./pages/Practice";
 
 
 function App() {
@@ -194,6 +195,7 @@ function App() {
         } */}
         <Route path="/team-dashboard" element={<Dashboard />} />
         <Route path="/team/assigned-jobs" element={<AssignedJobs />} />
+        <Route path="/team/practice" element={<Practice />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )

@@ -191,7 +191,7 @@ function AdminOrders() {
   //       redirect: 'follow'
   //     };
 
-  //     fetch(`http://65.0.45.255:8000/get_order_list/${data.state.ele.id}/`, requestOptions)
+  //     fetch(`http://65.0.45.255:8000/non-admin-order/${data.state.ele.id}/`, requestOptions)
   //       .then(response => response.json())
   //       .then(result => 
   //         {

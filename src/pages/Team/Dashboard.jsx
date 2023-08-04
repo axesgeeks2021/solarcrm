@@ -6,6 +6,8 @@ import { toast } from 'react-toastify'
 import { BiLogOut } from "react-icons/bi"
 import { useNavigate } from 'react-router-dom'
 
+import Dropdown from 'react-multilevel-dropdown'
+
 
 function Dashboard() {
 
@@ -16,13 +18,19 @@ function Dashboard() {
     const [loading, setLoading] = useState(false)
     const [pendingList, setPendingList] = useState([])
 
-    const [value, setValue] = useState('')
+    const [installerList, setInstallerList] = useState([])
 
     const [modal, setModal] = useState(false)
 
-    const handleChange = e => {
+    const [selectedValue, setSelectedValue] = useState('')
+    const [orderId, setOrderId] = useState('')
+
+    console.log('order id', orderId, 'and userid ',selectedValue)
+
+    const handleChange = (userId, orderId) => {
         setModal(true)
-        setValue(e.target.value)
+        setSelectedValue(userId)
+        setOrderId(orderId)
     }
 
     const fetchOrder = () => {
@@ -67,7 +75,6 @@ function Dashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    console.log(result)
                     setPendingList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -82,17 +89,17 @@ function Dashboard() {
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
             var formdata = new FormData();
-            formdata.append("assign_to", value.split(',')[1]);
-            formdata.append("order_status", "Completed");
+            formdata.append("assign_to", selectedValue);
+            formdata.append("order_status", "");
 
             var requestOptions = {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: myHeaders,
                 body: formdata,
                 redirect: 'follow'
             };
 
-            fetch(`http://solar365.co.in/team-update-order/${value.split(',')[0]}/`, requestOptions)
+            fetch(`http://solar365.co.in/order/${orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -101,6 +108,29 @@ function Dashboard() {
                         setModal(false)
                         return fetchPendingOrder()
                     }
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchGetInstaller = () => {
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            var requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("http://solar365.co.in/get_installer_profile/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -118,7 +148,9 @@ function Dashboard() {
 
         const subscribe1 = fetchPendingOrder()
 
-        return () => [subscribe, subscribe1]
+        const subscribe2 = fetchGetInstaller()
+
+        return () => [subscribe, subscribe1, subscribe2]
     }, [])
 
     return (
@@ -131,14 +163,14 @@ function Dashboard() {
                         <Button title="Logout" onclick={logout} />
                     </div>
                 </div>
-
-                <div style={{ zIndex: 1000, width: '40%', background: '#fff', position: 'fixed', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', height: '30%', display: modal ? 'flex' : 'none', justifyContent: 'space-between', boxShadow: '2px 2px 20px 2px rgba(0,0,0,0.3), -2px -2px 20px 2px rgba(0,0,0,0.3)', borderRadius: '5px', backfaceVisibility: 'hidden', alignItems: 'center', flexDirection: 'column' }}>
+                <div style={{ zIndex: 9999, width: '40%', background: '#fff', position: 'fixed', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', height: '30%', display: modal ? 'flex' : 'none', justifyContent: 'space-between', boxShadow: '2px 2px 20px 2px rgba(0,0,0,0.3), -2px -2px 20px 2px rgba(0,0,0,0.3)', borderRadius: '5px', backfaceVisibility: 'hidden', alignItems: 'center', flexDirection: 'column' }}>
                     <p style={{ fontSize: '1.1rem', margin: '5% 2%', alignSelf: 'flex-start' }}>Please assing to installer or electician</p>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
                         <button style={{ background: 'green', color: 'white', fontWeight: '600', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px' }} onClick={fetchUpdateAssignOrder}>Confirm</button>
                         <button onClick={() => setModal(false)} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
                     </div>
                 </div>
+
                 <div style={{ width: '100%', padding: '20px 10px' }}>
                     {/* <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} /> */}
                     <ul className="responsive-table">
@@ -160,12 +192,43 @@ function Dashboard() {
                                         <div className={`col col-2 text-center`}>{ele?.panels_quantity}</div>
                                         <div className={`col col-2 text-center`}>{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</div>
                                         <div className={`col col-2 text-center`}>
-                                            <select onChange={handleChange}>
-                                                <option>Select</option>
-                                                <option value={[ele?.id, '1']}>Admin</option>
-                                                <option value={[ele?.id, '2']}>Installer</option>
-                                                <option value={[ele?.id, '3']}>Electrician</option>
-                                            </select>
+                                            <Dropdown
+                                                title='Assign To'
+                                            >
+                                                <Dropdown.Item
+                                                >
+                                                    Electrician
+                                                    <Dropdown.Submenu>
+                                                        {
+                                                            installerList?.Electrician?.map((eles, idx) => {
+                                                                return (
+                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}> 
+                                                                        {
+                                                                            eles?.admin?.user?.first_name
+                                                                        }
+                                                                    </Dropdown.Item>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Dropdown.Submenu>
+                                                </Dropdown.Item>
+                                                <Dropdown.Item >
+                                                    Installer
+                                                    <Dropdown.Submenu>
+                                                        {
+                                                            installerList?.Installer?.map((eles, idx) => {
+                                                                return (
+                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+                                                                        {
+                                                                            eles?.admin?.user?.first_name
+                                                                        }
+                                                                    </Dropdown.Item>
+                                                                )
+                                                            })
+                                                        }
+                                                    </Dropdown.Submenu>
+                                                </Dropdown.Item>
+                                            </Dropdown>
                                         </div>
                                     </li>
                                 )
@@ -173,67 +236,6 @@ function Dashboard() {
                         }
                     </ul>
                 </div>
-                {/* {
-                    showForm &&
-                    <div style={{ width: "100%", display: 'flex', position: 'absolute', background: 'white', justifyContent: "center", alignItems: 'center', flexDirection: 'column' }}>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                            <Heading heading="Create or Register Customer" size="36px" weight="600" />
-                        </div>
-                        <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                                <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                                <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                                <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Enter your document file..." onChange={handlefile} type="file" />
-                                <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
-                                <FormInput placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" />
-                                <FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Supply..." onChange={handleChange} value={supply} name="supply" />
-                                <FormInput placeholder="Roof Type..." onChange={handleChange} value={rooftype} name="rooftype" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Floor..." onChange={handleChange} value={floor} name="floor" />
-                                <FormInput placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Buying Options..." onChange={handleChange} value={buyingoptions} name="buyingoptions" />
-                                <FormInput placeholder="Follows up 1..." onChange={handleChange} value={followsup1} name="followsup1" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
-                                <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="State..." onChange={handleChange} value={state} name="state" />
-                                <FormInput placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
-                                <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Button title="Submit" type="submit" background="orange" />
-                                <Button title="Close" background="lightgray" onclick={() => setShowForm(false)} margin="0 10px" />
-                            </div>
-                        </form>
-                    </div>
-                } */}
             </div>
         </>
     )
