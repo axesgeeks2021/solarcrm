@@ -12,7 +12,7 @@ export const fetchInstallation = createAsyncThunk(
   "installation/fetchInstallation",
   async (token) => {
     try {
-      const res = await axios.get("http://solar365.co.in/install", {
+      const res = await axios.get("https://solar365.co.in/install", {
         headers: {
           Authorization: `Token ${token}`,
         },

@@ -12,7 +12,7 @@ function Homepage() {
   const [status, setStatus] = useState([]);
 
   const getOrderStatus = async () => {
-    const res = await axios.get("http://solar365.co.in/home_status", {
+    const res = await axios.get("https://solar365.co.in/home_status", {
       headers: {
         Authorization: `Token ${cookies.Authorization}`,
       },

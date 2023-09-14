@@ -54,7 +54,7 @@ function Login() {
         redirect: 'follow'
       };
 
-      fetch("http://solar365.co.in/login/", requestOptions)
+      fetch("https://solar365.co.in/login/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)

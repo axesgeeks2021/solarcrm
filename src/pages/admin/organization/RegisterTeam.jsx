@@ -81,7 +81,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/register/?user_type=TEAM", requestOptions)
+            fetch("https://solar365.co.in/register/?user_type=TEAM", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -131,7 +131,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/get_team_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_team_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

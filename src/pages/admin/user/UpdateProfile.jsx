@@ -142,7 +142,7 @@ function UpdateProfile() {
                 redirect: 'follow'
             };
 
-            fetch(`http://solar365.co.in/update_profile/${id}/`, requestOptions)
+            fetch(`https://solar365.co.in/update_profile/${id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {

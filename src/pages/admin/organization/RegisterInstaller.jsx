@@ -107,7 +107,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/register/?user_type=INSTALLER", requestOptions)
+            fetch("https://solar365.co.in/register/?user_type=INSTALLER", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if(result.messsage === 'Success'){
@@ -159,7 +159,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/get_installer_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

@@ -27,7 +27,7 @@ function UnapprovedCompany() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/comp_profile_without_approve", requestOptions)
+            fetch("https://solar365.co.in/comp_profile_without_approve", requestOptions)
                 .then(response => response.json())
                 .then(result => {
 
@@ -58,7 +58,7 @@ function UnapprovedCompany() {
                 redirect: 'follow'
             };
 
-            fetch(`http://solar365.co.in/update_profile/${id}/`, requestOptions)
+            fetch(`https://solar365.co.in/update_profile/${id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {

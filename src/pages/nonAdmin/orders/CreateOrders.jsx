@@ -46,7 +46,7 @@ function CreateOrders() {
     const createOrders = async (e) => {
         e.preventDefault();
         try {
-            const url = "http://solar365.co.in/order/";
+            const url = "https://solar365.co.in/order/";
 
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)

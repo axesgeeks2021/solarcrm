@@ -22,7 +22,7 @@ function AssignedJobs() {
               redirect: 'follow'
             };
             
-            fetch("http://solar365.co.in/pending-order-list/", requestOptions)
+            fetch("https://solar365.co.in/pending-order-list/", requestOptions)
               .then(response => response.json())
               .then(result => {
                 setLoading(false)

@@ -97,7 +97,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {
@@ -159,7 +159,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -171,7 +171,7 @@ function NonAdminDashboard() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'http://solar365.co.in/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
         return setInverterList(requestInverter)
     }
 
@@ -187,7 +187,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -251,7 +251,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if (result.messsage === 'Success') {
@@ -278,7 +278,7 @@ function NonAdminDashboard() {
     //             redirect: 'follow'
     //         };
 
-    //         fetch("http://solar365.co.in/username_list_non_admin/", requestOptions)
+    //         fetch("https://solar365.co.in/username_list_non_admin/", requestOptions)
     //             .then(response => response.json())
     //             .then(result => {
     //                 console.log(result)
@@ -426,14 +426,14 @@ function NonAdminDashboard() {
                             <FormInput placeholder="Panels Layout" type="file" onChange={e => setpanelLayoutFile(e.target.files[0])} />
                             <FormInput placeholder="Extras" type="file" onChange={e => setextrasFile(e.target.files[0])} />
                         </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
-                            <FormInput placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
-                            <FormInput placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
-                        </div>
+                        {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                             <FormInput placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
+                             <FormInput placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
+                         </div>
+                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                             <FormInput placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
+                             <FormInput placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
+                        </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
                             <FormInput placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />

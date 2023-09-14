@@ -41,7 +41,7 @@ function DocumentsUpload() {
     formdata.append(formDataField, uploadImage);
 
     const res = await axios.put(
-      "http://solar365.co.in/upload_meter_docs/4/",
+      "https://solar365.co.in/upload_meter_docs/4/",
       formdata,
       {
         headers: {
@@ -67,7 +67,7 @@ function DocumentsUpload() {
         redirect: 'follow'
       };
 
-      fetch("http://solar365.co.in/get_docs/", requestOptions)
+      fetch("https://solar365.co.in/get_docs/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)

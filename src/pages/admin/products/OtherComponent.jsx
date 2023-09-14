@@ -44,7 +44,7 @@ function OtherComponent() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://solar365.co.in/other_component/"
+            const url = "https://solar365.co.in/other_component/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -89,7 +89,7 @@ function OtherComponent() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/other_component/", requestOptions)
+            fetch("https://solar365.co.in/other_component/", requestOptions)
                 .then(response => response.text())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));

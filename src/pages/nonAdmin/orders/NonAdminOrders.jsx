@@ -21,7 +21,7 @@ function AdminOrders() {
 
   const data = useLocation()
 
-  console.log(data)
+  console.log(data.state.project)
 
   const navigate = useNavigate()
 
@@ -84,7 +84,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch("http://solar365.co.in/slots_list/", requestOptions)
+      fetch("https://solar365.co.in/slots_list/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -103,7 +103,7 @@ function AdminOrders() {
 
       const formdata = new FormData();
       formdata.append("appointment_date", bookModal.date);
-      formdata.append("project", data?.state?.ele?.project);
+      formdata.append("project", data?.state?.project);
 
       const requestOptions = {
         method: 'POST',
@@ -112,7 +112,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch("http://solar365.co.in/take-appointment/", requestOptions)
+      fetch("https://solar365.co.in/take-appointment/", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.messsage === 'Success') {
@@ -162,7 +162,7 @@ function AdminOrders() {
   //       redirect: 'follow'
   //     };
 
-  //     fetch(`http://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
+  //     fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
   //       .then(response => response.json())
   //       .then(result => {
   //         setTimeout(() => {

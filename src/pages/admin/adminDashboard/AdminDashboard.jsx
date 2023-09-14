@@ -64,7 +64,7 @@ function AdminDashboard() {
         try {
 
             setLoading(true)
-            const url = "http://solar365.co.in/order/"
+            const url = "https://solar365.co.in/order/"
 
             const headers = new Headers()
 
@@ -118,7 +118,7 @@ function AdminDashboard() {
               redirect: 'follow'
             };
             
-            fetch("http://solar365.co.in/order/", requestOptions)
+            fetch("https://solar365.co.in/order/", requestOptions)
               .then(response => response.json())
               .then(result => console.log(result))
               .catch(error => console.log('error', error));
@@ -139,7 +139,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/username_list/", requestOptions)
+            fetch("https://solar365.co.in/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)

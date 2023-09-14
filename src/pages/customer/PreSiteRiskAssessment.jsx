@@ -79,7 +79,7 @@ function PreSiteRiskAssessment() {
     formdata.append("safety_concerns_comment", safetyComment);
 
     const res = await axios.put(
-      "http://solar365.co.in/presite_risk/1/",
+      "https://solar365.co.in/presite_risk/1/",
       formdata,
       {
         headers: {

@@ -99,7 +99,7 @@ const Dropdowns = () => {
         redirect: 'follow'
       };
 
-      fetch("http://solar365.co.in/get_installer_profile/", requestOptions)
+      fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
         .then(response => response.json())
         .then(result => {
           // console.log(result)

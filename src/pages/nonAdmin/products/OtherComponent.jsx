@@ -23,7 +23,7 @@ function OtherComponent() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://solar365.co.in/other_component/"
+            const url = "https://solar365.co.in/other_component/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)

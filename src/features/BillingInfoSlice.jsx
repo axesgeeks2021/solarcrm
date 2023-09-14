@@ -14,7 +14,7 @@ export const fetchInvoice = createAsyncThunk(
   "invoice/fetchInvoice",
   async (token) => {
     try {
-      const res = await axios.get("http://solar365.co.in/invoice", {
+      const res = await axios.get("https://solar365.co.in/invoice", {
         headers: {
           Authorization: `Token ${token}`,
         },

@@ -82,7 +82,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`http://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setTimeout(() => {
@@ -111,7 +111,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`http://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           // setLoading(false)

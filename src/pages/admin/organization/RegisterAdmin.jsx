@@ -76,7 +76,7 @@ function RegisterAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/register/?user_type=ADMIN", requestOptions)
+            fetch("https://solar365.co.in/register/?user_type=ADMIN", requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
@@ -99,7 +99,7 @@ function RegisterAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://solar365.co.in/get_admin_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

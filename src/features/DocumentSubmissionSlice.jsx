@@ -12,7 +12,7 @@ export const fetchDocumnets = createAsyncThunk(
   "documents/fetchDocuments",
   async (token) => {
     try {
-      const res = await axios.get("http://solar365.co.in/upload_meter_docs/4/", {
+      const res = await axios.get("https://solar365.co.in/upload_meter_docs/4/", {
         headers: {
           Authorization: `Token ${token}`,
         },

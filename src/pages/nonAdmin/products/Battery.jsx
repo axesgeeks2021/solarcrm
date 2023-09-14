@@ -20,7 +20,7 @@ function Battery() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://solar365.co.in/battery_module/"
+            const url = "https://solar365.co.in/battery_module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
