@@ -36,7 +36,7 @@ function InstallationDetails() {
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
               <p>
-                {install.data.install?.ins_booking_date
+                {install?.data?.install?.ins_booking_date === null ? null : install?.data?.install?.ins_booking_date
                   .toString()
                   .substring(0, 10)}
               </p>
@@ -45,7 +45,7 @@ function InstallationDetails() {
           </div>
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>${install.data.install?.payment_due}</p>
+              <p>${install?.data?.install?.payment_due}</p>
               <p>Payment Due</p>
             </div>
           </div>
@@ -57,13 +57,13 @@ function InstallationDetails() {
           </div>
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>{install.data.install?.installation_status}</p>
+              <p>{install?.data?.install?.installation_status}</p>
               <p>Installation Status</p>
             </div>
           </div>
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>{install.data.install?.net_meter_status}</p>
+              <p>{install?.data?.install?.net_meter_status}</p>
               <p>Net Meter Status</p>
             </div>
           </div>

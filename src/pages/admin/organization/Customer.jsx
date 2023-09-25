@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 
 function Customer() {
 
-
     const [cookies] = useCookies();
 
     const [showForm, setShowForm] = useState(false)
@@ -95,7 +94,11 @@ function Customer() {
             
             fetch("https://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
               .then(response => response.json())
-              .then(result => console.log(result))
+              .then(result => {
+                console.log(result)
+                setShowForm(false)
+                return fetchData()
+              } )
               .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -155,12 +158,12 @@ function Customer() {
                         customerList?.map((ele, idx) => {
                             return (
                                 <li className="table-row" key={idx}>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.city} / {ele?.to_address?.state}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.user_type}</div>
+                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.has_approve === false ? 'Not Approved' : 'Approved'}</div>
                                 </li>
                             )
                         })
@@ -222,7 +225,7 @@ function Customer() {
                     <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country"/>
                 </div>
                 <div style={{width: "100%", display: 'flex',  justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <Button title="button" background="orange"/>
+                    <Button title="button" background="orange" type="submit"/>
                     <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
                 </div>
             </form>

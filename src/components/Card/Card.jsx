@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Card(props) {
   return (
     <>
-      <Link to={props.link} className="card">
+      <Link to={props.link} state={{id: props.id}} className="card">
         <img
           src="https://getmdl.io/assets/demos/welcome_card.jpg"
           className="card-image"

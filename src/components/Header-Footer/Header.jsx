@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 
-function Header({ showmenu, logout }) {
+function Header({ showmenu, logout, setShowSlotModal }) {
   return (
     <>
       <header className="w-full overflow-hidden my-2">
@@ -22,6 +22,16 @@ function Header({ showmenu, logout }) {
             />
           </div>
           <div className="profile__details w-3/5 flex justify-end items-center mr-12">
+            <div className="mx-3">
+              <Button
+                width="160px"
+                color="white"
+                background="#34a446"
+                type="button"
+                title="Book Your Slots"
+                onclick={() => setShowSlotModal(true)}
+              />
+            </div>
             <Link to="refer-a-friend">
               <Button
                 width="160px"

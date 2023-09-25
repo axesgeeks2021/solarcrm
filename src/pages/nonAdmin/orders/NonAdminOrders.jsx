@@ -18,34 +18,22 @@ import { toast } from 'react-toastify'
 function AdminOrders() {
 
   const [cookies] = useCookies();
-
   const data = useLocation()
-
-  console.log(data.state.project)
-
   const navigate = useNavigate()
 
   const [showState, setShowState] = useState(false)
   const [showState1, setShowState1] = useState(false)
   const [showState2, setShowState2] = useState(false)
   const [showState3, setShowState3] = useState(false)
-
   const [listofSlotsModal, setListOfSlotsModal] = useState(false)
-
-
   const [displayForm, setDisplayForm] = useState(false)
-
   const [loading, setLoading] = useState(false)
-
   const [orderDetails, setOrderDetails] = useState([])
-
   const [listOfSlots, setListOfSlots] = useState({})
-
   const [bookModal, setBookModal] = useState({
     status: false,
     date: null
   })
-
 
   const [file, setFile] = useState()
 
@@ -278,7 +266,6 @@ function AdminOrders() {
                   {
                     !showState1 ? <AiOutlinePlus size={40} onClick={() => setShowState1(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState1(false)} style={{ transition: '0.3s' }} />
                   }
-
                 </div>
                 <div style={{ height: showState1 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                   <Line title="Title" value={orderDetails?.panels?.title} />
@@ -289,7 +276,6 @@ function AdminOrders() {
                   <Line title="Technology" value={orderDetails?.panels?.technology} />
                 </div>
               </div>
-
             </div>
             {/* Panels Details */}
             <hr></hr>
@@ -299,7 +285,6 @@ function AdminOrders() {
                   {
                     !showState2 ? <AiOutlinePlus size={40} onClick={() => setShowState2(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState2(false)} style={{ transition: '0.3s' }} />
                   }
-
                 </div>
                 <div style={{ height: showState2 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                   <Line title="Title" value={orderDetails?.inverter?.title} />
@@ -319,7 +304,6 @@ function AdminOrders() {
                   {
                     !showState3 ? <AiOutlinePlus size={40} onClick={() => setShowState3(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState3(false)} style={{ transition: '0.3s' }} />
                   }
-
                 </div>
                 <div style={{ height: showState3 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                   {
@@ -425,4 +409,4 @@ function AdminOrders() {
   )
 }
 
-export default AdminOrders
+export default AdminOrders;

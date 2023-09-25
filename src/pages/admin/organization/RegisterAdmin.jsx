@@ -8,6 +8,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
+import UploadFile from '../../../components/inputsfield/UploadFile';
 
 
 function RegisterAdmin() {
@@ -16,11 +17,8 @@ function RegisterAdmin() {
 
 
     const [file, setFile] = useState()
-
     const [showForm, setShowForm] = useState(false)
-
     const [adminList, setAdminList] = useState([])
-
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -123,7 +121,7 @@ function RegisterAdmin() {
                 <AdminSideNavigation />
             </div>
             <div style={{ width: '100%', padding: '20px 10px' }}>
-                <Button title="Create New Admin" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)}/>
+                <Button title="Create New Admin" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
                 <ul className="responsive-table">
                     <li className="table-header">
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
@@ -135,14 +133,14 @@ function RegisterAdmin() {
                     </li>
                     {
                         adminList?.map((ele, idx) => {
-                            return(
+                            return (
                                 <li className="table-row" key={idx}>
-                                <div className={`col col-2 text-center`}>{ele.user.first_name}</div>
-                                <div className={`col col-2 text-center`}>{ele.user.email}</div>
-                                <div className={`col col-2 text-center`}>{ele.user.phone}</div>
-                                <div className={`col col-2 text-center`}>{ele.city} / {ele.state}</div>
-                                <div className={`col col-2 text-center`}>{ele.user.user_type}</div>
-                                <div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    <div className={`col col-2 text-center`}>{ele.user.first_name}</div>
+                                    <div className={`col col-2 text-center`}>{ele.user.email}</div>
+                                    <div className={`col col-2 text-center`}>{ele.user.phone}</div>
+                                    <div className={`col col-2 text-center`}>{ele.city} / {ele.state}</div>
+                                    <div className={`col col-2 text-center`}>{ele.user.user_type}</div>
+                                    <div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
                                 </li>
                             )
                         })
@@ -165,7 +163,7 @@ function RegisterAdmin() {
                             <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Profile Photo..." type="file" onChange={handlefile} />
+                            <UploadFile label="Profie Photo" width="100%" onchange={e => setProfilePhoto(e.target.files[0])} />
                             <FormInput placeholder="Address..." onChange={handleChange} value={address} name="address" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
@@ -186,7 +184,7 @@ function RegisterAdmin() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" />
-                            <Button title="Close" background="lightgray" margin="0 10px" onclick={() => setShowForm(false)}/>
+                            <Button title="Close" background="lightgray" margin="0 10px" onclick={() => setShowForm(false)} />
                         </div>
                     </form>
                 </div>

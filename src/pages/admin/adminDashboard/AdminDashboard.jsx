@@ -31,11 +31,9 @@ function AdminDashboard() {
 
     const [showForm, setShowForm] = useState(false)
 
-    const [file, setFile] = useState()
-
-    const handleFile = e => {
-        setFile(e.target.files[0])
-    }
+    const [swmsDocFile, setSwmsDocFile] = useState(null)
+    const [swmsFile, setSwmsFile] = useState(null)
+    const [solar365File, setSolar365File] = useState(null)
 
     const [text, setText] = useState({
         username: "",
@@ -105,11 +103,13 @@ function AdminDashboard() {
             formdata.append("roof_Angle", roofAngle);
             formdata.append("meter_Phase", meterPhase);
             formdata.append("installation_Type", installationType);
-            formdata.append("document_file", file);
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
             formdata.append("other_component",otherComponent);
             formdata.append("batteries", batteries);
+            formdata.append("swms_doc", batteries);
+            formdata.append("swms", batteries);
+            formdata.append("solar365_docs", batteries);
             
             var requestOptions = {
               method: 'POST',
@@ -132,6 +132,7 @@ function AdminDashboard() {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+            myHeaders.append('Content-Type', 'application/json')
 
             var requestOptions = {
                 method: 'GET',
@@ -271,9 +272,6 @@ function AdminDashboard() {
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Other Component" value={otherComponent} name="otherComponent" onChange={handleChange} />
                             <FormInput placeholder="Battries" value={batteries} name="batteries" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Document File" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white"  type="submit"/>

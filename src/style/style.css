@@ -16,8 +16,6 @@
     --input-color: #99A3BA;
     --input-border: #CDD9ED;
     --input-background: #fff;
-    --group-color: var(--input-color);
-    --group-border: var(--input-border);
     --group-background: #EEF4FF;
     --group-color-focus: #fff;
 }
@@ -1619,7 +1617,7 @@ h2 small {
   padding: 5px 10px;
   transition: 0.3s;
   width: 100%;
-  margin: 0 10px;
+  margin: 6px 10px;
 }
 .form__input::placeholder{
   color: var(--input-color);
@@ -2510,3 +2508,30 @@ p {
   }
 }
 /* new table design */
+/* upload input design */
+
+input[type=file] {
+  display: none;
+}
+
+label[for=file] {
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5em;
+  justify-items: flex-start;
+  align-content: flex-start;
+  color: var(--input-color);
+  border: 0.2em solid var(--input-color);
+  background: rgba(0, 0, 0, 0);
+  padding: 0.85em 1.5em;
+  border-radius: 0em;
+  transition: 0.4s;
+  font-weight: 600;
+}
+label[for=file]:hover, label[for=file]:focus, label[for=file]:active {
+  background: var(--input-color);
+  color: #fff;
+}
+
+/* upload input design */

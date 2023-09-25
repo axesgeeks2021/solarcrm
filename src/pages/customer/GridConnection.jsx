@@ -12,6 +12,8 @@ function GridConnection() {
 
   const grid = useSelector((state) => state.grid);
 
+  console.log(grid.data)
+
   useEffect(() => {
     dispatch(fetchGridConnection(cookies.Authorization));
   }, []);
@@ -36,7 +38,7 @@ function GridConnection() {
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
               <p>
-                {grid.data.grid_approval?.meter_date
+                {grid?.data?.grid_approval?.meter_date === null ? null : grid?.data?.grid_approval?.meter_date
                   .toString()
                   .substring(0, 10)}
               </p>
@@ -45,11 +47,11 @@ function GridConnection() {
           </div>
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              {grid.data.grid_approval?.meter_Approved_date === null ? (
+              {grid?.data?.grid_approval?.meter_Approved_date === null ? (
                 <p>Not Apporved Yet</p>
               ) : (
                 <p>
-                  {grid.data.grid_approval?.meter_Approved_date
+                  {grid?.data?.grid_approval?.meter_Approved_date
                     .toString()
                     .substring(0, 10)}
                 </p>
@@ -57,15 +59,15 @@ function GridConnection() {
               <p>Meter Application Approved Date</p>
             </div>
           </div>
-          <div className="grid__connection__card">
+        {/*  <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>25-01-2022</p>
+              <p></p>
               <p>Meter Date</p>
             </div>
-          </div>
+                  </div>*/}
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>{grid.data.grid_approval?.nmi_no}</p>
+              <p>{grid?.data?.grid_approval?.nmi_no}</p>
               <p>NMI Number</p>
             </div>
           </div>

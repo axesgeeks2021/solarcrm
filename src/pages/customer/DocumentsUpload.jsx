@@ -8,8 +8,12 @@ import { fetchDocumnets } from "../../features/DocumentSubmissionSlice";
 import axios from "axios";
 
 import Loading from "../../components/loading/Loading";
+import { useLocation } from "react-router-dom";
 
 function DocumentsUpload() {
+
+  const data = useLocation()
+
   const [cookies] = useCookies();
 
   const dispatch = useDispatch();
@@ -17,16 +21,10 @@ function DocumentsUpload() {
   const document = useSelector((state) => state.document);
 
   const [loading, setLoading] = useState(false)
-
   const [modal, setModal] = useState(false);
-
   const [uploadImage, setUploadImage] = useState(null);
-
   const [formDataField, setFormDataField] = useState("");
-
   const [allStatus, setAllStatus] = useState({})
-
-  console.log('all status', allStatus)
 
   const fileUpload = (e) => {
     setFormDataField(e.target.name);
@@ -36,24 +34,34 @@ function DocumentsUpload() {
     }, 1000);
   };
 
-  const uploadDocument = async () => {
-    const formdata = new FormData();
-    formdata.append(formDataField, uploadImage);
 
-    const res = await axios.put(
-      "https://solar365.co.in/upload_meter_docs/4/",
-      formdata,
-      {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `Token ${cookies.Authorization}`,
-        },
-      }
-    );
-    const data = await res.data;
-    setModal(false);
-    dispatch(fetchDocumnets(cookies.Authorization));
-  };
+  const uploadDocument = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+      const formdata = new FormData();
+      formdata.append(formDataField, uploadImage);
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch(`https://solar365.co.in/upload_meter_docs/${data?.state?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          setModal(false);
+          return getStatus()
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getStatus = () => {
     try {
@@ -72,8 +80,7 @@ function DocumentsUpload() {
         .then(result => {
           setLoading(false)
           setAllStatus(result)
-          // console.log('status',result)
-        } )
+        })
         .catch(error => console.log('error', error));
     } catch (error) {
       console.log(error)
@@ -84,12 +91,11 @@ function DocumentsUpload() {
     const subscribe = getStatus()
 
     return () => subscribe
-    // dispatch(fetchDocumnets(`${cookies.Authorization}`));
   }, []);
 
-  if(loading){
-    return(
-      <div style={{width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+  if (loading) {
+    return (
+      <div style={{ width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Loading />
       </div>
     )
@@ -126,7 +132,7 @@ function DocumentsUpload() {
         </div>
         <PageHeading heading1="Documents Upload" heading2="Download" />
         <div className="documents w-full flex justify-evenly items-center flex-col gap-10">
-          <div className="documents__card flex justify-evenly items-center">
+          {/*<div className="documents__card flex justify-evenly items-center">
             <div className="document__card__details p-2">
               <div className="svg w-full flex justify-center items-center overflow-hidden py-2">
                 <svg
@@ -410,14 +416,13 @@ function DocumentsUpload() {
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
               <div
-                className={`status ${
-                  allStatus?.contract?.contract_status === "Completed"
+                className={`status ${allStatus?.contract?.contract_status === "Completed"
                     ? "status"
                     : "pending"
-                }`}
+                  }`}
               >
-                 {allStatus?.contract?.map((ele,idx) => {
-                  return(
+                {allStatus?.contract?.map((ele, idx) => {
+                  return (
                     <p key={idx}>{ele?.contract_status}</p>
                   )
                 })}
@@ -435,7 +440,7 @@ function DocumentsUpload() {
                 </div>
               </div>
             </div>
-          </div>
+              </div>*/}
           <div className="documents__card flex justify-evenly items-center">
             <div className="document__card__details p-2">
               <div className="svg w-full flex justify-center items-center overflow-hidden py-2">
@@ -720,14 +725,13 @@ function DocumentsUpload() {
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
               <div
-                className={`status ${
-                  allStatus?.meter?.meter_status === "Completed"
+                className={`status ${allStatus?.meter?.meter_status === "Completed"
                     ? "status"
                     : "pending"
-                }`}
+                  }`}
               >
-                 {allStatus?.meter?.map((ele,idx) => {
-                  return(
+                {allStatus?.meter?.map((ele, idx) => {
+                  return (
                     <p key={idx}>{ele?.meter_status}</p>
                   )
                 })}
@@ -1033,14 +1037,13 @@ function DocumentsUpload() {
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
               <div
-                className={`status ${
-                  allStatus?.electricity?.electricity_status === "Completed"
+                className={`status ${allStatus?.electricity?.electricity_status === "Completed"
                     ? "status"
                     : "pending"
-                }`}
+                  }`}
               >
-                  {allStatus?.electricity?.map((ele,idx) => {
-                  return(
+                {allStatus?.electricity?.map((ele, idx) => {
+                  return (
                     <p key={idx}>{ele?.electricity_status}</p>
                   )
                 })}
@@ -1062,7 +1065,7 @@ function DocumentsUpload() {
               </div>
             </div>
           </div>
-          <div className="documents__card flex justify-evenly items-center">
+         {/* <div className="documents__card flex justify-evenly items-center">
             <div className="document__card__details p-2">
               <div className="svg w-full flex justify-center items-center overflow-hidden py-2">
                 <svg
@@ -1346,14 +1349,13 @@ function DocumentsUpload() {
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
               <div
-                className={`status ${
-                  allStatus?.council?.council_status === "Completed"
+                className={`status ${allStatus?.council?.council_status === "Completed"
                     ? "status"
                     : "pending"
-                }`}
+                  }`}
               >
-                 {allStatus?.council?.map((ele,idx) => {
-                  return(
+                {allStatus?.council?.map((ele, idx) => {
+                  return (
                     <p key={idx}>{ele?.council_status}</p>
                   )
                 })}
@@ -1374,7 +1376,7 @@ function DocumentsUpload() {
                 </div>
               </div>
             </div>
-          </div>
+              </div>*/}
           <div className="documents__card flex justify-evenly items-center">
             <div className="document__card__details p-2">
               <div className="svg w-full flex justify-center items-center overflow-hidden py-2">
@@ -1659,14 +1661,13 @@ function DocumentsUpload() {
             <div className="documents__connected__line"></div>
             <div className="status__uploading">
               <div
-                className={`status ${
-                  allStatus?.miscellaneous?.miscellaneous_status === "Completed"
+                className={`status ${allStatus?.miscellaneous?.miscellaneous_status === "Completed"
                     ? "status"
                     : "pending"
-                }`}
+                  }`}
               >
-                {allStatus?.miscellaneous?.map((ele,idx) => {
-                  return(
+                {allStatus?.miscellaneous?.map((ele, idx) => {
+                  return (
                     <p key={idx}>{ele?.miscellaneous_status}</p>
                   )
                 })}

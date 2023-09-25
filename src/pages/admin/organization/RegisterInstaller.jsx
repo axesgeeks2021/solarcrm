@@ -26,6 +26,8 @@ function RegisterTeam() {
     const [file2, setFile2] = useState()
     const [file3, setFile3] = useState()
 
+    const [selectedDepartment, setSelectedDepartment] = useState('')
+
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -65,11 +67,6 @@ function RegisterTeam() {
         setFile3(e.target.files[0])
     }
 
-    const hello = () => {
-        toast.success('hello world')
-    }
-
-
     const registerTeam = async (e) => {
         e.preventDefault();
         try {
@@ -85,7 +82,7 @@ function RegisterTeam() {
             formdata.append("profile_pic", file);
             formdata.append("address", address);
             formdata.append("alternate_phone", alternatephone);
-            formdata.append("department", department);
+            formdata.append("department", selectedDepartment);
             formdata.append("ec_file", file2);
             formdata.append("ec_number", ecnumber);
             formdata.append("el_file", file3);
@@ -110,8 +107,8 @@ function RegisterTeam() {
             fetch("https://solar365.co.in/register/?user_type=INSTALLER", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    if(result.messsage === 'Success'){
-                        toast.update(loadingToast, {render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true})
+                    if (result.messsage === 'Success') {
+                        toast.update(loadingToast, { render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true })
                         setValue({
                             firstname: "",
                             lastname: "",
@@ -195,17 +192,17 @@ function RegisterTeam() {
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
                     </li>
                     {
-                        installerList?.map((ele, idx) => {
+                        installerList?.Installer?.map((ele, idx) => {
                             return (
                                 <Link key={idx} to="/installer-profile">
-                                <li className="table-row" >
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                </li>
+                                    <li className="table-row" >
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    </li>
                                 </Link>
                             )
                         })
@@ -214,7 +211,7 @@ function RegisterTeam() {
             </div>
             {
                 showForm &&
-                <div style={{ width: "100%", display: 'flex',position: 'absolute', justifyContent: "center", alignItems: 'center', flexDirection: 'column', background: 'white' }}>
+                <div style={{ width: "100%", display: 'flex', position: 'absolute', justifyContent: "center", alignItems: 'center', flexDirection: 'column', background: 'white' }}>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
                         <Heading heading="Create or Register Installer" size="36px" weight="600" />
                     </div>
@@ -233,7 +230,11 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <FormInput placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                            <FormInput placeholder="Department..." onChange={handleChange} value={department} name="department" />
+                            <select style={{width: '100%', padding: '5px 0', border: '2px solid #99A3BA'}} value={selectedDepartment} onChange={e => setSelectedDepartment(e.target.value)}>
+                                <option defaultChecked>Select Department</option>
+                                <option value="installer">Installer</option>
+                                <option value="electrician">Electrician</option>
+                            </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <FormInput placeholder="Ec_file" onChange={handlefile2} type="file" />
@@ -263,8 +264,8 @@ function RegisterTeam() {
                             <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" color="white" type="submit"/>
-                            <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
+                            <Button title="Submit" background="orange" color="white" type="submit" />
+                            <Button title="Close" background="lightgray" onclick={() => setShowForm(false)} margin="0 10px" />
                         </div>
                     </form>
                 </div>

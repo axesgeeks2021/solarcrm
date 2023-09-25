@@ -60,6 +60,7 @@ import NonAdminUpdateProfile from "./pages/nonAdmin/user/UpdateProfile"
 import InstallerProfile from "./pages/admin/organization/InstallerProfile"
 import Dashboard from "./pages/Team/Dashboard";
 import AssignedJobs from "./pages/Team/AssignedJobs";
+import UpdateAssignedOrders from "./pages/Team/UpdateAssignedOrders";
 import Practice from "./pages/Practice";
 
 
@@ -70,6 +71,7 @@ function App() {
   const [cookies, setCookies, removeCookies] = useCookies();
 
   const [show, setShow] = useState(true);
+  const [showSlotModal, setShowSlotModal] = useState(false)
 
   const navigate = useNavigate();
 
@@ -93,7 +95,7 @@ function App() {
 
     if (!cookies.Authorization && locations.pathname === "/admin-dashboard") {
       // locations.pathname === ("/login" && "/") ?  navigate("/admin-dashboard") : navigate("*") 
-     return navigate('/all-login')
+      return navigate('/all-login')
     }
   }, [])
 
@@ -102,7 +104,7 @@ function App() {
       <>
         {
           cookies.Authorization && auth?.user?.user_type === "CUSTOMER" ? (
-            <Header showmenu={showmenu} logout={logout} />
+            <Header showmenu={showmenu} logout={logout} setShowSlotModal={setShowSlotModal} />
           ) : null
         }
         <Sidemenu
@@ -110,9 +112,10 @@ function App() {
           showmenu={showmenu}
           logout={logout}
           setShow={setShow}
+
         />
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<Homepage showSlotModal={showSlotModal} setShowSlotModal={setShowSlotModal} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/customer/order-details" element={<OrderDetails />} />
           <Route path="/customer/documents-upload" element={<DocumentsUpload />} />
@@ -131,7 +134,7 @@ function App() {
       </>
     )
   }
-  
+
   if (auth?.user?.user_type === "ADMIN") {
     return (
       <>
@@ -195,15 +198,15 @@ function App() {
         } */}
         <Route path="/team-dashboard" element={<Dashboard />} />
         <Route path="/team/assigned-jobs" element={<AssignedJobs />} />
+        <Route path="/team/assigned-jobs/update-orders" element={<UpdateAssignedOrders />} />
         <Route path="/team/practice" element={<Practice />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )
   }
 
-  return(
+  return (
     <Login />
-    // <Calendar />
   )
 }
 

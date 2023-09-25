@@ -18,6 +18,7 @@ import Select from "react-select"
 
 import { BiLogOut } from "react-icons/bi"
 import { toast } from 'react-toastify'
+import UploadFile from '../../components/inputsfield/UploadFile'
 
 
 function NonAdminDashboard() {
@@ -29,25 +30,22 @@ function NonAdminDashboard() {
     const [loading, setLoading] = useState(false)
     const [showForm, setShowForm] = useState(false)
 
-
     const [orderLists, setOrderLists] = useState([])
-    const [moduleList, setModuleList] = useState([])
     const [inverterList, setInverterList] = useState([])
-    const [allUserList, setAllUserList] = useState([])
+    const [batteryList, setBatteryList] = useState([])
+    const [panelList, setPanelList] = useState([])
 
     const [ordersList, setOrdersLists] = useState([])
 
-
-    const [file, setFile] = useState()
     const [packingSlipFile, setPackingSlipFile] = useState(null)
     const [weternPowerFile, setweternPowerFile] = useState(null)
     const [switchBoardFile, setswitchBoardFile] = useState(null)
     const [panelLayoutFile, setpanelLayoutFile] = useState(null)
     const [extrasFile, setextrasFile] = useState(null)
 
-    const handleFile = e => {
-        setFile(e.target.files[0])
-    }
+    const [selectedPanel, setSelectedPanel] = useState('')
+    const [selectedBattery, setSelectedBattery] = useState('')
+    const [selectedInverter, setSelectedInverter] = useState('')
 
     const [text, setText] = useState({
         firstname: '',
@@ -85,7 +83,6 @@ function NonAdminDashboard() {
 
     const fetchOrder = async () => {
         try {
-
             setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -113,56 +110,27 @@ function NonAdminDashboard() {
         }
     }
 
-    const createOrder = (e) => {
-        e.preventDefault()
+    const getDetails = async () => {
+        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
+        return setInverterList(requestInverter)
+    }
+
+    const getBatteryDetails = () => {
         try {
-            var myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
-            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
 
-            var formdata = new FormData();
-            formdata.append("first_name", firstname);
-            formdata.append("last_name", lastname);
-            formdata.append("phone", phone);
-            formdata.append("email", email);
-            formdata.append("profile_pic", "");
-            formdata.append("system_Size", systemSize);
-            formdata.append("nmi_no", nmiNo);
-            formdata.append("meter_Number", meterNumber);
-            formdata.append("packing_slip", packingSlipFile);
-            formdata.append("western_power", weternPowerFile);
-            formdata.append("switch_board", switchBoardFile);
-            formdata.append("panel_layout", panelLayoutFile);
-            formdata.append("extras", extrasFile);
-            formdata.append("packing_slip_reason", packingSlipReason);
-            formdata.append("western_power_reason", westernPowerReason);
-            formdata.append("switch_board_reason", switchBoardReason);
-            formdata.append("panel_layout_reason", panelLayoutReason);
-            formdata.append("state", state);
-            formdata.append("address_line", addressline);
-            formdata.append("city", city);
-            formdata.append("postcode", postcode);
-            formdata.append("country", country);
-            formdata.append("description", descritpion);
-            formdata.append("meter_Phase", meterPhase);
-            formdata.append("panels", panels);
-            formdata.append("building_Type", buildingType);
-            formdata.append("inverter", inverter);
-            formdata.append("panels_quantity", panelsQuantity);
-            formdata.append("inverter_quantity", inverterQuantity);
-            formdata.append("batteries", batteries);
-
-            var requestOptions = {
-                method: 'POST',
+            const requestOptions = {
+                method: 'GET',
                 headers: myHeaders,
-                body: formdata,
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                    setBatteryList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -170,9 +138,27 @@ function NonAdminDashboard() {
         }
     }
 
-    const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
-        return setInverterList(requestInverter)
+    const getPanelDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setPanelList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const fetchGetOrders = () => {
@@ -237,12 +223,12 @@ function NonAdminDashboard() {
             formdata.append("country", country);
             formdata.append("description", descritpion);
             formdata.append("meter_Phase", meterPhase);
-            formdata.append("panels", panels);
+            formdata.append("panels", selectedPanel);
             formdata.append("building_Type", buildingType);
-            formdata.append("inverter", inverter);
+            formdata.append("inverter", selectedInverter);
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
-            formdata.append("batteries", batteries);
+            formdata.append("batteries", selectedBattery);
 
             const requestOptions = {
                 method: 'POST',
@@ -303,7 +289,11 @@ function NonAdminDashboard() {
 
         const subscribe3 = fetchGetOrders()
 
-        return () => [subscribe, subscribe1, subscribe3]
+        const subscribe4 = getBatteryDetails()
+
+        const subscribe5 = getPanelDetails()
+
+        return () => [subscribe, subscribe1, subscribe3, subscribe4, subscribe5]
     }, [])
 
 
@@ -321,7 +311,7 @@ function NonAdminDashboard() {
                 </div>
             </div>
             <div class="container__table">
-            <div className='py-2 flex justify-end'>
+                <div className='py-2 flex justify-end'>
                     <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                 </div>
                 <table class="responsive-table">
@@ -342,17 +332,17 @@ function NonAdminDashboard() {
                             ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
                                 return (
                                     // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                        <tr onClick={() => goToOrders('/non-admin/orders', {state: ele})} style={{cursor: 'pointer'}}>
-                                            <th scope="row">{ele.project}</th>
-                                            <td data-title="Released">{ele?.customer_name}</td>
-                                            <td data-title="Studio">{ele?.panels_quantity}</td>
-                                            <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
-                                            <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
-                                            <td data-title="International Gross" data-type="currency">
-                                            <Button title="In Process" background="green" color="white"  cursor="none"/>
-                                            </td>
-                                            {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
-                                        </tr>
+                                    <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }}>
+                                        <th scope="row">{ele.project}</th>
+                                        <td data-title="Released">{ele?.customer_name}</td>
+                                        <td data-title="Studio">{ele?.panels_quantity}</td>
+                                        <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
+                                        <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
+                                        <td data-title="International Gross" data-type="currency">
+                                            <Button title="In Process" background="green" color="white" cursor="none" />
+                                        </td>
+                                        {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
+                                    </tr>
                                     // </Link>
                                 )
                             })
@@ -416,15 +406,15 @@ function NonAdminDashboard() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
-                            <FormInput placeholder="Packing Slip" type="file" onChange={e => setPackingSlipFile(e.target.files[0])} />
+                            <UploadFile label="Packing Slip" onchange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Western Power" type="file" onChange={e => setweternPowerFile(e.target.files[0])} />
-                            <FormInput placeholder="Switch Board" type="file" onChange={e => setswitchBoardFile(e.target.files[0])} />
+                            <UploadFile label="Western Power" onchange={e => setweternPowerFile(e.target.files[0])} width="100%" />
+                            <UploadFile label="Switch Board" onchange={e => setswitchBoardFile(e.target.files[0])} width="100%" />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Panels Layout" type="file" onChange={e => setpanelLayoutFile(e.target.files[0])} />
-                            <FormInput placeholder="Extras" type="file" onChange={e => setextrasFile(e.target.files[0])} />
+                            <UploadFile label="Panels Layout" onchange={e => setpanelLayoutFile(e.target.files[0])} width="100%" />
+                            <UploadFile label="Extras" onchange={e => setextrasFile(e.target.files[0])} width="100%" />
                         </div>
                         {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                              <FormInput placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
@@ -448,18 +438,46 @@ function NonAdminDashboard() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
-                            <FormInput placeholder="Panels" value={panels} name="panels" onChange={handleChange} />
+                            <select value={selectedPanel} onChange={e => setSelectedPanel(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                            <option defaultChecked>Select Panel</option>
+                            {
+                                panelList.map((ele, idx) => {
+                                    return(
+                                        <option key={idx} value={ele?.code}>{ele?.code}</option>
+                                    )
+                                })
+                            }
+                            </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
-                            <FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />
+                            <select value={selectedInverter} onChange={e => setSelectedInverter(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option value="Select Inverter" selected disabled>Select Inverter</option>
+                                {
+                                    inverterList && inverterList.map((ele, idx) => {
+                                        return (
+                                            <option value={ele?.code} key={idx}>{ele?.code}</option>
+                                        )
+                                    })
+                                }
+                            </select>
+                            {/*<FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />*/}
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
                             <FormInput placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Battries" value={batteries} name="batteries" onChange={handleChange} />
+                            <select value={selectedBattery} onChange={e => setSelectedBattery(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option defaultChecked>Select Battery</option>
+                                {
+                                    batteryList.map((ele, idx) => {
+                                        return (
+                                            <option key={idx}>{ele?.code}</option>
+                                        )
+                                    })
+                                }
+                            </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" type="submit" background="orange" color="white" />

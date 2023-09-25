@@ -6,7 +6,7 @@ import logo from "../../assets/images/logo.webp";
 import Button from "../../components/Button/Button";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import Loading from "../../components/loading/Loading"
@@ -20,6 +20,7 @@ function Login() {
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+  const [urlParams, setUrlParams] = useState("")
   const [text, setText] = useState({
     username: "",
     password: "",
@@ -53,11 +54,11 @@ function Login() {
         body: formdata,
         redirect: 'follow'
       };
-
-      fetch("https://solar365.co.in/login/", requestOptions)
+      const url = `https://solar365.co.in/login/?user_type=${urlParams}`
+      console.log(url)
+      fetch(url, requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result)
           setLoading(false)
           setCookie("Authorization", result.token);
 
@@ -81,9 +82,9 @@ function Login() {
     }
   };
 
-  if(loading){
-    return(
-      <div style={{width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+  if (loading) {
+    return (
+      <div style={{ width: "100%", height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Loading />
       </div>
     )
@@ -121,6 +122,13 @@ function Login() {
             className="flex justify-center items-start gap-5 flex-col"
             onSubmit={getLogin}
           >
+          <select value={urlParams} onChange={e => setUrlParams(e.target.value)} style={{width: '100%', border: '2px solid #CDD9ED', padding: '5px 0'}} required>
+          <option defaultChecked >Select User Type</option>
+            <option value="ADMIN">Admin</option>
+            <option value="NON_ADMIN">Non Admin</option>
+            <option value="CUSTOMER">Customer</option>
+            <option value="TEAM">Team</option>
+          </select>
             <Input
               type="text"
               placeholder="Project ID"

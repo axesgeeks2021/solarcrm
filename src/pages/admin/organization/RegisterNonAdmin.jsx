@@ -49,7 +49,8 @@ function RegisterNonAdmin() {
         setFile(e.target.files[0])
     }
 
-    const registerNonAdmin = async () => {
+    const registerNonAdmin = async (e) => {
+        e.preventDefault()
         try {
 
             const formdata = new FormData()
@@ -70,6 +71,7 @@ function RegisterNonAdmin() {
             formdata.append("postcode", postcode)
             formdata.append("country", country)
 
+            const url = "https://solar365.co.in/register/?user_type=NON_ADMIN"
 
             const myheaders = new Headers();
             myheaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -83,6 +85,7 @@ function RegisterNonAdmin() {
             const data = await res.json()
 
             console.log(data)
+            return fetchData()
         } catch (error) {
             console.log(error)
         }
@@ -134,7 +137,7 @@ function RegisterNonAdmin() {
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
                     </li>
-                    {/* {
+                    {
                         nonAdminList?.map((ele, idx) => {
                             return (
                                 <li className="table-row" key={idx}>
@@ -147,7 +150,7 @@ function RegisterNonAdmin() {
                                 </li>
                             )
                         })
-                    } */}
+                    }
                 </ul>
             </div>
             {
@@ -192,7 +195,7 @@ function RegisterNonAdmin() {
                             <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" />
+                            <Button title="Submit" background="orange" type="submit"/>
                             <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
                         </div>
                     </form>
