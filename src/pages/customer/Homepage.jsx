@@ -21,7 +21,11 @@ function Homepage({showSlotModal, setShowSlotModal}) {
   const orders = useSelector(state => state.order)
   const { data, error, loading } = orders;
 
+  const [userData, setUserData] = useState({})
   const [status, setStatus] = useState([]);
+
+  console.log('status', status)
+
   const [listOfSlots, setListOfSlots] = useState({})
   const [bookModal, setBookModal] = useState({
     status: false,
@@ -99,6 +103,9 @@ function Homepage({showSlotModal, setShowSlotModal}) {
 
   useEffect(() => {
     const subscribe = getOrderStatus();
+
+    const user = JSON.parse(localStorage.getItem('auth'))
+    setUserData(user)
     
     const subscribe1 = fetchSlots()
     
@@ -156,7 +163,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
         className="flex flex-col gap-5 justify-center items-center py-5 overflow-hidden"
       >
         <Heading
-          heading="Hello Tracey And Norman Rickman,"
+          heading={`Hello ${userData?.user?.first_name} ${userData?.user?.last_name} - ${userData?.user?.username}`}
           color="black"
           size="1.4rem"
           weight="600"
@@ -182,6 +189,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
             text="Pre-Site Risk Assessment"
             status={status[0]?.presite_status}
             link="/customer/pre-site-risk-assessment"
+            id={status[0]?.id}
           />
           <Card
             src={pho}

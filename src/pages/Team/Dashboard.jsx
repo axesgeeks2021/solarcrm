@@ -22,13 +22,23 @@ function Dashboard() {
 
     const [modal, setModal] = useState(false)
 
-    const [selectedValue, setSelectedValue] = useState('')
+    const [selectedValue, setSelectedValue] = useState([])
     const [orderId, setOrderId] = useState('')
 
     const handleChange = (userId, orderId) => {
-        setModal(true)
-        setSelectedValue(userId)
-        setOrderId(orderId)
+
+        let installerElectricianId = [...selectedValue, userId]
+        setSelectedValue(installerElectricianId)
+        console.log(installerElectricianId)
+        if(installerElectricianId.length > 2){
+            let arrayToString = installerElectricianId.toString().split(',').join(', ')
+            setSelectedValue(arrayToString)
+            setOrderId(orderId)
+            setModal(true)
+            return
+            // return alert('')
+            // return alert('Please select 1 Electrician and 2 Installer')
+        }
     }
 
     const fetchOrder = () => {
@@ -82,21 +92,21 @@ function Dashboard() {
     }
 
     const fetchUpdateAssignOrder = () => {
+
         try {
-            var myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
-            var formdata = new FormData();
+            const formdata = new FormData();
             formdata.append("assign_to", selectedValue);
             formdata.append("order_status", "");
 
-            var requestOptions = {
+            const requestOptions = {
                 method: 'PUT',
                 headers: myHeaders,
                 body: formdata,
                 redirect: 'follow'
             };
-
             fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
@@ -115,10 +125,10 @@ function Dashboard() {
 
     const fetchGetInstaller = () => {
         try {
-            var myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
-            var requestOptions = {
+            const requestOptions = {
                 method: 'GET',
                 headers: myHeaders,
                 redirect: 'follow'
@@ -127,13 +137,17 @@ function Dashboard() {
             fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
                     setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleClosePopup = () => {
+        setSelectedValue([])
+        setModal(false)
     }
 
 
@@ -162,10 +176,10 @@ function Dashboard() {
                     </div>
                 </div>
                 <div style={{ zIndex: 9999, width: '40%', background: '#fff', position: 'fixed', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', height: '30%', display: modal ? 'flex' : 'none', justifyContent: 'space-between', boxShadow: '2px 2px 20px 2px rgba(0,0,0,0.3), -2px -2px 20px 2px rgba(0,0,0,0.3)', borderRadius: '5px', backfaceVisibility: 'hidden', alignItems: 'center', flexDirection: 'column' }}>
-                    <p style={{ fontSize: '1.1rem', margin: '5% 2%', alignSelf: 'flex-start' }}>Please assing to installer or electician</p>
+                    <p style={{ fontSize: '1.1rem', margin: '5% 2%', alignSelf: 'flex-start' }}>Please assign to installer or electician</p>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
                         <button style={{ background: 'green', color: 'white', fontWeight: '600', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px' }} onClick={fetchUpdateAssignOrder}>Confirm</button>
-                        <button onClick={() => setModal(false)} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
+                        <button onClick={handleClosePopup} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
                     </div>
                 </div>
                 {/* <div style={{ width: '100%', padding: '20px 10px' }}>
@@ -232,11 +246,11 @@ function Dashboard() {
                         }
                     </ul>
                 </div> */}
-                <div class="container__table">
+                <div className="container__table">
                     <div className='py-2 flex justify-end'>
                         <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                     </div>
-                    <table class="responsive-table">
+                    <table className="responsive-table">
                         {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
                         <thead>
                             <tr>
@@ -254,7 +268,7 @@ function Dashboard() {
                                 pendingList?.length < 1 ? <h2>There is no order available right now...</h2> : pendingList?.map((ele, idx) => {
                                     return (
                                         // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                        <tr>
+                                        <tr key={idx}>
                                             <th scope="row">{ele?.project}</th>
                                             <td data-title="Released">{ele?.to_address?.user?.first_name}</td>
                                             <td data-title="Studio">{ele?.building_Type}</td>

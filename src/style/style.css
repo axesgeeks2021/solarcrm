@@ -2514,7 +2514,7 @@ input[type=file] {
   display: none;
 }
 
-label[for=file] {
+.file__label {
   width: 100%;
   display: grid;
   grid-auto-flow: column;
@@ -2529,7 +2529,7 @@ label[for=file] {
   transition: 0.4s;
   font-weight: 600;
 }
-label[for=file]:hover, label[for=file]:focus, label[for=file]:active {
+.file__label:hover, .file__label:focus, .file__label:active {
   background: var(--input-color);
   color: #fff;
 }

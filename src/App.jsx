@@ -87,6 +87,8 @@ function App() {
 
   const auth = JSON.parse(localStorage.getItem('auth'))
 
+  console.log('auth', auth?.user?.admin?.user?.user_type.toUpperCase())
+
   useEffect(() => {
     if (!cookies.Authorization) {
       locations.pathname === ("/login" && "/") ? navigate("/admin-dashboard") : navigate("*")
@@ -188,7 +190,7 @@ function App() {
     )
   }
 
-  if (auth?.user?.department === "team") {
+  if (auth?.user?.admin?.user?.user_type.toUpperCase() === 'TEAM') {
     return (
       <Routes>
         {/* {

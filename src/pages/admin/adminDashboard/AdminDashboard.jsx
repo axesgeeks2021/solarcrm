@@ -144,7 +144,7 @@ function AdminDashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
-                    console.log(result)
+                    console.log('user',result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -238,7 +238,7 @@ function AdminDashboard() {
                                 {
                                     userList?.data?.map((ele, idx) => {
                                         return(
-                                            <option value={ele} key={idx}>{ele}</option>
+                                            <option value={ele?.project} key={idx}>{ele?.project} -  {ele?.name}</option>
                                         )
                                     })
                                 }

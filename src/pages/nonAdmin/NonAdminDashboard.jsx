@@ -112,6 +112,7 @@ function NonAdminDashboard() {
 
     const getDetails = async () => {
         const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
+        console.log(requestInverter)
         return setInverterList(requestInverter)
     }
 
@@ -332,7 +333,7 @@ function NonAdminDashboard() {
                             ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
                                 return (
                                     // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                    <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }}>
+                                    <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
                                         <th scope="row">{ele.project}</th>
                                         <td data-title="Released">{ele?.customer_name}</td>
                                         <td data-title="Studio">{ele?.panels_quantity}</td>
@@ -406,15 +407,15 @@ function NonAdminDashboard() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
-                            <UploadFile label="Packing Slip" onchange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
+                            <UploadFile id="packing" label="Packing Slip" onchange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <UploadFile label="Western Power" onchange={e => setweternPowerFile(e.target.files[0])} width="100%" />
-                            <UploadFile label="Switch Board" onchange={e => setswitchBoardFile(e.target.files[0])} width="100%" />
+                            <UploadFile id="wester" label="Western Power" onchange={e => setweternPowerFile(e.target.files[0])} width="100%" />
+                            <UploadFile id="switch" label="Switch Board" onchange={e => setswitchBoardFile(e.target.files[0])} width="100%" />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <UploadFile label="Panels Layout" onchange={e => setpanelLayoutFile(e.target.files[0])} width="100%" />
-                            <UploadFile label="Extras" onchange={e => setextrasFile(e.target.files[0])} width="100%" />
+                            <UploadFile id="panels" label="Panels Layout" onchange={e => setpanelLayoutFile(e.target.files[0])} width="100%" />
+                            <UploadFile id="extras" label="Extras" onchange={e => setextrasFile(e.target.files[0])} width="100%" />
                         </div>
                         {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                              <FormInput placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
@@ -443,7 +444,7 @@ function NonAdminDashboard() {
                             {
                                 panelList.map((ele, idx) => {
                                     return(
-                                        <option key={idx} value={ele?.code}>{ele?.code}</option>
+                                        <option key={idx} value={ele?.id}>{ele?.code}</option>
                                     )
                                 })
                             }
@@ -452,11 +453,11 @@ function NonAdminDashboard() {
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
                             <select value={selectedInverter} onChange={e => setSelectedInverter(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
-                                <option value="Select Inverter" selected disabled>Select Inverter</option>
+                                <option value="Select Inverter" selected>Select Inverter</option>
                                 {
                                     inverterList && inverterList.map((ele, idx) => {
                                         return (
-                                            <option value={ele?.code} key={idx}>{ele?.code}</option>
+                                            <option value={ele?.id} key={idx}>{ele?.code}</option>
                                         )
                                     })
                                 }
@@ -473,7 +474,7 @@ function NonAdminDashboard() {
                                 {
                                     batteryList.map((ele, idx) => {
                                         return (
-                                            <option key={idx}>{ele?.code}</option>
+                                            <option key={idx} value={ele?.id}>{ele?.code}</option>
                                         )
                                     })
                                 }
@@ -490,4 +491,4 @@ function NonAdminDashboard() {
     )
 }
 
-export default NonAdminDashboard
+export default NonAdminDashboard    

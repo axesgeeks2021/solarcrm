@@ -6,9 +6,12 @@ import { Multiselect } from "multiselect-react-dropdown";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
 
 function PreSiteRiskAssessment() {
   const [cookies] = useCookies();
+
+  const location = useLocation()
 
   const [checkHazards, setCheckHazards] = useState(false);
   const [checkRoof, setCheckRoof] = useState(false);
@@ -60,36 +63,48 @@ function PreSiteRiskAssessment() {
     setFile(e.target.files[0]);
   };
 
-  const getRiskData = async () => {
-    const formdata = new FormData();
-    formdata.append("approximate_age", range);
-    formdata.append("hazards", convertValue(checkHazards));
-    formdata.append("select_hazards", selectHazards);
-    formdata.append("roof_structure", selectRoofValue);
-    formdata.append("document_attachment", document);
-    formdata.append("moss", convertValue(checkRoof));
-    formdata.append("moss_comment", mossComment);
-    formdata.append("high_tension", convertValue(checkTension));
-    formdata.append("high_tension_attachment", file);
-    formdata.append("damaged_severley", convertValue(checkDamaged));
-    formdata.append("any_damage", convertValue(checkExposed));
-    formdata.append("vehicle_activities", convertValue(checkVehicle));
-    formdata.append("asbestos_presence", convertValue(checkPresence));
-    formdata.append("safety_concerns", convertValue(checkConcerns));
-    formdata.append("safety_concerns_comment", safetyComment);
+  const getRiskData = () => {
 
-    const res = await axios.put(
-      "https://solar365.co.in/presite_risk/1/",
-      formdata,
-      {
-        headers: {
-          Authorization: `Token ${cookies.Authorization}`,
-        },
-      }
-    );
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=ffv5SBCT3rpgiaHd0K3aVmWClCzflJMw; sessionid=b0ybmwwag66c50h1yuezwz8ck6c7uvnf");
 
-    const data = await res.data;
-    toast.success("Your assessment has been submitted successfully");
+      const formdata = new FormData();
+      formdata.append("approximate_age", range);
+      formdata.append("hazards", convertValue(checkHazards));
+      formdata.append("select_hazards", selectHazards);
+      formdata.append("roof_structure", selectRoofValue);
+      formdata.append("moss", convertValue(checkRoof));
+      formdata.append("moss_comment", mossComment);
+      formdata.append("high_tension", convertValue(checkTension));
+      formdata.append("damaged_severley", convertValue(checkDamaged));
+      formdata.append("any_damage", convertValue(checkExposed));
+      formdata.append("vehicle_activities", convertValue(checkVehicle));
+      formdata.append("asbestos_presence", convertValue(checkPresence));
+      formdata.append("safety_concerns", convertValue(checkConcerns));
+      formdata.append("safety_concerns_comment", safetyComment);
+
+      const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch(`https://solar365.co.in/update_presite/${location?.state?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          if (result) {
+            return toast.success("Your assessment has been submitted successfully");
+          }
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+    
   };
 
   return (

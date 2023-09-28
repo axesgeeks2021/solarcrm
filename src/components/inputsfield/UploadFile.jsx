@@ -1,14 +1,14 @@
 import React from 'react';
 import {AiOutlineCloudUpload} from 'react-icons/ai'
 
-function UploadFile({label,width, onchange}) {
+function UploadFile({label,width,onchange, name, id}) {
     return (
         <>
-            <div className="file" style={{width: width, display: 'flex' }}>
-                <label htmlFor="file">{label}
+            <div className="file my-1" style={{width: width, display: 'flex' }}>
+                <label htmlFor={id} className='file__label'>{label}
                     <AiOutlineCloudUpload size={15} />
                 </label>
-                <input id="file" type="file" onChange={onchange} />
+                <input id={id} name={name} type="file" onChange={onchange} multiple />
             </div>
         </>
     )

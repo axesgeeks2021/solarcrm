@@ -6,7 +6,7 @@ function WarrantyListing({ document }) {
       <li>
         <span>{document.data?.warranty?.battery_brands}</span>
         <a
-          href={`http://3.111.192.129:8000/${document.data?.install_docs?.battery_docs}`}
+          href={`https://solar365.co.in/${document.data?.install_docs?.battery_docs}`}
           download
         >
           Download
@@ -15,7 +15,7 @@ function WarrantyListing({ document }) {
       <li>
         <span>{document.data?.warranty?.inverter_brands}</span>
         <a
-          href={`http://3.111.192.129:8000/${document.data?.warranty?.inverter_docs}`}
+          href={`https://solar365.co.in/${document.data?.warranty?.inverter_docs}`}
           download
         >
           Download
@@ -24,7 +24,7 @@ function WarrantyListing({ document }) {
       <li>
         <span>{document.data?.warranty?.panels_brands}</span>
         <a
-          href={`http://3.111.192.129:8000/${document.data?.warranty?.panels_docs}`}
+          href={`https://solar365.co.in/${document.data?.warranty?.panels_docs}`}
           download
         >
           Download

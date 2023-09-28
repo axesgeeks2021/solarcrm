@@ -38,7 +38,7 @@ function AssignedJobs() {
     }
 
     const gotNextPage = (data) => {
-        return navigate('update-orders', {data: data})
+        return navigate('update-orders', {state: {data}})
     }
 
     useEffect(() => {

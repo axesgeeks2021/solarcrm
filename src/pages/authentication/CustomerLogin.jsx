@@ -123,7 +123,7 @@ function Login() {
             onSubmit={getLogin}
           >
           <select value={urlParams} onChange={e => setUrlParams(e.target.value)} style={{width: '100%', border: '2px solid #CDD9ED', padding: '5px 0'}} required>
-          <option defaultChecked >Select User Type</option>
+          <option defaultChecked>Select User Type</option>
             <option value="ADMIN">Admin</option>
             <option value="NON_ADMIN">Non Admin</option>
             <option value="CUSTOMER">Customer</option>
