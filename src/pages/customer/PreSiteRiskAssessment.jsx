@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../../components/heading/Heading";
 import PageHeading from "../../components/heading/PageHeading";
 
@@ -6,12 +6,12 @@ import { Multiselect } from "multiselect-react-dropdown";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PreSiteRiskAssessment() {
   const [cookies] = useCookies();
-
   const location = useLocation()
+  const navigate = useNavigate()
 
   const [checkHazards, setCheckHazards] = useState(false);
   const [checkRoof, setCheckRoof] = useState(false);
@@ -97,15 +97,45 @@ function PreSiteRiskAssessment() {
         .then(result => {
           console.log(result)
           if (result) {
-            return toast.success("Your assessment has been submitted successfully");
+            toast.success("Your assessment has been submitted successfully");
+            // return navigate('/')
           }
         })
         .catch(error => console.log('error', error));
     } catch (error) {
       console.log(error)
     }
-    
+
   };
+
+  const fetchOrder = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ; sessionid=gxzztx05okbwr01oti653d1rovjsx37z");
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`https://solar365.co.in/order/${location?.state?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    const subscribe = fetchOrder()
+
+    return () => [subscribe]
+  })
 
   return (
     <>

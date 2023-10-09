@@ -79,7 +79,7 @@ function RegisterTeam() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
+            // formdata.append("profile_pic", file);
             formdata.append("address", address);
             formdata.append("alternate_phone", alternatephone);
             formdata.append("department", selectedDepartment);
@@ -131,9 +131,9 @@ function RegisterTeam() {
                             postcode: "",
                             country: ""
                         })
-                        setFile()
-                        setFile2()
-                        setFile3()
+                        setFile(null)
+                        setFile2(null)
+                        setFile3(null)
                         setShowForm(false)
                         return fetchData()
                     }

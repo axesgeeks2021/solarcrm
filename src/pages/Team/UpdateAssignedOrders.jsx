@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import Line from '../../components/heading/Line';
@@ -14,6 +14,7 @@ function UpdateAssignedOrders() {
     const [cookies] = useCookies()
     const data = useLocation()
 
+    const [orderDetails, setOrderDetails] = useState({})
     const [showState, setShowState] = useState(false)
     const [showPresite, setShowPresite] = useState(false)
     const [showMeter, setShowMeter] = useState(false)
@@ -45,17 +46,30 @@ function UpdateAssignedOrders() {
         setSelectDate({ ...selectDate, [e.target.name]: e.target.value })
     }
 
+    function isDateBeforeToday(date) {
+        if(new Date(date.toDateString()) < new Date(new Date().toDateString())){
+                return alert('wornfg')
+        };
+    }
+
     const fetchUpdateGrid = (e) => {
         e.preventDefault()
+
+        if(new Date(meterDate).valueOf() < new Date().valueOf()){
+            return alert('Please select valid date!')
+        }
+        if(new Date(meterApproveDate).valueOf() < new Date().valueOf()){
+            return alert('Please select valid date!')
+        }
         try {
-            const id = toast.loading('Please wait....')
+            // const id = toast.loading('Please wait....')
             setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
             const formdata = new FormData();
-            formdata.append("meter_date", meterDate);
-            formdata.append("meter_Approved_date", meterApproveDate);
+            formdata.append("meter_date",orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date);
+            formdata.append("meter_Approved_date",orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date);
             formdata.append("energy_provider", "Energy");
 
             const requestOptions = {
@@ -65,21 +79,21 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_grid/${data?.state?.data?.id}/`, requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    setLoading(false)
-                    if (result) {
-                        setSelectDate({
-                            meterApproveDate: '',
-                            meterDate: ''
-                        })
-                        setShowState(false)
-                        toast.update(id, { render: 'Grid Information updated...', type: 'success', isLoading: false, autoClose: true })
-                        console.log(result)
-                    }
-                })
-                .catch(error => console.log('error', error));
+            // fetch(`https://solar365.co.in/update_grid/${data?.state?.data?.id}/`, requestOptions)
+            //     .then(response => response.json())
+            //     .then(result => {
+            //         setLoading(false)
+            //         if (result) {
+            //             setSelectDate({
+            //                 meterApproveDate: '',
+            //                 meterDate: ''
+            //             })
+            //             setShowState(false)
+            //             toast.update(id, { render: 'Grid Information updated...', type: 'success', isLoading: false, autoClose: true })
+            //             console.log(result)
+            //         }
+            //     })
+            //     .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -198,6 +212,36 @@ function UpdateAssignedOrders() {
             console.log(error)
         }
     }
+
+    const fetchOrder = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ; sessionid=gxzztx05okbwr01oti653d1rovjsx37z");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(`https://solar365.co.in/order/${data?.state?.data?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setOrderDetails(result)
+                    console.log('order',result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        const subscribe = fetchOrder()
+    
+        return () => [subscribe]
+      },[])
 
     return (
         <>

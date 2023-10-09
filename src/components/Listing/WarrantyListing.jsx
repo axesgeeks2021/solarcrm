@@ -22,7 +22,7 @@ function WarrantyListing({ document }) {
         </a>
       </li>
       <li>
-        <span>{document.data?.warranty?.panels_brands}</span>
+        <span>{document. data?.warranty?.panels_brands}</span>
         <a
           href={`https://solar365.co.in/${document.data?.warranty?.panels_docs}`}
           download

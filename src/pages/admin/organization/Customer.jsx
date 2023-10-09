@@ -65,7 +65,7 @@ function Customer() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
+            // formdata.append("profile_pic", file);
             formdata.append("alternate_phone", alternatephone);
             formdata.append("looking_for", lookingfor);
             formdata.append("project_capacity", projectcapacity);
@@ -96,6 +96,30 @@ function Customer() {
               .then(response => response.json())
               .then(result => {
                 console.log(result)
+                setValue({
+                    firstname: "",
+                    lastname: "",
+                    phone: "",
+                    email: "",
+                    alternatephone: "",
+                    lookingfor: "",
+                    projectcapacity: "",
+                    utilitybill: "",
+                    assignto: "",
+                    supply: "",
+                    rooftype: "",
+                    floor: "",
+                    remarks: "",
+                    buyingoptions: "",
+                    followsup1: "",
+                    followsup2: "",
+                    street: "",
+                    state: "",
+                    addressline: "",
+                    city: "",
+                    postcode: "",
+                    country: ""
+                })
                 setShowForm(false)
                 return fetchData()
               } )

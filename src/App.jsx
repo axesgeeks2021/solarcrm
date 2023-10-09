@@ -87,7 +87,6 @@ function App() {
 
   const auth = JSON.parse(localStorage.getItem('auth'))
 
-  console.log('auth', auth?.user?.admin?.user?.user_type.toUpperCase())
 
   useEffect(() => {
     if (!cookies.Authorization) {

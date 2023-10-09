@@ -8,6 +8,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 
 
@@ -52,13 +53,13 @@ function RegisterNonAdmin() {
     const registerNonAdmin = async (e) => {
         e.preventDefault()
         try {
-
+            const loadingId = toast.loading("Please wait....")
             const formdata = new FormData()
             formdata.append("first_name", firstname)
             formdata.append("last_name", lastname)
             formdata.append("phone", phone)
             formdata.append("email", email)
-            formdata.append("profile_pic", file)
+            // formdata.append("profile_pic", file)
             formdata.append("address", address)
             formdata.append("alternate_phone", alternatephone)
             formdata.append("abnnumber", abnnumber)
@@ -82,10 +83,30 @@ function RegisterNonAdmin() {
                 body: formdata
             })
 
+            
             const data = await res.json()
-
+            if(data?.messsage === 'Success'){
+                setValue({
+                    firstname: "",
+                    lastname: "",
+                    phone: "",
+                    email: "",
+                    address: "",
+                    alternatephone: "",
+                    abnnumber: "",
+                    acnnumber: "",
+                    companyname: "",
+                    addressline: "",
+                    city: "",
+                    state: "",
+                    street: "",
+                    postcode: "",
+                    country: ""
+                })
+                toast.update(loadingId, {render: "Non Admin Created Successfully...", isLoading: false, type: 'success', autoClose: true})
+                return fetchData()
+            }
             console.log(data)
-            return fetchData()
         } catch (error) {
             console.log(error)
         }

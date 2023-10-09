@@ -53,6 +53,7 @@ function RegisterTeam() {
     const registerTeam = async (e) => {
         e.preventDefault()
         try {
+            const loadingId = toast.loading('Please Wait')
             setLoading(true)
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -62,7 +63,7 @@ function RegisterTeam() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
+            // formdata.append("profile_pic", file);
             formdata.append("alternate_phone", alternatephone);
             formdata.append("department", department);
             formdata.append("description", description);
@@ -86,7 +87,7 @@ function RegisterTeam() {
                 .then(result => {
                     setLoading(false)
                     if(result.messsage === "Success"){
-                        toast.success('Team member created successfully')
+                        toast.update(loadingId, {render: "Team member created successfully", autoClose: true, isLoading: false, type: 'success'})
                         setShowForm(false)
                         setValue({
                             addressline: "",
@@ -107,10 +108,10 @@ function RegisterTeam() {
                         return fetchData()
                     }
 
-                    // if(result.error === true){
-                    //     setLoading(false)
-                    //     return toast.warning(result.errors.user_errors.email[0])
-                    // }
+                    if(result.error === true){
+                        setLoading(false)
+                        return toast.update(loadingId, {render: "Please Try Again!", isLoading: false, autoClose: true, type: 'success'})
+                    }
                     console.log(result)
                 })
                 .catch(error => console.log('error', error));
