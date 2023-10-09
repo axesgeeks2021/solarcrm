@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import UploadFile from '../../../components/inputsfield/UploadFile';
 
 
 
@@ -70,6 +71,7 @@ function RegisterTeam() {
     const registerTeam = async (e) => {
         e.preventDefault();
         try {
+            console.log('registered team')
             const loadingToast = toast.loading('Please wait')
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -104,9 +106,10 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/register/?user_type=INSTALLER", requestOptions)
+            fetch(`https://solar365.co.in/register/?user_type=INSTALLER`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('installer result',result)
                     if (result.messsage === 'Success') {
                         toast.update(loadingToast, { render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true })
                         setValue({
@@ -136,6 +139,10 @@ function RegisterTeam() {
                         setFile3(null)
                         setShowForm(false)
                         return fetchData()
+                    }
+
+                    if(result.error){
+                        return toast.update(loadingToast, { render: 'Please Try again...', type: 'warning', isLoading: false, autoClose: true })
                     }
                 })
                 .catch(error => console.log('error', error));
@@ -207,6 +214,22 @@ function RegisterTeam() {
                             )
                         })
                     }
+                    {
+                        installerList?.Electrician?.map((ele, idx) => {
+                            return (
+                                <Link key={idx} to="/installer-profile">
+                                    <li className="table-row" >
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    </li>
+                                </Link>
+                            )
+                        })
+                    }
                 </ul>
             </div>
             {
@@ -238,10 +261,12 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <FormInput placeholder="Ec_file" onChange={handlefile2} type="file" />
+                            <UploadFile width="100%" label="Ec File" id="ecfile" name="ecfile" onchange={handlefile2} />
                             <FormInput placeholder="Ec_number..." onChange={handleChange} value={ecnumber} name="ecnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <FormInput placeholder="El_file..." onChange={handlefile3} type="file" />
+                            <UploadFile width="100%" label="EL File" id="elfile" name="elfile" onchange={handlefile3} />
                             <FormInput placeholder="El_number..." onChange={handleChange} value={elnumber} name="elnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
