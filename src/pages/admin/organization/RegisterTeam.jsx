@@ -9,6 +9,7 @@ import Loading from '../../../components/loading/Loading';
 
 import { useCookies } from "react-cookie";
 import { toast } from 'react-toastify';
+import UploadFile from '../../../components/inputsfield/UploadFile';
 
 
 function RegisterTeam() {
@@ -86,8 +87,8 @@ function RegisterTeam() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    if(result.messsage === "Success"){
-                        toast.update(loadingId, {render: "Team member created successfully", autoClose: true, isLoading: false, type: 'success'})
+                    if (result.messsage === "Success") {
+                        toast.update(loadingId, { render: "Team member created successfully", autoClose: true, isLoading: false, type: 'success' })
                         setShowForm(false)
                         setValue({
                             addressline: "",
@@ -103,14 +104,14 @@ function RegisterTeam() {
                             phone: '',
                             postcode: '',
                             state: '',
-                            street:''
+                            street: ''
                         })
                         return fetchData()
                     }
 
-                    if(result.error === true){
+                    if (result.error === true) {
                         setLoading(false)
-                        return toast.update(loadingId, {render: "Please Try Again!", isLoading: false, autoClose: true, type: 'success'})
+                        return toast.update(loadingId, { render: "Please Try Again!", isLoading: false, autoClose: true, type: 'success' })
                     }
                     console.log(result)
                 })
@@ -189,7 +190,7 @@ function RegisterTeam() {
             </div>
             {
                 showForm &&
-                <div style={{ width: "95%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column' , position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.3), -2px -2px 10px 2px rgba(0,0,0,0.3)'}}>
+                <div style={{ width: "95%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column', position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.3), -2px -2px 10px 2px rgba(0,0,0,0.3)' }}>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', background: 'white' }}>
                         <Heading heading="Create or Register Team" size="36px" weight="600" />
                     </div>
@@ -204,14 +205,19 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <FormInput placeholder="Profile Photo..." type="file" onChange={handlefile} />
+                            <UploadFile label="Profile Photo" id="profilephoto" onchange={handlefile} width="100%" />
                             <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Department..." onChange={handleChange} value={department} name="department" />
+                            <select value={department} name="department" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option>Select Type</option>
+                                <option>Staff</option>
+                                <option>Manager</option>
+                            </select>
                             <FormInput placeholder="Description..." onChange={handleChange} value={description} name="description" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" />
+                            {/*<FormInput placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" />*/}
                             <FormInput placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
@@ -227,7 +233,7 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit" />
-                            <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
+                            <Button title="Close" background="lightgray" onclick={() => setShowForm(false)} margin="0 10px" />
                         </div>
                     </form>
                 </div>

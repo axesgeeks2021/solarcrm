@@ -36,8 +36,6 @@ function Dashboard() {
             setOrderId(orderId)
             setModal(true)
             return
-            // return alert('')
-            // return alert('Please select 1 Electrician and 2 Installer')
         }
     }
 

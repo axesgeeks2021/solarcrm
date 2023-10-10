@@ -98,7 +98,7 @@ function PreSiteRiskAssessment() {
           console.log(result)
           if (result) {
             toast.success("Your assessment has been submitted successfully");
-            // return navigate('/')
+            return navigate('/')
           }
         })
         .catch(error => console.log('error', error));

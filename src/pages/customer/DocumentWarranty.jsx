@@ -14,8 +14,6 @@ function DocumentWarranty() {
 
   const document = useSelector((state) => state.documentWarranty);
 
-  console.log('warranty', document)
-
   const [cookies] = useCookies();
 
   useEffect(() => {

@@ -18,17 +18,12 @@ import UploadFile from '../../../components/inputsfield/UploadFile';
 function RegisterTeam() {
 
     const [cookies] = useCookies();
-
     const [installerList, setInstallerList] = useState([])
-
     const [showForm, setShowForm] = useState(false)
-
     const [file, setFile] = useState()
     const [file2, setFile2] = useState()
     const [file3, setFile3] = useState()
-
     const [selectedDepartment, setSelectedDepartment] = useState('')
-
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -109,7 +104,6 @@ function RegisterTeam() {
             fetch(`https://solar365.co.in/register/?user_type=INSTALLER`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log('installer result',result)
                     if (result.messsage === 'Success') {
                         toast.update(loadingToast, { render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true })
                         setValue({
@@ -189,6 +183,11 @@ function RegisterTeam() {
             </div>
             <div style={{ width: '100%', padding: '20px 10px' }}>
                 <Button title="Create New Installer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
+                <select style={{background: 'green', padding: '10px 10px', margin: '0 10px', borderRadius: '5px', color: 'white'}}> 
+                    <option disabled selected>Filter</option>
+                    <option>Installer</option>
+                    <option>Electrician</option>
+                </select>
                 <ul className="responsive-table">
                     <li className="table-header">
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
@@ -207,7 +206,7 @@ function RegisterTeam() {
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.department}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
                                     </li>
                                 </Link>
@@ -223,7 +222,7 @@ function RegisterTeam() {
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.department}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
                                     </li>
                                 </Link>

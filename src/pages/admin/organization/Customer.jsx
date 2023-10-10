@@ -7,6 +7,8 @@ import Heading from "../../../components/heading/Heading"
 import AdminSideNavigation from '../menu/AdminSideNavigation';
 import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
+import UploadFile from '../../../components/inputsfield/UploadFile';
+import Dropdown from 'react-multilevel-dropdown'
 
 function Customer() {
 
@@ -15,9 +17,11 @@ function Customer() {
     const [showForm, setShowForm] = useState(false)
 
     const [customerList, setCustomerList] = useState([])
+    const [installerList, setInstallerList] = useState({})
 
-    const [file, setFile] = useState()
-
+    const [file, setFile] = useState(null)
+    const [selectedValue, setSelectedValue] = useState([])
+    const [othersBoolean, setOtherBoolean] = useState(false)
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -37,21 +41,36 @@ function Customer() {
         followsup2: "",
         street: "",
         state: "",
-        addressline: "",
         city: "",
+        addressline: "",
         postcode: "",
-        country: ""
+        country: "Australia"
     })
 
-    const {firstname, lastname, phone, email,  alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, city, country, postcode, state, street} = value
+    const { firstname, lastname, phone, email, city, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, country, postcode, state, street } = value
 
     const handleChange = e => {
-        setValue({...value, [e.target.name]: e.target.value})
+        setValue({ ...value, [e.target.name]: e.target.value })
+        if (rooftype === 'Others') {
+            return setOtherBoolean(true)
+        }
     }
 
     const handlefile = e => {
         setFile(e.target.files[0])
     }
+
+    const handleSelectInstaller = (userId) => {
+
+        let installerElectricianId = [...selectedValue, userId]
+        setSelectedValue(installerElectricianId)
+        if(installerElectricianId.length > 2){
+            let arrayToString = installerElectricianId.toString().split(',').join(', ')
+            setSelectedValue(arrayToString)
+            return
+        }
+    }
+
 
     const registerCustomer = async (e) => {
         e.preventDefault()
@@ -59,7 +78,7 @@ function Customer() {
 
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
-            
+
             let formdata = new FormData();
             formdata.append("first_name", firstname);
             formdata.append("last_name", lastname);
@@ -70,7 +89,7 @@ function Customer() {
             formdata.append("looking_for", lookingfor);
             formdata.append("project_capacity", projectcapacity);
             formdata.append("utility_bill", utilitybill);
-            formdata.append("assign_to", assignto);
+            formdata.append("assign_to", selectedValue);
             formdata.append("supply", supply);
             formdata.append("roof_type", rooftype);
             formdata.append("floor", floor);
@@ -84,46 +103,46 @@ function Customer() {
             formdata.append("city", city);
             formdata.append("postcode", postcode);
             formdata.append("country", country);
-            
+
             let requestOptions = {
-              method: 'POST',
-              headers: myHeaders,
-              body: formdata,
-              redirect: 'follow'
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
             };
-            
+
             fetch("https://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                console.log(result)
-                setValue({
-                    firstname: "",
-                    lastname: "",
-                    phone: "",
-                    email: "",
-                    alternatephone: "",
-                    lookingfor: "",
-                    projectcapacity: "",
-                    utilitybill: "",
-                    assignto: "",
-                    supply: "",
-                    rooftype: "",
-                    floor: "",
-                    remarks: "",
-                    buyingoptions: "",
-                    followsup1: "",
-                    followsup2: "",
-                    street: "",
-                    state: "",
-                    addressline: "",
-                    city: "",
-                    postcode: "",
-                    country: ""
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    setValue({
+                        firstname: "",
+                        lastname: "",
+                        phone: "",
+                        email: "",
+                        alternatephone: "",
+                        lookingfor: "",
+                        projectcapacity: "",
+                        utilitybill: "",
+                        assignto: "",
+                        supply: "",
+                        rooftype: "",
+                        floor: "",
+                        remarks: "",
+                        buyingoptions: "",
+                        followsup1: "",
+                        followsup2: "",
+                        street: "",
+                        state: "",
+                        addressline: "",
+                        city: "",
+                        postcode: "",
+                        country: ""
+                    })
+                    setShowForm(false)
+                    return fetchData()
                 })
-                setShowForm(false)
-                return fetchData()
-              } )
-              .catch(error => console.log('error', error));
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -134,130 +153,282 @@ function Customer() {
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
-            
-            
+
+
             const requestOptions = {
-              method: 'GET',
-              headers: myHeaders,
-              redirect: 'follow'
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
             };
-            
+
             fetch("https://solar365.co.in/get_customer_profile/", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                console.log(result)
-                setCustomerList(result)
-            })
-              .catch(error => console.log('error', error));
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    setCustomerList(result)
+                })
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
     }
 
+    const fetchGetInstaller = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setInstallerList(result)
+
+                    console.log('list of installler', result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getDetails = async () => {
+        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
+        return setInverterList(requestInverter)
+    }
+
+    const getBatteryDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setBatteryList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getPanelDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setPanelList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     useEffect(() => {
         const subscribe = fetchData()
+        const subscribe2 = fetchGetInstaller()
 
-        return () => subscribe
+        return () => [subscribe, subscribe2]
     }, [])
 
 
-  return (
-    <>
-        <div style={{width: "100%", display: 'flex', justifyContent: 'center'}} >
-            <div>
-                <AdminSideNavigation />
+    return (
+        <>
+            <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
+                <div>
+                    <AdminSideNavigation />
+                </div>
+                <div style={{ width: '100%', padding: '20px 10px' }}>
+                    <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
+                    <ul className="responsive-table">
+                        <li className="table-header">
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
+                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
+                        </li>
+                        {
+                            customerList?.map((ele, idx) => {
+                                return (
+                                    <li className="table-row" key={idx}>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.city} / {ele?.to_address?.state}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
+                {
+                    showForm &&
+                    <div style={{ width: "100%", display: 'flex', position: 'absolute', background: 'white', justifyContent: "center", alignItems: 'center', flexDirection: 'column' }}>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                            <Heading heading="Create or Register Customer" size="36px" weight="600" />
+                        </div>
+                        <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
+                                <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                                <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                                <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
+                                <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
+                                <FormInput placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
+                                <Dropdown
+                                    title='Assign To'
+                                >
+                                    <Dropdown.Item
+                                    >
+                                        Electrician
+                                        <Dropdown.Submenu>
+                                            {
+                                                installerList?.Electrician?.map((eles, idx) => {
+                                                    return (
+                                                        <Dropdown.Item key={idx} onClick={() => handleSelectInstaller(eles?.admin?.user?.id)}>
+                                                            {
+                                                                eles?.admin?.user?.first_name
+                                                            }
+                                                        </Dropdown.Item>
+                                                    )
+                                                })
+                                            }
+                                        </Dropdown.Submenu>
+                                    </Dropdown.Item>
+                                    <Dropdown.Item >
+                                        Installer
+                                        <Dropdown.Submenu>
+                                            {
+                                                installerList?.Installer?.map((eles, idx) => {
+                                                    return (
+                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id)}>
+                                                            {
+                                                                eles?.admin?.user?.first_name
+                                                            }
+                                                        </Dropdown.Item>
+                                                    )
+                                                })
+                                            }
+                                        </Dropdown.Submenu>
+                                    </Dropdown.Item>
+                                </Dropdown>
+                                {/*<FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />*/}
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={supply} onChange={handleChange}  >
+                                    <option>Select Supply</option>
+                                    <option value="Single Phase">Single Phase</option>
+                                    <option value="Double Phase">Double Phase</option>
+                                    <option value="Three Phase">Three Phase</option>
+                                </select>
+                                <select name='rooftype' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={rooftype} onChange={handleChange}  >
+                                    <option>Select Roof Type</option>
+                                    <option value="Tin">Tin</option>
+                                    <option value="Tilt">Tilt</option>
+                                    <option value="Tile">Tile</option>
+                                    <option value="Colorbond">Colorbond</option>
+                                    <option value="Others">
+                                        Others
+                                    </option>
+                                </select>
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={floor} onChange={handleChange}  >
+                                    <option>Select Floor Type</option>
+                                    <option value="Ground Floor">Ground Floor</option>
+                                    <option value="First Floor">First Floor</option>
+                                    <option value="Second Floor">Second Floor</option>
+                                    <option value="More">More</option>
+                                </select>
+                                <FormInput placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={buyingoptions} onChange={handleChange}  >
+                                    <option>Choose Buying Option</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="Paypal">Paypal</option>
+                                    <option value="Online Transfer">Online Transfer</option>
+                                </select>
+                                <select name='followsup1' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={followsup1} onChange={handleChange}  >
+                                    <option>Select Lead Type</option>
+                                    <option value="Facebook">Facebook</option>
+                                    <option value="Google">Google</option>
+                                    <option value="Direct Call">Direct Call</option>
+                                    <option value="Refrence">Refrence</option>
+                                </select>
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
+                                <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
+                                <FormInput placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
+                                    <option selected>Select State</option>
+                                    <option value="Queensland">Queensland</option>
+                                    <option value="New South Wales">New South Wales</option>
+                                    <option value="Victoria">Victoria</option>
+                                    <option value="Western Australia">Western Australia</option>
+                                </select>
+                                <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <Button title="Submit" background="orange" type="submit" />
+                                <Button title="Close" background="lightgray" onclick={() => setShowForm(false)} margin="0 10px" />
+                            </div>
+                        </form>
+                    </div>
+                }
             </div>
-            <div style={{ width: '100%', padding: '20px 10px' }}>
-                <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
-                <ul className="responsive-table">
-                    <li className="table-header">
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
-                    </li>
-                    {
-                        customerList?.map((ele, idx) => {
-                            return (
-                                <li className="table-row" key={idx}>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.city} / {ele?.to_address?.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele?.to_address?.user?.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
-            {
-                showForm && 
-            <div  style={{width: "100%", display: 'flex',position: 'absolute', background: 'white',  justifyContent: "center", alignItems: 'center', flexDirection: 'column'}}>
-            <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center'}}>
-                <Heading heading="Create or Register Customer" size="36px" weight="600"/>
-            </div>
-            <form style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center'}} onSubmit={registerCustomer}>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row'}}>
-                    <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname"/>
-                    <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone"/>
-                    <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                <FormInput placeholder="Enter your document file..." onChange={handlefile} type="file"/>
-                    <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor"/>
-                    <FormInput placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill"/>
-                    <FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Supply..." onChange={handleChange} value={supply} name="supply"/>
-                    <FormInput placeholder="Roof Type..." onChange={handleChange} value={rooftype} name="rooftype"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Floor..." onChange={handleChange} value={floor} name="floor"/>
-                    <FormInput placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Buying Options..." onChange={handleChange} value={buyingoptions} name="buyingoptions"/>
-                    <FormInput placeholder="Follows up 1..." onChange={handleChange} value={followsup1} name="followsup1"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2"/>
-                    <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="State..." onChange={handleChange} value={state} name="state"/>
-                    <FormInput placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="City..." onChange={handleChange} value={city} name="city"/>
-                    <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country"/>
-                </div>
-                <div style={{width: "100%", display: 'flex',  justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px'}}>
-                    <Button title="button" background="orange" type="submit"/>
-                    <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
-                </div>
-            </form>
-        </div>
-            }
-        </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default Customer

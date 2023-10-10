@@ -14,7 +14,7 @@ import Heading from '../../../components/heading/Heading'
 
 import FormInput from '../../../components/inputsfield/FormInput'
 
-import {BiLogOut} from "react-icons/bi"
+import { BiLogOut } from "react-icons/bi"
 
 
 
@@ -34,6 +34,10 @@ function AdminDashboard() {
     const [swmsDocFile, setSwmsDocFile] = useState(null)
     const [swmsFile, setSwmsFile] = useState(null)
     const [solar365File, setSolar365File] = useState(null)
+    const [inverterList, setInverterList] = useState([])
+    const [batteryList, setBatteryList] = useState([])
+    const [panelList, setPanelList] = useState([])
+
 
     const [text, setText] = useState({
         username: "",
@@ -91,7 +95,7 @@ function AdminDashboard() {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
-            
+
             var formdata = new FormData();
             formdata.append("username", username);
             formdata.append("system_Size", systemSize);
@@ -105,23 +109,23 @@ function AdminDashboard() {
             formdata.append("installation_Type", installationType);
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
-            formdata.append("other_component",otherComponent);
+            formdata.append("other_component", otherComponent);
             formdata.append("batteries", batteries);
             formdata.append("swms_doc", batteries);
             formdata.append("swms", batteries);
             formdata.append("solar365_docs", batteries);
-            
+
             var requestOptions = {
-              method: 'POST',
-              headers: myHeaders,
-              body: formdata,
-              redirect: 'follow'
+                method: 'POST',
+                headers: myHeaders,
+                body: formdata,
+                redirect: 'follow'
             };
-            
+
             fetch("https://solar365.co.in/order/", requestOptions)
-              .then(response => response.json())
-              .then(result => console.log(result))
-              .catch(error => console.log('error', error));
+                .then(response => response.json())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -144,7 +148,7 @@ function AdminDashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
-                    console.log('user',result)
+                    console.log('user', result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -152,17 +156,90 @@ function AdminDashboard() {
         }
     }
 
+    const getDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/inverter_module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setInverterList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getBatteryDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setBatteryList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getPanelDetails = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/module/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setPanelList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const logout = () => {
         removeCookies('Authorization')
-        return navigate ('/login')
+        return navigate('/login')
     }
 
 
     useEffect(() => {
         const subscribe = fetchOrder()
         const userSubscribe = getAllUserList()
+        const subscribe1 = getDetails()
+        const subscribe4 = getBatteryDetails()
+        const subscribe5 = getPanelDetails()
 
-        return () => subscribe, userSubscribe
+        return () => [subscribe, userSubscribe, subscribe1, subscribe4, subscribe5]
 
     }, [])
 
@@ -175,9 +252,9 @@ function AdminDashboard() {
         <div className='container-fluid' style={{ display: 'flex', flexDirection: 'row' }}>
             <div>
                 <AdminSideNavigation />
-                <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px'}}>
-                <BiLogOut />
-                <Button title="Logout" onclick={logout}/>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
+                    <BiLogOut />
+                    <Button title="Logout" onclick={logout} />
                 </div>
             </div>
             <div className="container py-5">
@@ -232,38 +309,75 @@ function AdminDashboard() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={createOrder}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <div style={{width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                            <select name='username' value={username} onChange={handleChange} style={{border: '2px solid gray', width: '95%', padding: '5px 0'}}>
-                                <option style={{textAlign: 'center'}} >Select User List</option>
+                            <div style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <select name='username' value={username} onChange={handleChange} style={{ border: '2px solid gray', width: '95%', padding: '5px 0' }}>
+                                    <option style={{ textAlign: 'center' }} >Select User List</option>
+                                    {
+                                        userList?.data?.map((ele, idx) => {
+                                            return (
+                                                <option value={ele?.project} key={idx}>{ele?.project} -  {ele?.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                            <div style={{ width: '50%' }}>
+                                {/* <FormInput placeholder="Username" value={username} name="username" onChange={handleChange} /> */}
+                                <FormInput placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
+                            </div>
+                        </div>
+                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                            <select value={buildingType} name="buildingType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                                <option>Select Floor Type</option>
+                                <option value="Ground Floor">Ground Floor</option>
+                                <option value="First Floor">First Floor</option>
+                                <option value="Second Floor">Second Floor</option>
+                                <option value="More">More</option>
+                            </select>
+                            <FormInput placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                        </div>
+                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                            <select value={panels} name="panels" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option defaultChecked>Select Panel</option>
                                 {
-                                    userList?.data?.map((ele, idx) => {
-                                        return(
-                                            <option value={ele?.project} key={idx}>{ele?.project} -  {ele?.name}</option>
+                                    panelList && panelList.map((ele, idx) => {
+                                        return (
+                                            <option key={idx} value={ele?.id}>{ele?.code}</option>
                                         )
                                     })
                                 }
                             </select>
-                            </div>
-                            <div style={{width: '50%'}}>
-                            {/* <FormInput placeholder="Username" value={username} name="username" onChange={handleChange} /> */}
-                            <FormInput placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
-                            </div>
+                            <select value={inverter} name="inverter" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option value="Select Inverter" selected>Select Inverter</option>
+                                {
+                                    inverterList && inverterList.map((ele, idx) => {
+                                        return (
+                                            <option value={ele?.id} key={idx}>{ele?.code}</option>
+                                        )
+                                    })
+                                }
+                            </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
-                            <FormInput placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Panels" value={panels} name="panels" onChange={handleChange} />
-                            <FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Roof Type" value={roofType} name="roofType" onChange={handleChange} />
+                            <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
+                                <option>Select Roof Type</option>
+                                <option value="Tin">Tin</option>
+                                <option value="Tilt">Tilt</option>
+                                <option value="Tile">Tile</option>
+                                <option value="Tile">Colorbond</option>
+                                <option value="Others">
+                                    Others
+                                </option>
+                            </select>
                             <FormInput placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
-                            <FormInput placeholder="Installation Type" value={installationType} name="installationType" onChange={handleChange} />
+                            <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
+                                <option>Select Installation Type</option>
+                                <option value="new">New</option>
+                                <option value="old">Old</option>
+                            </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
@@ -271,10 +385,19 @@ function AdminDashboard() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <FormInput placeholder="Other Component" value={otherComponent} name="otherComponent" onChange={handleChange} />
-                            <FormInput placeholder="Battries" value={batteries} name="batteries" onChange={handleChange} />
+                            <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                <option defaultChecked>Select Battery</option>
+                                {
+                                    batteryList.map((ele, idx) => {
+                                        return (
+                                            <option key={idx} value={ele?.id}>{ele?.code}</option>
+                                        )
+                                    })
+                                }
+                            </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
-                            <Button title="Submit" background="orange" color="white"  type="submit"/>
+                            <Button title="Submit" background="orange" color="white" type="submit" />
                             <Button title="Close" background="gray" color="white" onclick={() => setShowForm(false)} />
                         </div>
                     </form>

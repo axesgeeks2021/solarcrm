@@ -189,7 +189,7 @@ function App() {
     )
   }
 
-  if (auth?.user?.admin?.user?.user_type.toUpperCase() === 'TEAM') {
+  if (auth?.user?.admin?.user?.user_type === 'TEAM') {
     return (
       <Routes>
         {/* {

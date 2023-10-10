@@ -14,6 +14,7 @@ function UpdateAssignedOrders() {
     const [cookies] = useCookies()
     const data = useLocation()
 
+    const [todayDate, setTodayDate] = useState(new Date().toISOString().slice(0, 10))
     const [orderDetails, setOrderDetails] = useState({})
     const [showState, setShowState] = useState(false)
     const [showPresite, setShowPresite] = useState(false)
@@ -46,12 +47,6 @@ function UpdateAssignedOrders() {
         setSelectDate({ ...selectDate, [e.target.name]: e.target.value })
     }
 
-    function isDateBeforeToday(date) {
-        if(new Date(date.toDateString()) < new Date(new Date().toDateString())){
-                return alert('wornfg')
-        };
-    }
-
     const fetchUpdateGrid = (e) => {
         e.preventDefault()
 
@@ -62,7 +57,7 @@ function UpdateAssignedOrders() {
             return alert('Please select valid date!')
         }
         try {
-            // const id = toast.loading('Please wait....')
+            const id = toast.loading('Please wait....')
             setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -79,21 +74,21 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            // fetch(`https://solar365.co.in/update_grid/${data?.state?.data?.id}/`, requestOptions)
-            //     .then(response => response.json())
-            //     .then(result => {
-            //         setLoading(false)
-            //         if (result) {
-            //             setSelectDate({
-            //                 meterApproveDate: '',
-            //                 meterDate: ''
-            //             })
-            //             setShowState(false)
-            //             toast.update(id, { render: 'Grid Information updated...', type: 'success', isLoading: false, autoClose: true })
-            //             console.log(result)
-            //         }
-            //     })
-            //     .catch(error => console.log('error', error));
+            fetch(`https://solar365.co.in/update_grid/${data?.state?.data?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setLoading(false)
+                    if (result) {
+                        setSelectDate({
+                            meterApproveDate: '',
+                            meterDate: ''
+                        })
+                        setShowState(false)
+                        toast.update(id, { render: 'Grid Information updated...', type: 'success', isLoading: false, autoClose: true })
+                        console.log(result)
+                    }
+                })
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -166,7 +161,6 @@ function UpdateAssignedOrders() {
                     if (result) {
                         toast.update(id, { render: 'Meter Details updated...', type: 'success', isLoading: false, autoClose: true })
                         console.log(result)
-
                     }
                 })
                 .catch(error => console.log('error', error));
@@ -258,9 +252,9 @@ function UpdateAssignedOrders() {
                         <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
                                 <label>Meter Date</label>
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} />
+                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} min={todayDate}/>
                                 <label>Meter Approve Date</label>
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} />
+                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} min={todayDate}/>
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>

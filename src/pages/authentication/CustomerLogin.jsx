@@ -63,16 +63,16 @@ function Login() {
           setCookie("Authorization", result.token);
 
           localStorage.setItem('auth', JSON.stringify(result))
-          if (result.user?.user_type === 'CUSTOMER') {
+          if (result?.user?.user_type === 'CUSTOMER') {
             return navigate("/");
           }
-          if (result.user?.user_type === 'ADMIN') {
+          if (result?.user?.user_type === 'ADMIN') {
             return navigate("/admin");
           }
-          if (result.user?.admin?.user?.user_type === 'NON_ADMIN') {
+          if (result?.user?.admin?.user?.user_type === 'NON_ADMIN') {
             return navigate("/non-admin");
           }
-          if (result.user?.department === 'team') {
+          if (result?.user?.admin?.user?.user_type === 'TEAM') {
             return navigate("/team-dashboard");
           }
         })

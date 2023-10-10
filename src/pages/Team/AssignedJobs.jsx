@@ -28,7 +28,7 @@ function AssignedJobs() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    console.log(result)
+                    console.log('assingend',result)
                     setOrderList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -83,7 +83,7 @@ function AssignedJobs() {
                                                     {
                                                         ele?.assign_to?.map((ele, idx) => {
                                                             return (
-                                                                <p key={idx}>{ele?.user_type}</p>
+                                                                <p key={idx}>{ele?.first_name} {ele?.last_name}</p>
                                                             )
                                                         })
                                                     }
