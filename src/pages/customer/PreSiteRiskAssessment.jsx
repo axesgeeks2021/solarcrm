@@ -13,17 +13,19 @@ function PreSiteRiskAssessment() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [checkHazards, setCheckHazards] = useState(false);
-  const [checkRoof, setCheckRoof] = useState(false);
-  const [checkTension, setCheckTension] = useState(false);
-  const [checkDamaged, setCheckDamaged] = useState("false");
-  const [checkExposed, setCheckExposed] = useState("false");
-  const [checkVehicle, setCheckVehicle] = useState(false);
-  const [checkPresence, setCheckPresence] = useState(false);
-  const [checkConcerns, setCheckConcerns] = useState(false);
+  console.log('id', location.state.id)
 
-  const [mossComment, setMossComment] = useState("");
-  const [safetyComment, setSafetyComment] = useState("");
+  const [checkHazards, setCheckHazards] = useState("No");
+  const [checkRoof, setCheckRoof] = useState("No");
+  const [checkTension, setCheckTension] = useState("No");
+  const [checkDamaged, setCheckDamaged] = useState("No");
+  const [checkExposed, setCheckExposed] = useState("No");
+  const [checkVehicle, setCheckVehicle] = useState("No");
+  const [checkPresence, setCheckPresence] = useState("No");
+  const [checkConcerns, setCheckConcerns] = useState("No");
+
+  const [mossComment, setMossComment] = useState("No");
+  const [safetyComment, setSafetyComment] = useState("No");
 
   const [hazards] = useState([
     "Pets",
@@ -37,8 +39,12 @@ function PreSiteRiskAssessment() {
   const [selectHazards, setSelectHazards] = useState([]);
 
   const [roofValue] = useState(["None", "Fragile/Brittle", "Skylight"]);
+  const [range, setRange] = useState("");
 
   const [selectRoofValue, setSelectRoofValue] = useState([]);
+  const [file, setFile] = useState(null);
+  const [document, setDocument] = useState(null);
+  const [orderData, setOrderData] = useState()
 
   const convertValue = (val) => {
     if (val === true || val === "true") {
@@ -50,21 +56,15 @@ function PreSiteRiskAssessment() {
     }
   };
 
-  const [range, setRange] = useState("");
-
   const handlechange = (e) => {
     setRange(e.target.value);
   };
-
-  const [file, setFile] = useState(null);
-  const [document, setDocument] = useState(null);
 
   const handleFile = (e) => {
     setFile(e.target.files[0]);
   };
 
   const getRiskData = () => {
-
     try {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -72,18 +72,18 @@ function PreSiteRiskAssessment() {
 
       const formdata = new FormData();
       formdata.append("approximate_age", range);
-      formdata.append("hazards", convertValue(checkHazards));
-      formdata.append("select_hazards", selectHazards);
-      formdata.append("roof_structure", selectRoofValue);
-      formdata.append("moss", convertValue(checkRoof));
-      formdata.append("moss_comment", mossComment);
-      formdata.append("high_tension", convertValue(checkTension));
-      formdata.append("damaged_severley", convertValue(checkDamaged));
-      formdata.append("any_damage", convertValue(checkExposed));
-      formdata.append("vehicle_activities", convertValue(checkVehicle));
-      formdata.append("asbestos_presence", convertValue(checkPresence));
-      formdata.append("safety_concerns", convertValue(checkConcerns));
-      formdata.append("safety_concerns_comment", safetyComment);
+      formdata.append("hazards",  checkHazards);
+      formdata.append("select_hazards",  selectHazards);
+      formdata.append("roof_structure",  selectRoofValue);
+      formdata.append("moss",  checkRoof);
+      formdata.append("moss_comment",  mossComment);
+      formdata.append("high_tension",  checkTension);
+      formdata.append("damaged_severley",  checkDamaged);
+      formdata.append("any_damage",  checkExposed);
+      formdata.append("vehicle_activities",  checkVehicle);
+      formdata.append("asbestos_presence",  checkPresence);
+      formdata.append("safety_concerns",  checkConcerns);
+      formdata.append("safety_concerns_comment",  safetyComment);
 
       const requestOptions = {
         method: 'PUT',
@@ -123,7 +123,8 @@ function PreSiteRiskAssessment() {
       fetch(`https://solar365.co.in/order/${location?.state?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result)
+          console.log('presite', result)
+          setOrderData(result)
         })
         .catch(error => console.log('error', error));
     } catch (error) {
@@ -135,7 +136,7 @@ function PreSiteRiskAssessment() {
     const subscribe = fetchOrder()
 
     return () => [subscribe]
-  })
+  }, [])
 
   return (
     <>
@@ -161,17 +162,21 @@ function PreSiteRiskAssessment() {
             <div className="question">
               <p>What is the approximate age of the property?</p>
             </div>
-            <div className="options">
-              <select name="" id="" onChange={handlechange}>
-                <option defaultValue="Select Your Range">
-                  Select Your Value
-                </option>
-                <option value="0 to 5">0 to 5</option>
-                <option value="5 to 10">5 to 10</option>
-                <option value="10 to 20">10 to 20</option>
-                <option value="30+">30+</option>
-              </select>
-            </div>
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <select name="" id="" onChange={handlechange}>
+                  <option defaultValue="Select Your Range">
+                    Select Your Value
+                  </option>
+                  <option value="0 to 5">0 to 5</option>
+                  <option value="5 to 10">5 to 10</option>
+                  <option value="10 to 20">10 to 20</option>
+                  <option value="30+">30+</option>
+                </select>
+              </div> :
+                <p>{orderData?.presite?.approximate_age}</p>
+            }
+
             <div className="additional"></div>
           </div>
           <div className="assesment">
@@ -181,46 +186,61 @@ function PreSiteRiskAssessment() {
                 property?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkHazards ? "#34a446" : "",
-                  border: checkHazards ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckHazards(true)}
-              >
-                <p style={{ color: checkHazards ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkHazards ? "#34a446" : "",
-                  border: !checkHazards ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckHazards(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <div
+                  className="select__options"
                   style={{
-                    color: !checkHazards ? "#34a446" : "",
+                    background: checkHazards === "Yes" ? "#34a446" : "",
+                    border: checkHazards === "Yes" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckHazards("Yes")}
+                >
+                  <p style={{ color: checkHazards ? "#34a446" : "" }}>Yes</p>
+                </div>
+                <div
+                  className="select__options"
+                  style={{
+                    background: checkHazards === "No" ? "#34a446" : "",
+                    border: checkHazards === "No" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckHazards("No")}
+                >
+                  <p
+                    style={{
+                      color: !checkHazards ? "#34a446" : "",
+                    }}
+                  >
+                    No
+                  </p>
+                </div>
+              </div> : <div className="options">
+                <div
+                  className="select__options"
+                  style={{
+                    background: "#34a446",
+                    border: "2px solid #34a446",
                   }}
                 >
-                  No
-                </p>
+                  <p style={{ color: "#34a446" }}>{orderData?.presite?.hazards}</p>
+                </div>
               </div>
-            </div>
-            <div
-              className="additional"
-              style={{ visibility: checkHazards ? "visible" : "hidden" }}
-            >
-              <Multiselect
-                isObject={false}
-                options={hazards}
-                placeholder="Select Hazards"
-                onRemove={(e) => setSelectHazards([...e])}
-                onSelect={(e) => setSelectHazards([...e])}
-              />
-            </div>
+            }
+
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div
+                className="additional"
+                style={{ display: checkHazards === "Yes" ? "block" : "none" }}
+              >
+                <Multiselect
+                  isObject={false}
+                  options={hazards}
+                  placeholder="Select Hazards"
+                  onRemove={(e) => setSelectHazards([...e])}
+                  onSelect={(e) => setSelectHazards([...e])}
+                />
+              </div> : <p>{orderData?.presite?.select_hazards}</p>
+            }
           </div>
           <div className="assesment">
             <div className="question">
@@ -229,15 +249,18 @@ function PreSiteRiskAssessment() {
                 has skylights?
               </p>
             </div>
-            <div className="options">
-              <Multiselect
-                isObject={false}
-                options={roofValue}
-                placeholder="Select Roof Structure"
-                onRemove={(e) => setSelectRoofValue([...e])}
-                onSelect={(e) => setSelectRoofValue([...e])}
-              />
-            </div>
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <Multiselect
+                  isObject={false}
+                  options={roofValue}
+                  placeholder="Select Roof Structure"
+                  onRemove={(e) => setSelectRoofValue([...e])}
+                  onSelect={(e) => setSelectRoofValue([...e])}
+                />
+              </div> : <p>{orderData?.presite?.roof_structure}</p>
+            }
+
             <div className="additional">
               <input
                 type="file"
@@ -245,44 +268,73 @@ function PreSiteRiskAssessment() {
               />
             </div>
           </div>
-          <div className="assesment">
+          <div className="assesment" >
             <div className="question">
               <p>
                 Is there build up of moss/algae/dew on the roof which may make
                 it slippery?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkRoof ? "#34a446" : "",
-                  border: checkRoof ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckRoof(true)}
-              >
-                <p style={{ color: checkRoof ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkRoof ? "#34a446" : "",
-                  border: !checkRoof ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckRoof(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <div
+                  className="select__options"
                   style={{
-                    color: !checkRoof ? "#34a446" : "",
+                    background: checkRoof === "Yes" ? "#34a446" : "",
+                    border: checkRoof === "Yes" ? "none" : "2px solid black",
                   }}
+                  onClick={() => setCheckRoof("Yes")}
                 >
-                  No
-                </p>
-              </div>
-            </div>
+                  <p style={{ color: checkRoof ? "#34a446" : "" }}>Yes</p>
+                </div>
+                <div
+                  className="select__options"
+                  style={{
+                    background: checkRoof === "No" ? "#34a446" : "",
+                    border: checkRoof === "No" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckRoof("No")}
+                >
+                  <p
+                    style={{
+                      color: !checkRoof ? "#34a446" : "",
+                    }}
+                  >
+                    No
+                  </p>
+                </div>
+              </div> :
+                <div className="options" style={{ display: 'flex', justifyContent: 'space-between'}}>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: "#34a446",
+                      border: "2px solid #34a446",
+                    }}
+                  >
+                    <p style={{ color: "#34a446" }}>{orderData?.presite?.moss}</p>
+                  </div>
+                  {
+                    orderData?.presite?.moss.toLowerCase() === 'yes' ?
+
+                      <div
+                        className="additional"
+                      >
+                        <input
+                          type="text"
+                          placeholder="Leave Comment..."
+                          className="comment"
+                          value={orderData?.presite?.moss_comment}
+                          onChange={(e) => setMossComment(e.target.value)}
+                        />
+                      </div> : null
+                  }
+                </div>
+            }
+
             <div
               className="additional"
-              style={{ visibility: checkRoof ? "visible" : "hidden" }}
+              style={{ visibility: checkRoof === "Yes" ? "visible" : "hidden" }}
             >
               <input
                 type="text"
@@ -300,34 +352,46 @@ function PreSiteRiskAssessment() {
                 within 4m of roof/property?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkTension ? "#34a446" : "",
-                  border: checkTension ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckTension(true)}
-              >
-                <p style={{ color: checkTension ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkTension ? "#34a446" : "",
-                  border: !checkTension ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckTension(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ?
+                <div className="options">
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkTension === "Yes" ? "#34a446" : "",
+                      border: checkTension === "Yes" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckTension("Yes")}
+                  >
+                    <p style={{ color: checkTension ? "#34a446" : "" }}>Yes</p>
+                  </div>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkTension === "No" ? "#34a446" : "",
+                      border: checkTension === "No" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckTension("No")}
+                  >
+                    <p
+                      style={{
+                        color: !checkTension ? "#34a446" : "",
+                      }}
+                    >
+                      No
+                    </p>
+                  </div>
+                </div> : <div
+                  className="select__options"
                   style={{
-                    color: !checkTension ? "#34a446" : "",
+                    background: "#34a446",
+                    border: "2px solid #34a446",
                   }}
                 >
-                  No
-                </p>
-              </div>
-            </div>
+                  <p style={{ color: "#34a446" }}>{orderData?.presite?.high_tension}</p>
+                </div>
+            }
+
             <div
               className="additional"
               style={{ visibility: checkTension ? "visible" : "hidden" }}
@@ -342,52 +406,65 @@ function PreSiteRiskAssessment() {
                 since then?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkDamaged === "true" ? "#34a446" : "",
-                  border: checkDamaged === "true" ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckDamaged("true")}
-              >
-                <p style={{ color: checkDamaged === "true" ? "#34a446" : "" }}>
-                  Yes
-                </p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: checkDamaged === "false" ? "#34a446" : "",
-                  border: checkDamaged === "false" ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckDamaged("false")}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <div
+                  className="select__options"
                   style={{
-                    color: checkDamaged === "false" ? "#34a446" : "",
+                    background: checkDamaged === "Yes" ? "#34a446" : "",
+                    border: checkDamaged === "Yes" ? "none" : "2px solid black",
                   }}
+                  onClick={() => setCheckDamaged("Yes")}
                 >
-                  No
-                </p>
-              </div>
-              <div
+                  <p style={{ color: checkDamaged === "Yes" ? "#34a446" : "" }}>
+                    Yes
+                  </p>
+                </div>
+                <div
+                  className="select__options"
+                  style={{
+                    background: checkDamaged === "No" ? "#34a446" : "",
+                    border: checkDamaged === "No" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckDamaged("No")}
+                >
+                  <p
+                    style={{
+                      color: checkDamaged === "No" ? "#34a446" : "",
+                    }}
+                  >
+                    No
+                  </p>
+                </div>
+                <div
+                  className="select__options"
+                  style={{
+                    background: checkDamaged === "Not Sure" ? "#34a446" : "",
+                    border: checkDamaged === "Not Sure" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckDamaged("Not Sure")}
+                >
+                  <p
+                    style={{
+                      color: checkDamaged === "Not Sure" ? "#34a446" : "",
+                    }}
+                  >
+                    Not&nbsp;Sure
+                  </p>
+                </div>
+              </div> : <div
                 className="select__options"
                 style={{
-                  background: checkDamaged === "null" ? "#34a446" : "",
-                  border: checkDamaged === "null" ? "none" : "2px solid black",
+                  background: "#34a446",
+                  border: "2px solid #34a446",
                 }}
-                onClick={() => setCheckDamaged("null")}
               >
-                <p
-                  style={{
-                    color: checkDamaged === "null" ? "#34a446" : "",
-                  }}
-                >
-                  Not&nbsp;Sure
+                <p style={{ color: "#34a446" }}>
+                  {orderData?.presite?.roof_damage}
                 </p>
               </div>
-            </div>
+            }
+
             <div className="additional"></div>
           </div>
           <div className="assesment">
@@ -397,53 +474,70 @@ function PreSiteRiskAssessment() {
                 concern of installer?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkExposed === "true" ? "#34a446" : "",
-                  border: checkExposed === "true" ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckExposed("true")}
-              >
-                <p style={{ color: checkExposed === "true" ? "#34a446" : "" }}>
-                  Yes
-                </p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: checkExposed === "false" ? "#34a446" : "",
-                  border: checkExposed === "false" ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckExposed("false")}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ?
+                <div className="options">
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkExposed === "Yes" ? "#34a446" : "",
+                      border: checkExposed === "Yes" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckExposed("Yes")}
+                  >
+                    <p style={{ color: checkExposed === "Yes" ? "#34a446" : "" }}>
+                      Yes
+                    </p>
+                  </div>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkExposed === "No" ? "#34a446" : "",
+                      border: checkExposed === "No" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckExposed("No")}
+                  >
+                    <p
+                      style={{
+                        color: checkExposed === "No" ? "#34a446" : "",
+                      }}
+                    >
+                      No
+                    </p>
+                  </div>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkExposed === "Not Sure" ? "#34a446" : "",
+                      border: checkExposed === "Not Sure" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckExposed("Not Sure")}
+                  >
+                    <p
+                      style={{
+                        color: checkExposed === "Not Sure" ? "#34a446" : "",
+                      }}
+                    >
+                      Not&nbsp;Sure
+                    </p>
+                  </div>
+                </div> : <div
+                  className="select__options"
                   style={{
-                    color: checkExposed === "false" ? "#34a446" : "",
-                    // fontWeight: !checkHazards ? "700" : "400",
+                    background: "#34a446",
+                    border: "2px solid #34a446",
                   }}
                 >
-                  No
-                </p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: checkExposed === "null" ? "#34a446" : "",
-                  border: checkExposed === "null" ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckExposed("null")}
-              >
-                <p
-                  style={{
-                    color: checkExposed === "null" ? "#34a446" : "",
-                  }}
-                >
-                  Not&nbsp;Sure
-                </p>
-              </div>
-            </div>
+                  <p
+                    style={{
+                      color: "#34a446",
+                    }}
+                  >
+                    {orderData?.presite?.any_damage}
+                  </p>
+                </div>
+            }
+
             <div className="additional"></div>
           </div>
           <div className="assesment">
@@ -454,35 +548,47 @@ function PreSiteRiskAssessment() {
                 your premise?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkVehicle ? "#34a446" : "",
-                  border: checkVehicle ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckVehicle(true)}
-              >
-                <p style={{ color: checkVehicle ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkVehicle ? "#34a446" : "",
-                  border: !checkVehicle ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckVehicle(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ?
+                <div className="options">
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkVehicle === "Yes" ? "#34a446" : "",
+                      border: checkVehicle === "Yes" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckVehicle("Yes")}
+                  >
+                    <p style={{ color: checkVehicle ? "#34a446" : "" }}>Yes</p>
+                  </div>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkVehicle === "No" ? "#34a446" : "",
+                      border: checkVehicle === "No" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckVehicle("No")}
+                  >
+                    <p
+                      style={{
+                        color: !checkVehicle ? "#34a446" : "",
+                        // fontWeight: !checkHazards ? "700" : "400",
+                      }}
+                    >
+                      No
+                    </p>
+                  </div>
+                </div> : <div
+                  className="select__options"
                   style={{
-                    color: !checkVehicle ? "#34a446" : "",
-                    // fontWeight: !checkHazards ? "700" : "400",
+                    background: "#34a446",
+                    border: "2px solid #34a446",
                   }}
                 >
-                  No
-                </p>
-              </div>
-            </div>
+                  <p style={{ color: "#34a446" }}>{orderData?.presite?.vehicle_activities}</p>
+                </div>
+            }
+
             <div className="additional"></div>
           </div>
           <div className="assesment">
@@ -492,75 +598,117 @@ function PreSiteRiskAssessment() {
                 meter box or roof?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkPresence ? "#34a446" : "",
-                  border: checkPresence ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckPresence(true)}
-              >
-                <p style={{ color: checkPresence ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkPresence ? "#34a446" : "",
-                  border: !checkPresence ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckPresence(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ?
+                <div className="options">
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkPresence === "Yes" ? "#34a446" : "",
+                      border: checkPresence === "Yes" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckPresence("Yes")}
+                  >
+                    <p style={{ color: checkPresence ? "#34a446" : "" }}>Yes</p>
+                  </div>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: checkPresence === "No" ? "#34a446" : "",
+                      border: checkPresence === "No" ? "none" : "2px solid black",
+                    }}
+                    onClick={() => setCheckPresence("No")}
+                  >
+                    <p
+                      style={{
+                        color: !checkPresence ? "#34a446" : "",
+                      }}
+                    >
+                      No
+                    </p>
+                  </div>
+                </div> : <div
+                  className="select__options"
                   style={{
-                    color: !checkPresence ? "#34a446" : "",
-                    // fontWeight: !checkHazards ? "700" : "400",
+                    background: "#34a446",
+                    border: "2px solid #34a446",
                   }}
                 >
-                  No
-                </p>
-              </div>
-            </div>
+                  <p style={{ color: "#34a446" }}>Yes</p>
+                </div>
+            }
+
             <div className="additional"></div>
           </div>
           <div className="assesment">
-            <div className="question">
+            <div className="question" >
               <p>
                 Any other Safety concerns which you would like to mention about
                 and we haven't asked you?
               </p>
             </div>
-            <div className="options">
-              <div
-                className="select__options"
-                style={{
-                  background: checkConcerns ? "#34a446" : "",
-                  border: checkConcerns ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckConcerns(true)}
-              >
-                <p style={{ color: checkConcerns ? "#34a446" : "" }}>Yes</p>
-              </div>
-              <div
-                className="select__options"
-                style={{
-                  background: !checkConcerns ? "#34a446" : "",
-                  border: !checkConcerns ? "none" : "2px solid black",
-                }}
-                onClick={() => setCheckConcerns(false)}
-              >
-                <p
+            {
+              orderData?.presite?.presite_status !== "Completed" ? <div className="options">
+                <div
+                  className="select__options"
                   style={{
-                    color: !checkConcerns ? "#34a446" : "",
+                    background: checkConcerns === "Yes" ? "#34a446" : "",
+                    border: checkConcerns === "Yes" ? "none" : "2px solid black",
                   }}
+                  onClick={() => setCheckConcerns("Yes")}
                 >
-                  No
-                </p>
-              </div>
-            </div>
+                  <p style={{ color: checkConcerns ? "#34a446" : "" }}>Yes</p>
+                </div>
+                <div
+                  className="select__options"
+                  style={{
+                    background: checkConcerns === "No" ? "#34a446" : "",
+                    border: checkConcerns === "No" ? "none" : "2px solid black",
+                  }}
+                  onClick={() => setCheckConcerns("No")}
+                >
+                  <p
+                    style={{
+                      color: !checkConcerns ? "#34a446" : "",
+                    }}
+                  >
+                    No
+                  </p>
+                </div>
+              </div> :
+                <div className="options" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <div
+                    className="select__options"
+                    style={{
+                      background: "#34a446",
+                      border: "2px solid #34a446",
+                      position: 'relative'
+                    }}
+
+                  >
+                    <p style={{ color: "#34a446" }}>{orderData?.presite?.safety_concerns}</p>
+                  </div>
+                  {
+                    orderData?.presite?.safety_concerns.toLowerCase() === 'yes' ? <div
+                      className="additional"
+                      style={{ position: 'relative' }}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Leave Comment..."
+                        className="comment"
+                        value={orderData?.presite?.safety_concerns_comment}
+                        onChange={(e) => setSafetyComment(e.target.value)}
+                      />
+                    </div> : null
+                  }
+
+                </div>
+            }
+
             <div
               className="additional"
-              style={{ visibility: checkConcerns ? "visible" : "hidden" }}
+              style={{ display: checkConcerns === "Yes" ? "block" : "none" }}
             >
               <input
                 type="text"
@@ -569,15 +717,18 @@ function PreSiteRiskAssessment() {
                 value={safetyComment}
                 onChange={(e) => setSafetyComment(e.target.value)}
               />
-            </div>
           </div>
-          <button
-            type="button"
-            className="pre__site__button"
-            onClick={getRiskData}
-          >
-            Submit
-          </button>
+          </div>
+          {
+            orderData?.presite?.presite_status !== "Completed" ? <button
+              type="button"
+              className="pre__site__button"
+              onClick={getRiskData}
+            >
+              Submit
+            </button> : null
+          }
+
         </div>
       </section>
     </>
