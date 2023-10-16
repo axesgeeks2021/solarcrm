@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import UploadFile from '../../../components/inputsfield/UploadFile';
+import Input from '../../../components/inputsfield/Input';
 
 
 
@@ -66,7 +67,6 @@ function RegisterTeam() {
     const registerTeam = async (e) => {
         e.preventDefault();
         try {
-            console.log('registered team')
             const loadingToast = toast.loading('Please wait')
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -239,19 +239,19 @@ function RegisterTeam() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerTeam}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                            <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                            <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                            <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                            <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Profile Photo..." type="file" onChange={handlefile} />
-                            <FormInput placeholder="Address..." onChange={handleChange} value={address} name="address" />
+                            <Input placeholder="Profile Photo..." type="file" onChange={handlefile} />
+                            <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                            <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                             <select style={{width: '100%', padding: '5px 0', border: '2px solid #99A3BA'}} value={selectedDepartment} onChange={e => setSelectedDepartment(e.target.value)}>
                                 <option defaultChecked>Select Department</option>
                                 <option value="installer">Installer</option>
@@ -259,33 +259,33 @@ function RegisterTeam() {
                             </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Ec_file" onChange={handlefile2} type="file" />
+                            <Input placeholder="Ec_file" onChange={handlefile2} type="file" />
                             <UploadFile width="100%" label="Ec File" id="ecfile" name="ecfile" onchange={handlefile2} />
-                            <FormInput placeholder="Ec_number..." onChange={handleChange} value={ecnumber} name="ecnumber" />
+                            <Input placeholder="Ec_number..." onChange={handleChange} value={ecnumber} name="ecnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="El_file..." onChange={handlefile3} type="file" />
+                            <Input placeholder="El_file..." onChange={handlefile3} type="file" />
                             <UploadFile width="100%" label="EL File" id="elfile" name="elfile" onchange={handlefile3} />
-                            <FormInput placeholder="El_number..." onChange={handleChange} value={elnumber} name="elnumber" />
+                            <Input placeholder="El_number..." onChange={handleChange} value={elnumber} name="elnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Abn_number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
-                            <FormInput placeholder="Acn_number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
+                            <Input placeholder="Abn_number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
+                            <Input placeholder="Acn_number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Tfn_number..." onChange={handleChange} value={tfnnumber} name="tfnnumber" />
-                            <FormInput placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
+                            <Input placeholder="Tfn_number..." onChange={handleChange} value={tfnnumber} name="tfnnumber" />
+                            <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                            <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
+                            <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                            <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="State..." onChange={handleChange} value={state} name="state" />
-                            <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                            <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
+                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" color="white" type="submit" />

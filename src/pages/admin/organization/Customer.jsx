@@ -9,6 +9,8 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import UploadFile from '../../../components/inputsfield/UploadFile';
 import Dropdown from 'react-multilevel-dropdown'
+import Input from '../../../components/inputsfield/Input';
+// import {Multiselect} from "multi"
 
 function Customer() {
 
@@ -298,23 +300,23 @@ function Customer() {
                         </div>
                         <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                                <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                                <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                                <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                                <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                                <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                                <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                                <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
-                                <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                                <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
-                                <FormInput placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
+                                <Input placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
+                                <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
                                 <Dropdown
                                     title='Assign To'
                                 >
@@ -352,7 +354,7 @@ function Customer() {
                                         </Dropdown.Submenu>
                                     </Dropdown.Item>
                                 </Dropdown>
-                                {/*<FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />*/}
+                                {/*<Input placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />*/}
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={supply} onChange={handleChange}  >
@@ -380,7 +382,7 @@ function Customer() {
                                     <option value="Second Floor">Second Floor</option>
                                     <option value="More">More</option>
                                 </select>
-                                <FormInput placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
+                                <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={buyingoptions} onChange={handleChange}  >
@@ -399,12 +401,12 @@ function Customer() {
                                 </select>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
-                                <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                                <Input placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
+                                <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
-                                <FormInput placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
+                                <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
+                                <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
@@ -414,10 +416,10 @@ function Customer() {
                                     <option value="Victoria">Victoria</option>
                                     <option value="Western Australia">Western Australia</option>
                                 </select>
-                                <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                                <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                                <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Button title="Submit" background="orange" type="submit" />

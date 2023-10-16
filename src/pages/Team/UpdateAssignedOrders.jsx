@@ -8,6 +8,7 @@ import Button from '../../components/Button/Button';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import UploadFile from '../../components/inputsfield/UploadFile';
+import Input from '../../components/inputsfield/Input';
 
 function UpdateAssignedOrders() {
 
@@ -251,10 +252,8 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
-                                <label>Meter Date</label>
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} min={todayDate}/>
-                                <label>Meter Approve Date</label>
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} min={todayDate}/>
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === "" ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date !== "" ? true : false}/>
+                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === "" ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date !== "" ? true : false}/>
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
@@ -269,8 +268,8 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showPresite ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdatePresite}>
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} />
-                                <FormInput type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} />
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} />
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} />
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>

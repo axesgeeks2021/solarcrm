@@ -13,24 +13,21 @@ import FormsContainer from '../Forms/FormsContainer'
 import Heading from '../../../components/heading/Heading'
 
 import FormInput from '../../../components/inputsfield/FormInput'
+import Input from '../../../components/inputsfield/Input'
 
 import { BiLogOut } from "react-icons/bi"
+import { toast } from 'react-toastify'
 
 
 
 function AdminDashboard() {
 
-    const [cookies, setCookies, removeCookies] = useCookies();
-
     const navigate = useNavigate()
-
+    const [cookies, setCookies, removeCookies] = useCookies();
     const [loading, setLoading] = useState(false)
-
     const [orderLists, setOrderLists] = useState([])
     const [userList, setUserList] = useState([])
-
     const [showForm, setShowForm] = useState(false)
-
     const [swmsDocFile, setSwmsDocFile] = useState(null)
     const [swmsFile, setSwmsFile] = useState(null)
     const [solar365File, setSolar365File] = useState(null)
@@ -92,11 +89,12 @@ function AdminDashboard() {
     const createOrder = (e) => {
         e.preventDefault()
         try {
-            var myHeaders = new Headers();
+            const loadingId = toast.loading("Please wait...")
+            const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
 
-            var formdata = new FormData();
+            const formdata = new FormData();
             formdata.append("username", username);
             formdata.append("system_Size", systemSize);
             formdata.append("building_Type", buildingType);
@@ -124,7 +122,10 @@ function AdminDashboard() {
 
             fetch("https://solar365.co.in/order/", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then(result =>{
+                    toast.update(loadingId, { render: 'Order created Successfully...', type: 'success', isLoading: false, autoClose: true })
+                    console.log(result)
+                })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -322,8 +323,7 @@ function AdminDashboard() {
                                 </select>
                             </div>
                             <div style={{ width: '50%' }}>
-                                {/* <FormInput placeholder="Username" value={username} name="username" onChange={handleChange} /> */}
-                                <FormInput placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
+                                <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
                             </div>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
@@ -334,7 +334,7 @@ function AdminDashboard() {
                                 <option value="Second Floor">Second Floor</option>
                                 <option value="More">More</option>
                             </select>
-                            <FormInput placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                            <Input placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={panels} name="panels" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
@@ -369,10 +369,10 @@ function AdminDashboard() {
                                     Others
                                 </option>
                             </select>
-                            <FormInput placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
+                            <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
+                            <Input placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
                             <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
                                 <option>Select Installation Type</option>
                                 <option value="new">New</option>
@@ -380,11 +380,11 @@ function AdminDashboard() {
                             </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
-                            <FormInput placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
+                            <Input placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
+                            <Input placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Other Component" value={otherComponent} name="otherComponent" onChange={handleChange} />
+                            <Input placeholder="Other Component" value={otherComponent} name="otherComponent" onChange={handleChange} />
                             <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
                                 <option defaultChecked>Select Battery</option>
                                 {

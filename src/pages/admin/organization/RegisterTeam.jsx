@@ -10,6 +10,7 @@ import Loading from '../../../components/loading/Loading';
 import { useCookies } from "react-cookie";
 import { toast } from 'react-toastify';
 import UploadFile from '../../../components/inputsfield/UploadFile';
+import Input from '../../../components/inputsfield/Input';
 
 
 function RegisterTeam() {
@@ -196,17 +197,17 @@ function RegisterTeam() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerTeam}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                            <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                            <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                            <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                            <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Profile Photo..." type="file" onChange={handlefile} />
+                            <Input placeholder="Profile Photo..." type="file" onChange={handlefile} />
                             <UploadFile label="Profile Photo" id="profilephoto" onchange={handlefile} width="100%" />
-                            <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                            <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <select value={department} name="department" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
@@ -214,22 +215,22 @@ function RegisterTeam() {
                                 <option>Staff</option>
                                 <option>Manager</option>
                             </select>
-                            <FormInput placeholder="Description..." onChange={handleChange} value={description} name="description" />
+                            <Input placeholder="Description..." onChange={handleChange} value={description} name="description" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            {/*<FormInput placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" />*/}
-                            <FormInput placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
+                            {/*<Input placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" />*/}
+                            <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
-                            <FormInput placeholder="State..." onChange={handleChange} value={state} name="state" />
+                            <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
+                            <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                            <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                            <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit" />

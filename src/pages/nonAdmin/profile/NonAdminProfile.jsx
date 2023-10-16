@@ -4,6 +4,7 @@ import Button from '../../../components/Button/Button';
 import FormInput from '../../../components/inputsfield/FormInput';
 import { useCookies } from 'react-cookie';
 import NonAdminSideNavigation from '../menu/NonAdminSideNavigation';
+import Input from '../../../components/inputsfield/Input';
 
 function NonAdminProfile() {
 
@@ -162,16 +163,16 @@ function NonAdminProfile() {
           </div>
           {
             display.change && <div style={{ width: "50%", background: 'white', position: 'absolute', overflow: 'hidden', padding: "10% 5%", boxShadow: "2px 2px 10px 1px rgba(0,0,0,0.4), -2px -2px 10px 1px rgba(0,0,0,0.4)", borderRadius: 4 }}>
-              <FormInput placeholder="Enter your valid e-Mail id..." width="65%" value={changeText} onChange={e => setChangeText(e.target.value)} />
+              <Input placeholder="Enter your valid e-Mail id..." width="65%" value={changeText} onChange={e => setChangeText(e.target.value)} />
               <Button title="Submit" background="green" color="white" onclick={changePassword} />
               <Button title="Close" background="orange" color="white" onclick={() => setDisplay({ change: false })} margin="0 10px" />
             </div>
           }
           {
             display.forget && <div style={{ width: "50%", background: 'white', position: 'absolute', overflow: 'hidden', gap: '20px', padding: "6% 5%", boxShadow: "2px 2px 10px 1px rgba(0,0,0,0.4), -2px -2px 10px 1px rgba(0,0,0,0.4)", borderRadius: 4, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              <FormInput placeholder="Current Password" width="90%" value={currentPassword} onChange={handleChange} name="currentPassword" />
-              <FormInput placeholder="Password" width="90%" value={password} onChange={handleChange} name="password" />
-              <FormInput placeholder="Confirm Password" width="90%" value={confirmPassword} onChange={handleChange} name="confirmPassword" />
+              <Input placeholder="Current Password" width="90%" value={currentPassword} onChange={handleChange} name="currentPassword" />
+              <Input placeholder="Password" width="90%" value={password} onChange={handleChange} name="password" />
+              <Input placeholder="Confirm Password" width="90%" value={confirmPassword} onChange={handleChange} name="confirmPassword" />
               <div style={{ display: "flex", justifyContent: 'flex-end', alignItems: 'center', width: "100%", gap: '10px' }}>
                 <Button title="Submit" background="green" color="white" onclick={forgetPassword} />
                 <Button title="Close" background="orange" color="white" onclick={() => setDisplay({ forget: false })} />

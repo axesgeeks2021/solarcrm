@@ -11,6 +11,7 @@ import { useCookies } from 'react-cookie'
 import FormsContainer from './Forms/FormsContainer'
 import Heading from '../../components/heading/Heading'
 import FormInput from '../../components/inputsfield/FormInput'
+import Input from '../../components/inputsfield/Input'
 
 import { fetchRequest } from '../../utils/FetchRequest'
 
@@ -372,16 +373,16 @@ function NonAdminDashboard() {
                             </div> */}
 
                         <div style={{ width: '90%', display: 'flex' }}>
-                            <FormInput placeholder="First name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="First name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last name" value={lastname} name="lastname" onChange={handleChange} />
                         </div>
                         {/* </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
-                            <FormInput placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
+                            <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
                             {/* <select>
                                 {
                                     inverterList.map((ele, idx) => {
@@ -403,10 +404,10 @@ function NonAdminDashboard() {
                                 options={inverterList}
 
                             /> */}
-                            <FormInput placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                            <Input placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
+                            <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
                             <UploadFile id="packing" label="Packing Slip" onchange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
@@ -418,27 +419,27 @@ function NonAdminDashboard() {
                             <UploadFile id="extras" label="Extras" onchange={e => setextrasFile(e.target.files[0])} width="100%" />
                         </div>
                         {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                             <FormInput placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
-                             <FormInput placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
+                             <Input placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
+                             <Input placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
                          </div>
                          <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                             <FormInput placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
-                             <FormInput placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
+                             <Input placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
+                             <Input placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
                         </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
-                            <FormInput placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
-                            <FormInput placeholder="Description" value={descritpion} name="descritpion" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="Description" value={descritpion} name="descritpion" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
+                            <Input placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
                             <select value={selectedPanel} onChange={e => setSelectedPanel(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
                             <option defaultChecked>Select Panel</option>
                             {
@@ -451,7 +452,7 @@ function NonAdminDashboard() {
                             </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
+                            <Input placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
                             <select value={selectedInverter} onChange={e => setSelectedInverter(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
                                 <option value="Select Inverter" selected>Select Inverter</option>
                                 {
@@ -462,11 +463,11 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            {/*<FormInput placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />*/}
+                            {/*<Input placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />*/}
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
-                            <FormInput placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
+                            <Input placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
+                            <Input placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={selectedBattery} onChange={e => setSelectedBattery(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>

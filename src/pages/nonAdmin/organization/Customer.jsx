@@ -8,17 +8,14 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import NonAdminSideNavigation from '../menu/NonAdminSideNavigation';
 import { toast } from 'react-toastify';
+import Input from '../../../components/inputsfield/Input';
 
 function Customer() {
 
     const [cookies] = useCookies();
-
     const [showForm, setShowForm] = useState(false)
-
     const [customerList, setCustomerList] = useState([])
-
     const [file, setFile] = useState(null)
-
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -245,51 +242,51 @@ function Customer() {
                         </div>
                         <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                                <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                                <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                                <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                                <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                                <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                                <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                                <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Enter your document file..." onChange={handlefile} type="file" />
-                                <FormInput placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                                <Input placeholder="Enter your document file..." onChange={handlefile} type="file" />
+                                <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
-                                <FormInput placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
+                                <Input placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
+                                <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" />
-                                {/* <FormInput placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" /> */}
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" />
+                                {/* <Input placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" /> */}
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Supply..." onChange={handleChange} value={supply} name="supply" />
-                                <FormInput placeholder="Roof Type..." onChange={handleChange} value={rooftype} name="rooftype" />
+                                <Input placeholder="Supply..." onChange={handleChange} value={supply} name="supply" />
+                                <Input placeholder="Roof Type..." onChange={handleChange} value={rooftype} name="rooftype" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Floor..." onChange={handleChange} value={floor} name="floor" />
-                                <FormInput placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
+                                <Input placeholder="Floor..." onChange={handleChange} value={floor} name="floor" />
+                                <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Buying Options..." onChange={handleChange} value={buyingoptions} name="buyingoptions" />
-                                <FormInput placeholder="Follows up 1..." onChange={handleChange} value={followsup1} name="followsup1" />
+                                <Input placeholder="Buying Options..." onChange={handleChange} value={buyingoptions} name="buyingoptions" />
+                                <Input placeholder="Follows up 1..." onChange={handleChange} value={followsup1} name="followsup1" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
-                                <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                                <Input placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
+                                <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="State..." onChange={handleChange} value={state} name="state" />
-                                <FormInput placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
+                                <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
+                                <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
-                                <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                                <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
+                                <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                                <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Button title="Submit" type="submit" background="orange" />

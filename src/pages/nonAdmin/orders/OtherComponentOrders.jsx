@@ -10,12 +10,12 @@ import FormInput from '../../../components/inputsfield/FormInput'
 import Loading from '../../../components/loading/Loading'
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input'
 
 
 function OtherComponentOrders() {
 
     const [cookies] = useCookies();
-
 
     const data = useLocation()
 
@@ -133,23 +133,23 @@ function OtherComponentOrders() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Code" value={code} name="code" onChange={handleChange} />
-                            <FormInput placeholder="Title" value={title} name="title" onChange={handleChange} />
+                            <Input placeholder="Code" value={code} name="code" onChange={handleChange} />
+                            <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Smart Meter" value={smartmeter} name="smartmeter" onChange={handleChange} />
-                            <FormInput placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                            <Input placeholder="Smart Meter" value={smartmeter} name="smartmeter" onChange={handleChange} />
+                            <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Component Logo" type="file" onChange={handlefile} />
-                            <FormInput placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
+                            <Input placeholder="Component Logo" type="file" onChange={handlefile} />
+                            <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Optimisor" value={optimisor} name="optimisor" onChange={handleChange} />
-                            <FormInput placeholder="Optimisor Heading" value={optimisorheading} name="optimisorheading" onChange={handleChange} />
+                            <Input placeholder="Optimisor" value={optimisor} name="optimisor" onChange={handleChange} />
+                            <Input placeholder="Optimisor Heading" value={optimisorheading} name="optimisorheading" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Component Type" value={componenttype} name="componenttype" onChange={handleChange} />
+                            <Input placeholder="Component Type" value={componenttype} name="componenttype" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" />

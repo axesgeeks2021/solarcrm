@@ -11,6 +11,7 @@ import Loading from '../../../components/loading/Loading'
 import AdminSideNavigation from '../menu/AdminSideNavigation'
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input'
 
 
 function PanlesOrders() {
@@ -129,17 +130,17 @@ function PanlesOrders() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Code" value={code} name="code" onChange={handleChange} />
-                            <FormInput placeholder="Title" value={title} name="title" onChange={handleChange} />
-                            <FormInput placeholder="Panel Logo" type="file" onChange={handlefile} />
+                            <Input placeholder="Code" value={code} name="code" onChange={handleChange} />
+                            <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
+                            <Input placeholder="Panel Logo" type="file" onChange={handlefile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Technology" value={technology} name="technology" onChange={handleChange} />
-                            <FormInput placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                            <Input placeholder="Technology" value={technology} name="technology" onChange={handleChange} />
+                            <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
-                            <FormInput placeholder="Performance warranty" value={performancewarranty} name="performancewarranty" onChange={handleChange} />
+                            <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
+                            <Input placeholder="Performance warranty" value={performancewarranty} name="performancewarranty" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" />

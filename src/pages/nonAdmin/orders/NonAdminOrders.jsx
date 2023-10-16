@@ -13,6 +13,7 @@ import Accordian from '../../../components/Accordian'
 
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from "react-icons/ai"
 import { toast } from 'react-toastify'
+import Input from '../../../components/inputsfield/Input'
 
 
 function AdminOrders() {
@@ -334,28 +335,28 @@ function AdminOrders() {
             </div>
             <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Quotation" value={quotation} name="quotation" onChange={handleChange} />
-                <FormInput placeholder="Quantity" value={quantity} name="quantity" onChange={handleChange} />
+                <Input placeholder="Quotation" value={quotation} name="quotation" onChange={handleChange} />
+                <Input placeholder="Quantity" value={quantity} name="quantity" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Rate" value={rate} name="rate" onChange={handleChange} />
-                <FormInput placeholder="Due Date" type="date" value={dueDate} name="dueDate" onChange={handleChange} />
+                <Input placeholder="Rate" value={rate} name="rate" onChange={handleChange} />
+                <Input placeholder="Due Date" type="date" value={dueDate} name="dueDate" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Installation Type" value={installationType} name="installationType" onChange={handleChange} />
-                <FormInput placeholder="Is Delivered" value={isDelivered} name="isDelivered" onChange={handleChange} />
+                <Input placeholder="Installation Type" value={installationType} name="installationType" onChange={handleChange} />
+                <Input placeholder="Is Delivered" value={isDelivered} name="isDelivered" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Is Send" value={isSend} name="isSend" onChange={handleChange} />
-                <FormInput placeholder="Description" value={description} name="description" onChange={handleChange} />
+                <Input placeholder="Is Send" value={isSend} name="isSend" onChange={handleChange} />
+                <Input placeholder="Description" value={description} name="description" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Other Component" value={otherComponenet} name="otherComponenet" onChange={handleChange} />
-                <FormInput placeholder="Document File" type="file" onChange={handleFile} />
+                <Input placeholder="Other Component" value={otherComponenet} name="otherComponenet" onChange={handleChange} />
+                <Input placeholder="Document File" type="file" onChange={handleFile} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <FormInput placeholder="Full pay due date" type="date" value={fullpayduedate} name="fullpayduedate" onChange={handleChange} />
-                <FormInput placeholder="Pay" value={pay} name="pay" onChange={handleChange} />
+                <Input placeholder="Full pay due date" type="date" value={fullpayduedate} name="fullpayduedate" onChange={handleChange} />
+                <Input placeholder="Pay" value={pay} name="pay" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                 <Button title="Submit" background="orange" color="white" />

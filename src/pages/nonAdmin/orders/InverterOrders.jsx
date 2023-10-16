@@ -10,6 +10,7 @@ import FormInput from '../../../components/inputsfield/FormInput'
 import Loading from '../../../components/loading/Loading'
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input'
 
 
 function InverterOrders() {
@@ -127,22 +128,22 @@ function InverterOrders() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Code" value={code} name="code" onChange={handleChange} />
-                            <FormInput placeholder="Title" value={title} name="title" onChange={handleChange} />
+                            <Input placeholder="Code" value={code} name="code" onChange={handleChange} />
+                            <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
 
-                            <FormInput placeholder="Inverter Logo" type="file" onChange={handlefile} />
+                            <Input placeholder="Inverter Logo" type="file" onChange={handlefile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleChange} />
-                            <FormInput placeholder="Rated Output Power" value={ratedOutputPower} name="ratedOutputPower" onChange={handleChange} />
+                            <Input placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleChange} />
+                            <Input placeholder="Rated Output Power" value={ratedOutputPower} name="ratedOutputPower" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
-                            <FormInput placeholder="Additional part warranty" value={additionalpartwarranty} name="additionalpartwarranty" onChange={handleChange} />
+                            <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
+                            <Input placeholder="Additional part warranty" value={additionalpartwarranty} name="additionalpartwarranty" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Default inverter range" value={defaultinverterrange} name="defaultinverterrange" onChange={handleChange} />
-                            <FormInput placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                            <Input placeholder="Default inverter range" value={defaultinverterrange} name="defaultinverterrange" onChange={handleChange} />
+                            <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" />

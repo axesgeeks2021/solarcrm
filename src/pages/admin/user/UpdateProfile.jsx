@@ -8,6 +8,7 @@ import Loading from '../../../components/loading/Loading'
 import AdminSideNavigation from '../menu/AdminSideNavigation'
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input'
 
 
 function UpdateProfile() {
@@ -187,22 +188,22 @@ function UpdateProfile() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
 
-                            <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
+                            <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateProfile} />
@@ -219,25 +220,25 @@ function UpdateProfile() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
-                            <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
+                            <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
-                            <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
+                            <Input placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
+                            <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateProfile} />
@@ -254,30 +255,30 @@ function UpdateProfile() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
 
-                            <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
+                            <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
-                            <FormInput placeholder="Description" value={description} name="description" onChange={handleChange} />
+                            <Input placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
+                            <Input placeholder="Description" value={description} name="description" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Is online" value={isOnline} name="isOnline" onChange={handleChange} />
-                            <FormInput placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
+                            <Input placeholder="Is online" value={isOnline} name="isOnline" onChange={handleChange} />
+                            <Input placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateProfile} />
@@ -294,38 +295,38 @@ function UpdateProfile() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
-                            <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
+                            <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
-                        <FormInput placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
-                            <FormInput placeholder="Department" value={department} name="department" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
+                        <Input placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
+                            <Input placeholder="Department" value={department} name="department" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Ec File" type="file" onChange={handleFile2} />
-                            <FormInput placeholder="Ec Number" value={ecnumber} name="ecnumber" onChange={handleChange} />
-                        <FormInput placeholder="El File" type="file" onChange={handleFile3} />
+                            <Input placeholder="Ec File" type="file" onChange={handleFile2} />
+                            <Input placeholder="Ec Number" value={ecnumber} name="ecnumber" onChange={handleChange} />
+                        <Input placeholder="El File" type="file" onChange={handleFile3} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="El Number" value={elnumber} name="elnumber" onChange={handleChange} />
-                            <FormInput placeholder="ABM Number" value={abmnumber} name="abmnumber" onChange={handleChange} />
-                            <FormInput placeholder="ACN Number" value={acnnummber} name="acnnummber" onChange={handleChange} />
+                            <Input placeholder="El Number" value={elnumber} name="elnumber" onChange={handleChange} />
+                            <Input placeholder="ABM Number" value={abmnumber} name="abmnumber" onChange={handleChange} />
+                            <Input placeholder="ACN Number" value={acnnummber} name="acnnummber" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="TFN Number" value={tfnnumber} name="tfnnumber" onChange={handleChange} />
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="TFN Number" value={tfnnumber} name="tfnnumber" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateProfile} />
@@ -342,26 +343,26 @@ function UpdateProfile() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '15px 0' }}>
-                            <FormInput placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
-                            <FormInput placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
+                            <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                            <Input placeholder="Last Name" value={lastname} name="lastname" onChange={handleChange} />
 
                    
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
-                            <FormInput placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            <Input placeholder="Phone" value={phone} name="phone" onChange={handleChange} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                        <FormInput placeholder="Profile Pic" type="file" onChange={handleFile} />
-                        <FormInput placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
+                        <Input placeholder="Profile Pic" type="file" onChange={handleFile} />
+                        <Input placeholder="Alternate Number" value={alternatenumber} name="alternatenumber" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <FormInput placeholder="State" value={state} name="state" onChange={handleChange} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
-                            <FormInput placeholder="Country" value={country} name="country" onChange={handleChange} />
+                            <Input placeholder="PostCode" value={postcode} name="postcode" onChange={handleChange} />
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateProfile} />

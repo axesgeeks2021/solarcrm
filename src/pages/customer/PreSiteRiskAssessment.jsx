@@ -7,13 +7,12 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import UploadFile from "../../components/inputsfield/UploadFile";
 
 function PreSiteRiskAssessment() {
   const [cookies] = useCookies();
   const location = useLocation()
   const navigate = useNavigate()
-
-  console.log('id', location.state.id)
 
   const [checkHazards, setCheckHazards] = useState("No");
   const [checkRoof, setCheckRoof] = useState("No");
@@ -24,8 +23,8 @@ function PreSiteRiskAssessment() {
   const [checkPresence, setCheckPresence] = useState("No");
   const [checkConcerns, setCheckConcerns] = useState("No");
 
-  const [mossComment, setMossComment] = useState("No");
-  const [safetyComment, setSafetyComment] = useState("No");
+  const [mossComment, setMossComment] = useState("");
+  const [safetyComment, setSafetyComment] = useState("");
 
   const [hazards] = useState([
     "Pets",
@@ -196,7 +195,7 @@ function PreSiteRiskAssessment() {
                   }}
                   onClick={() => setCheckHazards("Yes")}
                 >
-                  <p style={{ color: checkHazards ? "#34a446" : "" }}>Yes</p>
+                  <p style={{ color: checkHazards === "Yes" ? "#34a446" : "" }}>Yes</p>
                 </div>
                 <div
                   className="select__options"
@@ -208,7 +207,7 @@ function PreSiteRiskAssessment() {
                 >
                   <p
                     style={{
-                      color: !checkHazards ? "#34a446" : "",
+                      color: checkHazards === "No" ? "#34a446" : "",
                     }}
                   >
                     No
@@ -285,7 +284,7 @@ function PreSiteRiskAssessment() {
                   }}
                   onClick={() => setCheckRoof("Yes")}
                 >
-                  <p style={{ color: checkRoof ? "#34a446" : "" }}>Yes</p>
+                  <p style={{ color: checkRoof === "Yes" ? "#34a446" : "" }}>Yes</p>
                 </div>
                 <div
                   className="select__options"
@@ -297,7 +296,7 @@ function PreSiteRiskAssessment() {
                 >
                   <p
                     style={{
-                      color: !checkRoof ? "#34a446" : "",
+                      color: checkRoof === "No" ? "#34a446" : "",
                     }}
                   >
                     No
@@ -363,7 +362,7 @@ function PreSiteRiskAssessment() {
                     }}
                     onClick={() => setCheckTension("Yes")}
                   >
-                    <p style={{ color: checkTension ? "#34a446" : "" }}>Yes</p>
+                    <p style={{ color: checkTension === "Yes" ? "#34a446" : "" }}>Yes</p>
                   </div>
                   <div
                     className="select__options"
@@ -375,7 +374,7 @@ function PreSiteRiskAssessment() {
                   >
                     <p
                       style={{
-                        color: !checkTension ? "#34a446" : "",
+                        color: checkTension === "No" ? "#34a446" : "",
                       }}
                     >
                       No
@@ -394,9 +393,9 @@ function PreSiteRiskAssessment() {
 
             <div
               className="additional"
-              style={{ visibility: checkTension ? "visible" : "hidden" }}
+              style={{ visibility: checkTension  === "Yes" ? "visible" : "hidden" }}
             >
-              <input type="file" onChange={handleFile} />
+            <UploadFile id="hightension" label="High Tension Attachment" onchange={handleFile} />
             </div>
           </div>
           <div className="assesment">
@@ -559,7 +558,7 @@ function PreSiteRiskAssessment() {
                     }}
                     onClick={() => setCheckVehicle("Yes")}
                   >
-                    <p style={{ color: checkVehicle ? "#34a446" : "" }}>Yes</p>
+                    <p style={{ color: checkVehicle === "Yes" ? "#34a446" : "" }}>Yes</p>
                   </div>
                   <div
                     className="select__options"
@@ -571,8 +570,7 @@ function PreSiteRiskAssessment() {
                   >
                     <p
                       style={{
-                        color: !checkVehicle ? "#34a446" : "",
-                        // fontWeight: !checkHazards ? "700" : "400",
+                        color: checkVehicle === "No" ? "#34a446" : "",
                       }}
                     >
                       No
@@ -609,7 +607,7 @@ function PreSiteRiskAssessment() {
                     }}
                     onClick={() => setCheckPresence("Yes")}
                   >
-                    <p style={{ color: checkPresence ? "#34a446" : "" }}>Yes</p>
+                    <p style={{ color: checkPresence === "Yes" ? "#34a446" : "" }}>Yes</p>
                   </div>
                   <div
                     className="select__options"
@@ -621,7 +619,7 @@ function PreSiteRiskAssessment() {
                   >
                     <p
                       style={{
-                        color: !checkPresence ? "#34a446" : "",
+                        color: checkPresence === "No" ? "#34a446" : "",
                       }}
                     >
                       No
@@ -634,7 +632,7 @@ function PreSiteRiskAssessment() {
                     border: "2px solid #34a446",
                   }}
                 >
-                  <p style={{ color: "#34a446" }}>Yes</p>
+                  <p style={{ color: "#34a446" }}>{orderData?.presite?.asbestos_presence}</p>
                 </div>
             }
 
@@ -657,7 +655,7 @@ function PreSiteRiskAssessment() {
                   }}
                   onClick={() => setCheckConcerns("Yes")}
                 >
-                  <p style={{ color: checkConcerns ? "#34a446" : "" }}>Yes</p>
+                  <p style={{ color: checkConcerns === "Yes" ? "#34a446" : "" }}>Yes</p>
                 </div>
                 <div
                   className="select__options"
@@ -669,7 +667,7 @@ function PreSiteRiskAssessment() {
                 >
                   <p
                     style={{
-                      color: !checkConcerns ? "#34a446" : "",
+                      color: checkConcerns === "No" ? "#34a446" : "",
                     }}
                   >
                     No

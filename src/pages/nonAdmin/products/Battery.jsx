@@ -8,6 +8,7 @@ import Heading from '../../../components/heading/Heading';
 import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input';
 
 function Battery() {
     const [batteryData, setBatteryData] = useState([])
@@ -82,14 +83,14 @@ function Battery() {
                 {/* <ImCross style={{position: 'absolute', top: '5px', left: '10px', cursor: 'pointer'}} onClick={() => setDisplayForm(false)}/> */}
                 <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "80%" }}>
                     <Heading heading="Enter details for creating new Panels" />
-                    <FormInput width="100%" placeholder="Title" />
-                    <FormInput width="100%" placeholder="Product Code" />
-                    <FormInput width="100%" placeholder="upload your logo" />
-                    <FormInput width="100%" placeholder="Inverter Type" />
-                    <FormInput width="100%" placeholder="Rated Output Power..." />
-                    <FormInput width="100%" placeholder="Product warranty" />
-                    <FormInput width="100%" placeholder="Additional part warranty" />
-                    <FormInput width="100%" placeholder="Manufacturer" />
+                    <Input width="100%" placeholder="Title" />
+                    <Input width="100%" placeholder="Product Code" />
+                    <Input width="100%" placeholder="upload your logo" />
+                    <Input width="100%" placeholder="Inverter Type" />
+                    <Input width="100%" placeholder="Rated Output Power..." />
+                    <Input width="100%" placeholder="Product warranty" />
+                    <Input width="100%" placeholder="Additional part warranty" />
+                    <Input width="100%" placeholder="Manufacturer" />
                     <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
                         <Button title="Submit" background="orange" />
                         <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />

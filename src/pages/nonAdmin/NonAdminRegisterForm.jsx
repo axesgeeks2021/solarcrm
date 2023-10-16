@@ -5,6 +5,7 @@ import Button from "../../components/Button/Button";
 
 import Heading from "../../components/heading/Heading"
 import { useCookies } from 'react-cookie';
+import Input from '../../components/inputsfield/Input';
 // import AdminSideNavigation from '../admin/menu/AdminSideNavigation';
 
 function NonAdminRegisterForm() {
@@ -91,38 +92,38 @@ function NonAdminRegisterForm() {
                 </div>
                 <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerNonAdmin}>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                        <FormInput placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                        <FormInput placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                        <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
+                        <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                        <FormInput placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                        <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
+                        <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Profile Photo..." type="file" onChange={handlefile} name="profilepic" />
-                        <FormInput placeholder="Address..." onChange={handleChange} value={address} name="address" />
+                        <Input placeholder="Profile Photo..." type="file" onChange={handlefile} name="profilepic" />
+                        <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                        <FormInput placeholder="Companyname..." onChange={handleChange} value={companyname} name="companyname" />
+                        <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                        <Input placeholder="Companyname..." onChange={handleChange} value={companyname} name="companyname" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="ABN Number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
-                        <FormInput placeholder="ACN Number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
+                        <Input placeholder="ABN Number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
+                        <Input placeholder="ACN Number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
+                        <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                        <FormInput placeholder="City..." onChange={handleChange} value={city} name="city" />
+                        <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                        <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="State..." onChange={handleChange} value={state} name="state" />
-                        <FormInput placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
+                        <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
+                        <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <FormInput placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                        <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                     </div>
                     <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                         <Button title="Submit" background="orange" />

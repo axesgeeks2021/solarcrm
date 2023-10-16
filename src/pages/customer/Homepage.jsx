@@ -124,9 +124,9 @@ function Homepage({showSlotModal, setShowSlotModal}) {
             })} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
           </div>
         </div>
-    <div style={{position: 'fixed',zIndex: 100,background: '#fff', backdropFilter: 'blur(10px)', padding: '20px 20px', width: "70%", display: showSlotModal ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.4), -2px -2px 10px 2px rgba(0,0,0,0.4)', borderRadius: '4px'}}>
+    <div style={{height: '80vh', overflowY: 'scroll',position: 'fixed',zIndex: 100,background: '#fff', backdropFilter: 'blur(10px)', padding: '20px 20px', width: "70%", display: showSlotModal ? 'flex' : 'none', justifyContent: 'center', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.4), -2px -2px 10px 2px rgba(0,0,0,0.4)', borderRadius: '4px'}}>
             <AiOutlineClose style={{position: 'absolute', top: '10px', right: '10px', cursor: 'pointer'}} size={25} onClick={() => setShowSlotModal(false)}/>
-    <table style={{ background: '#34a446',color: '#fff', border: '2px solid #000', margin: '20px 10px' }}>
+    <table style={{ background: '#34a446',color: '#fff', border: '2px solid #000', margin: '20px 10px', }}>
     <thead >
       <tr>
         <th style={{ padding: '10px 0' }}>S.No</th>
@@ -137,7 +137,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
     </thead>
     <tbody>
       {
-        listOfSlots?.data?.slice(0, 7).map((ele, idx) => {
+        listOfSlots?.data?.map((ele, idx) => {
           return (
             <tr key={idx} style={{ background: "#fff", border:'2px solid black' }}>
               <td style={{ padding: '5px 0', color: 'black', fontWeight: '600' }}>{idx + 1}</td>

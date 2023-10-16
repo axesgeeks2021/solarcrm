@@ -134,14 +134,14 @@ function Login() {
               placeholder="Project ID"
               value={username}
               name="username"
-              onchange={handleChange}
+              onChange={handleChange}
             />
             <Input
               type="text"
               placeholder="Pin Number"
               value={password}
               name="password"
-              onchange={handleChange}
+              onChange={handleChange}
             />
             <Button
               type="submit"

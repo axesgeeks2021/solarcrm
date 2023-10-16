@@ -120,16 +120,16 @@ function BatterOrders() {
                     </div>
                     <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Code" value={code} name="code" onChange={handleChange} />
-                            <FormInput placeholder="Title" value={title} name="title" onChange={handleChange} />
+                            <Input placeholder="Code" value={code} name="code" onChange={handleChange} />
+                            <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Total energy" value={totalenergy} name="totalenergy" onChange={handleChange} />
-                            <FormInput placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                            <Input placeholder="Total energy" value={totalenergy} name="totalenergy" onChange={handleChange} />
+                            <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <FormInput placeholder="Battery Logo" type="file" onChange={handlefile} />
-                            <FormInput placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
+                            <Input placeholder="Battery Logo" type="file" onChange={handlefile} />
+                            <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" />

@@ -8,6 +8,7 @@ import Heading from '../../../components/heading/Heading';
 import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input';
 
 
 
@@ -136,12 +137,12 @@ function Panels() {
                 <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "80%" }}>
                     <Heading heading="Enter details for creating new Panels" />
                     <form className='flex flex-col justify-center items-center gap-3' style={{ width: "100%" }} onSubmit={createPanels}>
-                    <FormInput width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
-                    <FormInput width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
-                    <FormInput width="100%" placeholder="Technology" value={technology} name="technology" onChange={handleText}/>
-                    <FormInput width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}/>
-                    <FormInput width="100%" placeholder="Performance Warranty" value={performanceWarranty} name="performanceWarranty" onChange={handleText}/>
-                    <FormInput width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
+                    <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
+                    <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
+                    <Input width="100%" placeholder="Technology" value={technology} name="technology" onChange={handleText}/>
+                    <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}/>
+                    <Input width="100%" placeholder="Performance Warranty" value={performanceWarranty} name="performanceWarranty" onChange={handleText}/>
+                    <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
                     <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
                         <Button title="Submit" background="orange" type="submit"/>
                         <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />

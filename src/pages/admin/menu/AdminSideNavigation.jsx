@@ -51,7 +51,7 @@ function AdminSideNavigation() {
             itemId: '/register-customer'
           },
           {
-            title: "Installer",
+            title: "Installer / Electrician",
             itemId: '/register-installer'
           },
         ]

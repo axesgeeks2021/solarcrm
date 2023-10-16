@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Button from '../../../components/Button/Button'
 
 import { useCookies } from "react-cookie";
+import Input from '../../../components/inputsfield/Input'
 
 
 function CreateOrders() {
@@ -95,33 +96,33 @@ function CreateOrders() {
                 </div>
                 <form onSubmit={createOrders} style={{width: "100%", overflow: 'hidden'}}>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your username..." value={username} name="username" onChange={handleChange} />
-                        <FormInput placeholder="Enter your system size..." value={systemSize} name="systemSize" onChange={handleChange} />
-                        <FormInput placeholder="Enter your building type..." value={buildingType} name="buildingType" onChange={handleChange} />
+                        <Input placeholder="Enter your username..." value={username} name="username" onChange={handleChange} />
+                        <Input placeholder="Enter your system size..." value={systemSize} name="systemSize" onChange={handleChange} />
+                        <Input placeholder="Enter your building type..." value={buildingType} name="buildingType" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your nmi number..." value={nmiNumber} name="nmiNumber" onChange={handleChange} />
+                        <Input placeholder="Enter your nmi number..." value={nmiNumber} name="nmiNumber" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your panels..." value={panels} name="panels" onChange={handleChange} />
-                        <FormInput placeholder="Enter your inverter..." value={inverter} name="inverter" onChange={handleChange} />
-                        <FormInput placeholder="Enter your roof type..." value={roofType} name="roofType" onChange={handleChange} />
+                        <Input placeholder="Enter your panels..." value={panels} name="panels" onChange={handleChange} />
+                        <Input placeholder="Enter your inverter..." value={inverter} name="inverter" onChange={handleChange} />
+                        <Input placeholder="Enter your roof type..." value={roofType} name="roofType" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your roof angle..." value={roofAngle} name="roofAngle" onChange={handleChange} />
+                        <Input placeholder="Enter your roof angle..." value={roofAngle} name="roofAngle" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your meter phase..." value={meterPhase} name="meterPhase" onChange={handleChange} />
-                        <FormInput placeholder="Enter your installation type..." value={installationType} name="installationType" onChange={handleChange} />
-                        <FormInput placeholder="Enter your document file..." onChange={handleFile} type="file"/>
+                        <Input placeholder="Enter your meter phase..." value={meterPhase} name="meterPhase" onChange={handleChange} />
+                        <Input placeholder="Enter your installation type..." value={installationType} name="installationType" onChange={handleChange} />
+                        <Input placeholder="Enter your document file..." onChange={handleFile} type="file"/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your panels quantity..." value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
+                        <Input placeholder="Enter your panels quantity..." value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <FormInput placeholder="Enter your inverter quantity..." value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
-                        <FormInput placeholder="Enter your other component..." value={otherComponent} name="otherComponent" onChange={handleChange} />
-                        <FormInput placeholder="Enter your battries..." value={battries} name="battries" onChange={handleChange} />
+                        <Input placeholder="Enter your inverter quantity..." value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
+                        <Input placeholder="Enter your other component..." value={otherComponent} name="otherComponent" onChange={handleChange} />
+                        <Input placeholder="Enter your battries..." value={battries} name="battries" onChange={handleChange} />
                     </div>
                     <div className='admin__order__input__container flex p-4  justify-end mx-2'>
                         <Button title="Submit" background="orange" color="white" />
