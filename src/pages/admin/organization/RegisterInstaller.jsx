@@ -77,7 +77,6 @@ function RegisterTeam() {
             formdata.append("phone", phone);
             formdata.append("email", email);
             // formdata.append("profile_pic", file);
-            formdata.append("address", address);
             formdata.append("alternate_phone", alternatephone);
             formdata.append("department", selectedDepartment);
             formdata.append("ec_file", file2);
@@ -104,6 +103,7 @@ function RegisterTeam() {
             fetch(`https://solar365.co.in/register/?user_type=INSTALLER`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log(result)
                     if (result.messsage === 'Success') {
                         toast.update(loadingToast, { render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true })
                         setValue({
@@ -248,7 +248,6 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Profile Photo..." type="file" onChange={handlefile} />
-                            <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
@@ -260,12 +259,10 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Ec_file" onChange={handlefile2} type="file" />
-                            <UploadFile width="100%" label="Ec File" id="ecfile" name="ecfile" onchange={handlefile2} />
                             <Input placeholder="Ec_number..." onChange={handleChange} value={ecnumber} name="ecnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="El_file..." onChange={handlefile3} type="file" />
-                            <UploadFile width="100%" label="EL File" id="elfile" name="elfile" onchange={handlefile3} />
                             <Input placeholder="El_number..." onChange={handleChange} value={elnumber} name="elnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>

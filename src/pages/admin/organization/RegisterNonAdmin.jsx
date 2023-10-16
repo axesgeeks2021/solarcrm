@@ -177,9 +177,9 @@ function RegisterNonAdmin() {
             </div>
             {
                 showForm &&
-                <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column' }}>
-                    <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                        <Heading heading="Create or Register Non Admin" size="36px" weight="600" />
+                <div style={{background: '#fff', width: "100%",display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column', position: 'absolute' }}>
+                <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <Heading heading="Create or Register Non Admin" size="36px" weight="600" />
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerNonAdmin}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>

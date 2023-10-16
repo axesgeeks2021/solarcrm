@@ -9,6 +9,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
+import Loading from '../../../components/loading/Loading';
 
 
 
@@ -18,11 +19,13 @@ function Panels() {
 
 
     const [panelsData, setPanelsData] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const [displayForm, setDisplayForm] = useState(false)
 
     const [file, setFile] = useState(null)
     const [text, setText] = useState({
+        title: "",
         code: "",
         manufacturer: "",
         technology: "",
@@ -30,7 +33,7 @@ function Panels() {
         performanceWarranty: "",
     })
 
-    const {code, manufacturer,performanceWarranty, productWarranty,technology  } = text
+    const {code, manufacturer,performanceWarranty, productWarranty,technology, title  } = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -52,9 +55,9 @@ function Panels() {
             })
 
             const data = await res.json()
+            console.log('panels', data)
             setPanelsData(data)
 
-            console.log(data)
         } catch (error) {
             console.log(error)
         }
@@ -63,11 +66,13 @@ function Panels() {
     const createPanels = e => {
         e.preventDefault()
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
 
             const formdata = new FormData();
+            formdata.append('title', title)
             formdata.append("code", code);
             formdata.append("panel_logo", file);
             formdata.append("manufacturer", manufacturer);
@@ -84,8 +89,13 @@ function Panels() {
             };
 
             fetch("https://solar365.co.in/module/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
+                .then(response => response.json())
+                .then(result => {
+                    setLoading(false)
+                    setDisplayForm(false)
+                    console.log(result)
+                    return fetchRecord()
+                })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -97,6 +107,10 @@ function Panels() {
 
         return () => subscribe
     }, [])
+
+    if(loading){
+        return <Loading />
+    }
 
     return (
         <>
@@ -138,6 +152,7 @@ function Panels() {
                     <Heading heading="Enter details for creating new Panels" />
                     <form className='flex flex-col justify-center items-center gap-3' style={{ width: "100%" }} onSubmit={createPanels}>
                     <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
+                    <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
                     <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
                     <Input width="100%" placeholder="Technology" value={technology} name="technology" onChange={handleText}/>
                     <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}/>

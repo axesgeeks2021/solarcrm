@@ -9,6 +9,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
+import Loading from '../../../components/loading/Loading';
 
 
 
@@ -17,7 +18,7 @@ function OtherComponent() {
     const [cookies] = useCookies();
 
     const [otherComponentData, setotherComponentData] = useState([])
-
+    const [loading, setLoading] = useState(false)
     const [displayForm, setDisplayForm] = useState(false)
 
     const [file, setFile] = useState(null)
@@ -66,6 +67,7 @@ function OtherComponent() {
     const createOtherComponent = e => {
         e.preventDefault()
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
@@ -91,8 +93,13 @@ function OtherComponent() {
             };
 
             fetch("https://solar365.co.in/other_component/", requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
+                .then(response => response.json())
+                .then(result => {
+                    setLoading(false)
+                    setDisplayForm(false)
+                    console.log(result)
+                    return fetchRecord()
+                })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -104,6 +111,10 @@ function OtherComponent() {
 
         return () => subscribe
     }, [])
+
+    if(loading){
+        return <Loading />
+    }
 
     return (
         <>

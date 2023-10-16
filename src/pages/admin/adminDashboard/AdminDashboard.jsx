@@ -89,7 +89,7 @@ function AdminDashboard() {
     const createOrder = (e) => {
         e.preventDefault()
         try {
-            const loadingId = toast.loading("Please wait...")
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
@@ -123,7 +123,8 @@ function AdminDashboard() {
             fetch("https://solar365.co.in/order/", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
-                    toast.update(loadingId, { render: 'Order created Successfully...', type: 'success', isLoading: false, autoClose: true })
+                    setLoading(false)
+                    setShowForm(false)
                     console.log(result)
                 })
                 .catch(error => console.log('error', error));

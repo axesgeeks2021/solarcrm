@@ -9,11 +9,13 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
+import Loading from '../../../components/loading/Loading';
 
 function Battery() {
     const [batteryData, setBatteryData] = useState([])
 
     const [displayForm, setDisplayForm] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const [cookies] = useCookies();
 
@@ -61,6 +63,7 @@ function Battery() {
     const createBattery = (e) => {
         e.preventDefault()
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -84,7 +87,10 @@ function Battery() {
             fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    setLoading(false)
+                    setDisplayForm(false)
                     console.log(result)
+                    return fetchRecord()
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -97,6 +103,10 @@ function Battery() {
 
         return () => subscribe
     }, [])
+
+    if(loading){
+        return <Loading />
+    }
 
     return (
         <>

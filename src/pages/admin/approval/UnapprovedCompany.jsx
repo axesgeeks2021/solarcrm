@@ -63,7 +63,7 @@ function UnapprovedCompany() {
                 .then(result => {
                     setTimeout(() => {
                         setLoading(false)
-                        fetchData()
+                        return fetchData()
                     }, 700)
                 })
                 .catch(error => console.log('error', error));

@@ -3,7 +3,6 @@ import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 
 import FormsContainer from '../Forms/FormsContainer'
-import FormInput from '../../../components/inputsfield/FormInput'
 import Loading from '../../../components/loading/Loading'
 import AdminSideNavigation from '../menu/AdminSideNavigation'
 
@@ -14,7 +13,6 @@ import Input from '../../../components/inputsfield/Input'
 function UpdateProfile() {
 
     const [cookies] = useCookies();
-
 
     const [display, setDisplay] = useState({
         admin: false,

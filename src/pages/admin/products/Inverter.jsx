@@ -19,12 +19,11 @@ function Inverter() {
     const navigate = useNavigate()
 
     const [inverterData, setInverterData] = useState([])
-
+    const [loading, setLoading] = useState(false)
     const [displayForm, setDisplayForm] = useState(false)
-
     const [file, setFile] = useState(null)
-
     const [text, setText] = useState({
+        title: "",
         code: "",
         ratedOutputPower: "",
         productWaranty: "",
@@ -33,7 +32,7 @@ function Inverter() {
         manufacturer: ""
     })
 
-    const {additionalPartWarranty, code, inverterType, manufacturer, productWaranty, ratedOutputPower} = text
+    const {additionalPartWarranty, code,title, inverterType, manufacturer, productWaranty, ratedOutputPower} = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -64,15 +63,16 @@ function Inverter() {
     }
 
     const createInverter = e => {
-        e.preventDefaul()
-
+        e.preventDefault()
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
 
             const formdata = new FormData();
             formdata.append("code", code);
+            formdata.append("title", title);
             formdata.append("inverter_logo", file);
             formdata.append("rated_output_power", ratedOutputPower);
             formdata.append("product_warranty", productWaranty);
@@ -91,7 +91,12 @@ function Inverter() {
 
             fetch("https://solar365.co.in/inverter_module/", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then(result =>{
+                    setLoading(false)
+                    setDisplayForm(false)
+                    console.log(result)
+                    return fetchRecord()
+        })
                 .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
@@ -144,6 +149,7 @@ function Inverter() {
                     <Heading heading="Enter details for creating new Inverters" />
                     <form className='flex flex-col justify-center items-center gap-3' style={{ width: "100%" }} onSubmit={createInverter}>
                     <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
+                    <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
                     <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
                     <Input width="100%" placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleText}/>
                     <Input width="100%" placeholder="Rated Output Power..." value={ratedOutputPower} name="ratedOutputPower" onChange={handleText}/>

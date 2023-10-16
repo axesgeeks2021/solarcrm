@@ -206,7 +206,6 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Profile Photo..." type="file" onChange={handlefile} />
-                            <UploadFile label="Profile Photo" id="profilephoto" onchange={handlefile} width="100%" />
                             <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
