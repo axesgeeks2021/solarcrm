@@ -35,18 +35,12 @@ function NonAdminDashboard() {
     const [inverterList, setInverterList] = useState([])
     const [batteryList, setBatteryList] = useState([])
     const [panelList, setPanelList] = useState([])
-
     const [ordersList, setOrdersLists] = useState([])
-
     const [packingSlipFile, setPackingSlipFile] = useState(null)
     const [weternPowerFile, setweternPowerFile] = useState(null)
     const [switchBoardFile, setswitchBoardFile] = useState(null)
     const [panelLayoutFile, setpanelLayoutFile] = useState(null)
     const [extrasFile, setextrasFile] = useState(null)
-
-    const [selectedPanel, setSelectedPanel] = useState('')
-    const [selectedBattery, setSelectedBattery] = useState('')
-    const [selectedInverter, setSelectedInverter] = useState('')
 
     const [text, setText] = useState({
         firstname: '',
@@ -55,6 +49,7 @@ function NonAdminDashboard() {
         email: '',
         systemSize: "",
         buildingType: "",
+        roofType: "",
         nmiNo: "",
         meterNumber: "",
         packingSlipReason: '',
@@ -65,17 +60,18 @@ function NonAdminDashboard() {
         addressline: "",
         city: "",
         postcode: "",
-        country: "",
+        country: "Australia",
         descritpion: '',
         meterPhase: "",
         panels: "",
         inverter: "",
         panelsQuantity: "",
         inverterQuantity: "",
-        batteries: ""
+        batteries: "",
+        batteriesQuantity: ""
     })
 
-    const { addressline, batteries, buildingType, city, country, descritpion, email, firstname, inverter, inverterQuantity, lastname, meterNumber, meterPhase, nmiNo, packingSlipReason,
+    const { addressline, batteries, roofType, batteriesQuantity, buildingType, city, country, descritpion, email, firstname, inverter, inverterQuantity, lastname, meterNumber, meterPhase, nmiNo, packingSlipReason,
         panelLayoutReason, panels, panelsQuantity, phone, postcode, state, switchBoardReason, systemSize, westernPowerReason } = text
 
     const handleChange = e => {
@@ -98,11 +94,9 @@ function NonAdminDashboard() {
             fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setTimeout(() => {
                         setLoading(false)
                         // console.log('orders', result)
                         setOrderLists(result)
-                    }, 200);
                 })
                 .catch(error => console.log('error', error));
 
@@ -196,6 +190,8 @@ function NonAdminDashboard() {
     const fetchCreateOrder = (e) => {
         e.preventDefault()
         try {
+            
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             // myHeaders.append("Content-Type", "application/json");
@@ -225,35 +221,38 @@ function NonAdminDashboard() {
             formdata.append("country", country);
             formdata.append("description", descritpion);
             formdata.append("meter_Phase", meterPhase);
-            formdata.append("panels", selectedPanel);
+            formdata.append("panels", panels);
             formdata.append("building_Type", buildingType);
-            formdata.append("inverter", selectedInverter);
+            formdata.append("inverter", inverter);
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
-            formdata.append("batteries", selectedBattery);
+            formdata.append("batteries", batteries);
+            formdata.append("roof_type", roofType);
+            formdata.append("battery_quantity", batteriesQuantity);
 
-            const requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: formdata,
-                redirect: 'follow'
-            };
+                const requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: formdata,
+                    redirect: 'follow'
+                };
 
-            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    if (result.messsage === 'Success') {
-                        toast.success('Order created successfully')
-                        setShowForm(false)
-                        return fetchOrder()
-                    }
-                    console.log(result)
-                })
-                .catch(error => console.log('error', error));
-        } catch (error) {
-            console.log(error)
+                fetch("https://solar365.co.in/non-admin-order/", requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        setLoading(false)
+                        if (result.messsage === 'Success') {
+                            toast.success('Order created successfully')
+                            setShowForm(false)
+                            return fetchOrder()
+                        }
+                        console.log(result)
+                    })
+                    .catch(error => console.log('error', error));
+            } catch (error) {
+                console.log(error)
+            }
         }
-    }
 
     // const getAllUserList = () => {
     //     try {
@@ -278,87 +277,82 @@ function NonAdminDashboard() {
     //     }
     // }
 
+
     const goToOrders = (url, data) => {
-        return navigate(url, data)
-    }
+            return navigate(url, data)
+        }
 
-    useEffect(() => {
-        const subscribe = fetchOrder()
-
-        const subscribe1 = getDetails()
-
-        // const subscribe2 = getAllUserList()
-
-        const subscribe3 = fetchGetOrders()
-
-        const subscribe4 = getBatteryDetails()
-
-        const subscribe5 = getPanelDetails()
-
-        return () => [subscribe, subscribe1, subscribe3, subscribe4, subscribe5]
-    }, [])
+        useEffect(() => {
+            const subscribe = fetchOrder()
+            const subscribe1 = getDetails()
+            // const subscribe2 = getAllUserList()
+            const subscribe3 = fetchGetOrders()
+            const subscribe4 = getBatteryDetails()
+            const subscribe5 = getPanelDetails()
+            return () => [subscribe, subscribe1, subscribe3, subscribe4, subscribe5]
+        }, [])
 
 
-    if (loading) {
-        return <Loading />
-    }
+        if (loading) {
+            return <Loading />
+        }
 
-    return (
-        <div className='container-fluid' style={{ display: 'flex', flexDirection: 'row' }}>
-            <div>
-                <NonAdminSideNavigation />
-                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
-                    <BiLogOut />
-                    <Button title="Logout" onclick={logout} />
-                </div>
-            </div>
-            <div class="container__table">
-                <div className='py-2 flex justify-end'>
-                    <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
-                </div>
-                <table class="responsive-table">
-                    {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
-                    <thead>
-                        <tr>
-                            <th scope="col">Project Number</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Panels Quantity</th>
-                            <th scope="col">Building Type</th>
-                            <th scope="col">NMI No</th>
-                            <th scope="col">Status</th>
-                            {/* <th scope="col">Budget</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
-                                return (
-                                    // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                    <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
-                                        <th scope="row">{ele.project}</th>
-                                        <td data-title="Released">{ele?.customer_name}</td>
-                                        <td data-title="Studio">{ele?.panels_quantity}</td>
-                                        <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
-                                        <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
-                                        <td data-title="International Gross" data-type="currency">
-                                            <Button title="In Process" background="green" color="white" cursor="none" />
-                                        </td>
-                                        {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
-                                    </tr>
-                                    // </Link>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
-            </div>
-            {
-                showForm && <FormsContainer flexDirection="column" height="80vh" overflow="scroll" justifyContent="flex-start">
-                    <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                        <Heading heading="Create your order..." size="200%" />
+        return (
+            <div className='container-fluid' style={{ display: 'flex', flexDirection: 'row' }}>
+                <div>
+                    <NonAdminSideNavigation />
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
+                        <BiLogOut />
+                        <Button title="Logout" onclick={logout} />
                     </div>
-                    <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={fetchCreateOrder}>
-                        {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                </div>
+                <div class="container__table">
+                    <div className='py-2 flex justify-end'>
+                        <Button title="Create New Job" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                    </div>
+                    <table class="responsive-table">
+                        {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
+                        <thead>
+                            <tr>
+                                <th scope="col">Project Number</th>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Panels Quantity</th>
+                                <th scope="col">Building Type</th>
+                                <th scope="col">NMI No</th>
+                                <th scope="col">Status</th>
+                                {/* <th scope="col">Budget</th> */}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                ordersList.length < 1 ? <h2>There is no order available right now...</h2> : orderLists.map((ele, idx) => {
+                                    return (
+                                        // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
+                                        <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
+                                            <th scope="row">{ele.project}</th>
+                                            <td data-title="Released">{ele?.customer_name}</td>
+                                            <td data-title="Studio">{ele?.panels_quantity}</td>
+                                            <td data-title="Worldwide Gross" data-type="currency">{ele.building_Type}</td>
+                                            <td data-title="Domestic Gross" data-type="currency">{ele.nmi_no}</td>
+                                            <td data-title="International Gross" data-type="currency">
+                                                <Button title="In Process" background="green" color="white" cursor="none" />
+                                            </td>
+                                            {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
+                                        </tr>
+                                        // </Link>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                {
+                    showForm && <FormsContainer flexDirection="column" height="80vh" overflow="scroll" justifyContent="flex-start">
+                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                            <Heading heading="Create your Job" size="200%" />
+                        </div>
+                        <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={fetchCreateOrder}>
+                            {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <div style={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <select name='username' value={username} onChange={handleChange} style={{ border: '2px solid gray', width: '95%', padding: '5px 0' }}>
                                     <option style={{ textAlign: 'center' }} >Select User List</option>
@@ -372,18 +366,17 @@ function NonAdminDashboard() {
                                 </select>
                             </div> */}
 
-                        <div style={{ width: '90%', display: 'flex' }}>
-                            <Input placeholder="First name" value={firstname} name="firstname" onChange={handleChange} />
-                            <Input placeholder="Last name" value={lastname} name="lastname" onChange={handleChange} />
-                        </div>
-                        {/* </div> */}
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
-                            <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
-                            {/* <select>
+                            <div style={{ width: '90%', display: 'flex' }}>
+                                <Input placeholder="Customer name" value={firstname} name="firstname" onChange={handleChange} required={true} />
+                                <Input placeholder="Email" value={email} name="email" onChange={handleChange} />
+                            </div>
+                            {/* </div> */}
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} required={true} />
+                                <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true} />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                {/* <select>
                                 {
                                     inverterList.map((ele, idx) => {
                                         return(
@@ -392,7 +385,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select> */}
-                            {/* <Select
+                                {/* <Select
                                 className="basic-single"
                                 classNamePrefix="select"
                                 defaultValue={inverter[0]}
@@ -404,21 +397,22 @@ function NonAdminDashboard() {
                                 options={inverterList}
 
                             /> */}
-                            <Input placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
-                            <UploadFile id="packing" label="Packing Slip" onchange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <UploadFile id="wester" label="Western Power" onchange={e => setweternPowerFile(e.target.files[0])} width="100%" />
-                            <UploadFile id="switch" label="Switch Board" onchange={e => setswitchBoardFile(e.target.files[0])} width="100%" />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <UploadFile id="panels" label="Panels Layout" onchange={e => setpanelLayoutFile(e.target.files[0])} width="100%" />
-                            <UploadFile id="extras" label="Extras" onchange={e => setextrasFile(e.target.files[0])} width="100%" />
-                        </div>
-                        {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                                <Input type="file" placeholder="Packing Slip" onChange={e => setPackingSlipFile(e.target.files[0])} width="100%" required={true} />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input type="file" placeholder="Western Power Approval" onChange={e => setweternPowerFile(e.target.files[0])} width="100%" required={true} />
+                                <Input type="file" placeholder="Switch Board" onChange={e => setswitchBoardFile(e.target.files[0])} width="100%" required={true} />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input type="file" placeholder="Panels Layout" onChange={e => setpanelLayoutFile(e.target.files[0])} width="100%" required={true} />
+                                <Input type="file" placeholder="Extras" onChange={e => setextrasFile(e.target.files[0])} width="100%" />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input placeholder="Street Address" value={addressline} name="addressline" onChange={handleChange} />
+                                <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                            </div>
+                            {/* <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                              <Input placeholder="Packing Slip Reason*" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
                              <Input placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
                          </div>
@@ -426,70 +420,136 @@ function NonAdminDashboard() {
                              <Input placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
                              <Input placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
                         </div> */}
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="State" value={state} name="state" onChange={handleChange} />
-                            <Input placeholder="Address Line" value={addressline} name="addressline" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="City" value={city} name="city" onChange={handleChange} />
-                            <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
-                            <Input placeholder="Description" value={descritpion} name="descritpion" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
-                            <select value={selectedPanel} onChange={e => setSelectedPanel(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
-                            <option defaultChecked>Select Panel</option>
-                            {
-                                panelList.map((ele, idx) => {
-                                    return(
-                                        <option key={idx} value={ele?.id}>{ele?.code}</option>
-                                    )
-                                })
-                            }
-                            </select>
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Building Type" value={buildingType} name="buildingType" onChange={handleChange} />
-                            <select value={selectedInverter} onChange={e => setSelectedInverter(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
-                                <option value="Select Inverter" selected>Select Inverter</option>
-                                {
-                                    inverterList && inverterList.map((ele, idx) => {
-                                        return (
-                                            <option value={ele?.id} key={idx}>{ele?.code}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                            {/*<Input placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} />*/}
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Panels Quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
-                            <Input placeholder="Inverter Quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <select value={selectedBattery} onChange={e => setSelectedBattery(e.target.value)} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
-                                <option defaultChecked>Select Battery</option>
-                                {
-                                    batteryList.map((ele, idx) => {
-                                        return (
-                                            <option key={idx} value={ele?.id}>{ele?.code}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
-                            <Button title="Submit" type="submit" background="orange" color="white" />
-                            <Button title="Close" background="gray" color="white" onclick={() => setShowForm(false)} />
-                        </div>
-                    </form>
-                </FormsContainer>
-            }
-        </div>
-    )
-}
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
+                                    <option selected>Select State</option>
+                                    <option value="Queensland">Queensland</option>
+                                    <option value="New South Wales">New South Wales</option>
+                                    <option value="Victoria">Victoria</option>
+                                    <option value="Western Australia">Western Australia</option>
+                                </select>
+                                <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} required={true} />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <Input placeholder="Country" value={country} name="country" onChange={handleChange} required={true} />
+                                <select value={meterPhase} name='meterPhase' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option>Select Meter Phase</option>
+                                    <option>Single Phase</option>
+                                    <option>2 Phase</option>
+                                    <option>3 Phase</option>
+                                </select>
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <select value={buildingType} name="buildingType" onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                                    <option>Select Floor Type</option>
+                                    <option value="Ground Floor">Ground Floor</option>
+                                    <option value="First Floor">First Floor</option>
+                                    <option value="Second Floor">Second Floor</option>
+                                    <option value="More">More</option>
+                                </select>
+                                <select value={roofType} name="roofType" onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
+                                    <option>Select Roof Type</option>
+                                    <option value="Tin">Tin</option>
+                                    <option value="Tilt">Tilt</option>
+                                    <option value="Tile">Tile</option>
+                                    <option value="Tile">Colorbond</option>
+                                    <option value="Others">
+                                        Others
+                                    </option>
+                                </select>
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <select value={panels} name='panels' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option defaultChecked>Select Panel</option>
+                                    {
+                                        panelList.map((ele, idx) => {
+                                            return (
+                                                <option key={idx} value={ele?.id}>{ele?.code}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select value={panelsQuantity} name='panelsQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option>Panels Quantity</option>
+                                    {
+                                        [...Array(100)].map((_, idx) => {
+                                            return (
+                                                <option key={idx}>{idx + 1}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                                    <option>Purchase From</option>
+                                    <option value="Ground Floor">Himself</option>
+                                    <option value="First Floor">From Company</option>
+                                </select>
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <select value={inverter} name="inverter" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option value="Select Inverter" selected>Select Inverter</option>
+                                    {
+                                        inverterList && inverterList.map((ele, idx) => {
+                                            return (
+                                                <option value={ele?.id} key={idx}>{ele?.code}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select value={inverterQuantity} name='inverterQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option>Inverter Quantity</option>
+                                    {
+                                        [...Array(100)].map((_, idx) => {
+                                            return (
+                                                <option key={idx}>{idx + 1}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select  onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                                    <option>Purchase From</option>
+                                    <option value="Ground Floor">Himself</option>
+                                    <option value="First Floor">From Company</option>
+                                </select>
+                            </div>
 
-export default NonAdminDashboard    
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                                <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option defaultChecked>Select Battery</option>
+                                    {
+                                        batteryList.map((ele, idx) => {
+                                            return (
+                                                <option key={idx} value={ele?.id}>{ele?.code}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select value={batteriesQuantity} name='batteriesQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                                    <option>Battery Quantity</option>
+                                    {
+                                        [...Array(100)].map((_, idx) => {
+                                            return (
+                                                <option key={idx}>{idx + 1}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                <select onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                                    <option>Purchase From</option>
+                                    <option value="Ground Floor">Himself</option>
+                                    <option value="First Floor">From Company</option>
+                                </select>
+                            </div>
+
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
+                                <Button title="Submit" type="submit" background="orange" color="white" />
+                                <Button title="Close" background="gray" color="white" onclick={() => setShowForm(false)} />
+                            </div>
+                        </form>
+                    </FormsContainer>
+                }
+            </div>
+        )
+    }
+
+    export default NonAdminDashboard    

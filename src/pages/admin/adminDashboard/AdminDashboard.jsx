@@ -373,7 +373,12 @@ function AdminDashboard() {
                             <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Meter Phase" value={meterPhase} name="meterPhase" onChange={handleChange} />
+                            <select value={meterPhase} name='meterPhase' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                            <option>Select Meter Phase</option>
+                            <option>Single Phase</option>
+                            <option>2 Phase</option>
+                            <option>3 Phase</option>
+                        </select>
                             <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
                                 <option>Select Installation Type</option>
                                 <option value="new">New</option>

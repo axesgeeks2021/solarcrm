@@ -99,6 +99,8 @@ function Homepage({showSlotModal, setShowSlotModal}) {
     }
   }
 
+
+
   useEffect(() => {
     const subscribe = getOrderStatus();
 

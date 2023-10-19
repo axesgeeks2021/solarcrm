@@ -62,6 +62,7 @@ import Dashboard from "./pages/Team/Dashboard";
 import AssignedJobs from "./pages/Team/AssignedJobs";
 import UpdateAssignedOrders from "./pages/Team/UpdateAssignedOrders";
 import Practice from "./pages/Practice";
+import UpdateOtherComponentPrice from "./pages/admin/products/UpdateOtherComponentPrice";
 
 
 function App() {
@@ -164,6 +165,7 @@ function App() {
           <Route path="/unapproved-company" element={<UnapprovedCompany />} />
           <Route path="/approved-company" element={<ApprovedCompany />} />
           <Route path="/admin-profile" element={<AdminProfile />} />
+          <Route path="/admin-update-other-component-price" element={<UpdateOtherComponentPrice />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>

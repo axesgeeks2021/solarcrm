@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import UploadFile from '../../../components/inputsfield/UploadFile';
 import Dropdown from 'react-multilevel-dropdown'
 import Input from '../../../components/inputsfield/Input';
-// import {Multiselect} from "multi"
+import {Multiselect} from "multiselect-react-dropdown"
 
 function Customer() {
 
@@ -317,8 +317,10 @@ function Customer() {
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
+                                <Multiselect options={installerList?.Electrician?.admin} isObject={true} displayValue='city' placeholder='select electrician' />
                                 <Dropdown
                                     title='Assign To'
+                                    
                                 >
                                     <Dropdown.Item
                                     >

@@ -13,7 +13,7 @@ function Input(props) {
           onChange={props.onChange}
           name={props.name}
           disabled={props.disabled}
-          required
+          required={props.required}                                                                                                                                                                                                                                                                                              
         />
       </div>
     </>

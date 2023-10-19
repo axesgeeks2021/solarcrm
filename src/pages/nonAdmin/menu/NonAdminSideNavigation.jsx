@@ -28,17 +28,7 @@ function NonAdminSideNavigation() {
         itemId: '/non-admin',
         elemBefore: () => <AiOutlineHome />,
       },
-      {
-        title: 'Create Profiles',
-        itemId: '',
-        elemBefore: () => <BiUserCheck />,
-        subNav: [
-          {
-            title: "Customer",
-            itemId: '/non-admin/register-customer'
-          },
-        ]
-      },
+   
       // {
       //   title: 'Hardwares',
       //   elemBefore: () => <MdHardware />,

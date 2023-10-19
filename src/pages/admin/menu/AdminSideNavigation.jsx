@@ -76,6 +76,10 @@ function AdminSideNavigation() {
             title: 'Other',
             itemId: '/other-component',
           },
+          {
+            title: 'Update Other Component Price',
+            itemId: '/admin-update-other-component-price',
+          },
         ],
       },
       {
