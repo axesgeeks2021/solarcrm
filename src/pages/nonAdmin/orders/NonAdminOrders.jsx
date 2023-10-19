@@ -20,6 +20,8 @@ function AdminOrders() {
 
   const [cookies] = useCookies();
   const data = useLocation()
+
+  // console.log('new data',data?.state?.id)
   const navigate = useNavigate()
 
   const [showState, setShowState] = useState(false)
@@ -76,7 +78,6 @@ function AdminOrders() {
       fetch("https://solar365.co.in/slots_list/", requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result)
           setListOfSlots(result)
         })
         .catch(error => console.log('error', error));
@@ -124,9 +125,7 @@ function AdminOrders() {
 
 
   useEffect(() => {
-    const subscribe = fetchSlots()
-
-    return () => [subscribe]
+   
   }, [])
 
   // const updateOrder = async (e) => {
@@ -167,40 +166,41 @@ function AdminOrders() {
   //   }
   // }
 
-  // const fetchOrderDetails = () => {
-  //   try {
-  //     // setLoading(true)
-  //     const myHeaders = new Headers();
-  //     myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
-  //     myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+  const fetchOrderDetails = () => {
+    try {
+      setLoading(true)
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
 
-  //     const requestOptions = {
-  //       method: 'GET',
-  //       headers: myHeaders,
-  //       redirect: 'follow'
-  //     };
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
 
-  //     fetch(`http://65.0.45.255:8000/non-admin-order/${data.state.ele.id}/`, requestOptions)
-  //       .then(response => response.json())
-  //       .then(result => 
-  //         {
-  //           setTimeout(() => {
-  //             setLoading(false)
-  //             // console.log(result)
-  //             setOrderDetails(result)
-  //           }, 200);
-  //         })
-  //       .catch(error => console.log('error', error));
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+      fetch(`https://solar365.co.in/non-admin-order/${data?.state?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => 
+          {
+              setLoading(false)
+              console.log('orders;,',result)
+              setOrderDetails(result)
+          })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  // useEffect(() => {
-  //   const subscribe = fetchOrderDetails()
+  useEffect(() => {
+    const subscribe = fetchOrderDetails()
 
-  //   return () => subscribe
-  // }, [])
+    const subscribe2 = fetchSlots()
+
+    return () => [subscribe, subscribe2]
+
+  }, [])
 
   if (loading) {
     return <Loading />
@@ -248,20 +248,20 @@ function AdminOrders() {
                   }
                 </div>
                 <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                  <Line title="Project" value={data?.state?.ele?.project} />
-                  <Line title="Customer Email" value={data?.state?.ele?.to_address?.user?.emial} />
-                  <Line title="Installation Type" value={data?.state?.ele?.installation_type} />
-                  <Line title="Building Type" value={data?.state?.ele?.building_Type} />
-                  {/* <Line title="Quotation" value={data?.state?.ele?.quotation} /> */}
-                  <Line title="Nmi Number" value={data?.state?.ele?.nmi_no} />
-                  <Line title="Meter Phase" value={data?.state?.ele?.meter_Phase} />
-                  <Line title="Status" value={data?.state?.ele?.order_status} />
+                  <Line title="Project" value={data?.state?.project} />
+                  <Line title="Customer Email" value={data?.state?.to_address?.user?.email} />
+                  {/*<Line title="Installation Type" value={data?.state?.installation_type} />*/}
+                  <Line title="Building Type" value={data?.state?.building_Type} />
+                  {/* <Line title="Quotation" value={data?.state?.quotation} /> */}
+                  <Line title="Nmi Number" value={data?.state?.nmi_no} />
+                  <Line title="Meter Phase" value={data?.state?.meter_Phase} />
+                  <Line title="Status" value={data?.state?.order_status} />
                 </div>
               </div>
             </div>
             {/* Panels Details */}
             <hr></hr>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
+            {/*<div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
               <div className='accordian__box'>
                 <div className='accordian__question' onClick={() => setShowState1(!showState1)}>Panels Details
                   {
@@ -277,10 +277,10 @@ function AdminOrders() {
                   <Line title="Technology" value={orderDetails?.panels?.technology} />
                 </div>
               </div>
-            </div>
+                </div>*/}
             {/* Panels Details */}
             <hr></hr>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
+            {/*<div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
               <div className='accordian__box'>
                 <div className='accordian__question' onClick={() => setShowState2(!showState2)}>Inverter Details
                   {
@@ -296,10 +296,10 @@ function AdminOrders() {
                   <Line title="Rated Output Power" value={orderDetails?.inverter?.rated_ouptut_power} />
                 </div>
               </div>
-            </div>
+                </div>*/}
             <hr></hr>
             {/* Other Component */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
+            {/*<div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
               <div className='accordian__box'>
                 <div className='accordian__question' onClick={() => setShowState3(!showState3)}>Other Component Details
                   {
@@ -325,7 +325,7 @@ function AdminOrders() {
                   }
                 </div>
               </div>
-            </div>
+                </div>*/}
           </div>
         </div>
         {
