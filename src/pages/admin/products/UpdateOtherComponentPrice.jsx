@@ -49,7 +49,6 @@ function UpdateOtherComponentPrice() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    console.log('compnay', result)
                     setCompanyList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -113,7 +112,8 @@ function UpdateOtherComponentPrice() {
                     if (result.message === "success") {
                         setValue({
                             component: "",
-                            price: ''
+                            price: '',
+                            company: company
                         })
                         toast.update(loadingId, { render: 'Price updated successfully', isLoading: false, autoClose: true, type: 'success' })
                         return fetchOtherComponentPriceList()
