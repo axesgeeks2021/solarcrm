@@ -21,7 +21,6 @@ function AdminOrders() {
   const [cookies] = useCookies();
   const data = useLocation()
 
-  // console.log('new data',data?.state?.id)
   const navigate = useNavigate()
 
   const [showState, setShowState] = useState(false)
@@ -128,43 +127,43 @@ function AdminOrders() {
    
   }, [])
 
-  // const updateOrder = async (e) => {
-  //   e.preventDefault()
-  //   try {
-  //     setLoading(true)
-  //     let myHeaders = new Headers();
-  //     myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
+  const updateOrder = async (e) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      let myHeaders = new Headers();
+      myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
-  //     let formdata = new FormData();
-  //     formdata.append("quotation", quotation);
-  //     formdata.append("quantity", quantity);
-  //     formdata.append("rate", rate);
-  //     formdata.append("due_date", dueDate);
-  //     formdata.append("full_pay_due_date", fullpayduedate);
-  //     formdata.append("pay", pay);
+      let formdata = new FormData();
+      formdata.append("quotation", quotation);
+      formdata.append("quantity", quantity);
+      formdata.append("rate", rate);
+      formdata.append("due_date", dueDate);
+      formdata.append("full_pay_due_date", fullpayduedate);
+      formdata.append("pay", pay);
 
-  //     let requestOptions = {
-  //       method: 'PATCH',
-  //       headers: myHeaders,
-  //       body: formdata,
-  //       redirect: 'follow'
-  //     };
+      let requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
 
-  //     fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
-  //       .then(response => response.json())
-  //       .then(result => {
-  //         setTimeout(() => {
-  //           setLoading(false)
-  //           // console.log(result)
-  //           setOrderDetails(result)
-  //         }, 1000);
-  //       })
-  //       .catch(error => console.log('error', error));
+      fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setTimeout(() => {
+            setLoading(false)
+            // console.log(result)
+            setOrderDetails(result)
+          }, 1000);
+        })
+        .catch(error => console.log('error', error));
 
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const fetchOrderDetails = () => {
     try {

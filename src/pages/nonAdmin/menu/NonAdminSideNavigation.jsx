@@ -73,11 +73,7 @@ function NonAdminSideNavigation() {
         //   }
         // ]
       },
-      {
-        title: 'Calendar',
-        itemId: '/non-admin/calendar',
-        elemBefore: () => <AiOutlineHome />
-      }
+   
     ]}
   />
   )

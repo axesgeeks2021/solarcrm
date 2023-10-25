@@ -136,6 +136,7 @@ function Dashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setInstallerList(result)
+                    console.log('installer ', result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
