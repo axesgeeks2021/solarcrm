@@ -17,7 +17,7 @@ function Inverter() {
     const [cookies] = useCookies();
 
     const navigate = useNavigate()
-
+ 
     const [inverterData, setInverterData] = useState([])
     const [loading, setLoading] = useState(false)
     const [displayForm, setDisplayForm] = useState(false)

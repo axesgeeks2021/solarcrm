@@ -8,7 +8,7 @@ import Heading from '../../../components/heading/Heading';
 import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
-import Input from '../../../components/inputsfield/Input';
+import Input from '../../../components/inputsfield/Input'; 
 import Loading from '../../../components/loading/Loading';
 
 

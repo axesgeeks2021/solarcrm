@@ -10,6 +10,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
 import Loading from '../../../components/loading/Loading';
+import { toast } from 'react-toastify';
 
 function Battery() {
     const [batteryData, setBatteryData] = useState([])
@@ -63,14 +64,15 @@ function Battery() {
     const createBattery = (e) => {
         e.preventDefault()
         try {
-            setLoading(true)
+            // setLoading(true)
+            const loadingId = toast.loading('Please wait...')
             const myHeaders = new Headers();
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
             const formdata = new FormData();
             formdata.append("code", code);
-            formdata.append("battery_logo", file);
+            // formdata.append("battery_logo", file);
             formdata.append("manufacturer", manufacturer);
             formdata.append("title", title);
             formdata.append("total_energy", totalEnergy);
@@ -87,7 +89,8 @@ function Battery() {
             fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setLoading(false)
+                    // setLoading(false)
+                    toast.update(loadingId, {render: 'New battery successfully addedd...', isLoading: false, type: 'success', autoClose: true})
                     setDisplayForm(false)
                     console.log(result)
                     return fetchRecord()

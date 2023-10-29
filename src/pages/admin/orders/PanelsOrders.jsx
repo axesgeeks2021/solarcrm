@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useLocation, useNavigate } from 'react-router-dom'
 import Line from '../../../components/heading/Line'
@@ -12,16 +12,14 @@ import AdminSideNavigation from '../menu/AdminSideNavigation'
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input'
+import { toast } from 'react-toastify'
 
 
 function PanlesOrders() {
 
     const [cookies] = useCookies();
-
     const data = useLocation()
-
     const navigate = useNavigate()
-
     const [file, setFile] = useState()
 
     const handlefile = e => {
@@ -29,9 +27,8 @@ function PanlesOrders() {
     }
 
     const [displayForm, setDisplayForm] = useState(false)
-
     const [loading, setLoading] = useState(false)
-
+    const [panelsData, setPanelsData] = useState({})
     const [value, setValue] = useState({
         code: "",
         manufacturer: "",
@@ -48,37 +45,37 @@ function PanlesOrders() {
         setValue({ ...value, [e.target.name]: e.target.value })
     }
 
-    const updateOrder = async (e) => {
-        e.preventDefault()
+    const updateOrder = () => {
         try {
-            setLoading(true)
-            let myHeaders = new Headers();
-            myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
+            const loadingId = toast.loading('Please wait...')
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
 
-            let formdata = new FormData();
-            formdata.append("code", code);
-            formdata.append("panel_logo", file);
-            formdata.append("manufacturer", manufacturer);
-            formdata.append("technology", technology);
-            formdata.append("product_warranty", productwarranty);
-            formdata.append("performance_warranty", performancewarranty);
-            formdata.append("my_list", "true");
-            formdata.append("title", title);
+            const formdata = new FormData();
+            formdata.append("code", code !== "" ? code : panelsData?.code);
+            // formdata.append("panel_logo", fileInput.files[0], "/home/admin1/Pictures/Screenshots/Screenshot from 2022-11-10 10-56-20.png");
+            formdata.append("manufacturer", manufacturer !== "" ? manufacturer : panelsData?.manufacturer);
+            formdata.append("technology", technology !== "" ? technology : panelsData?.technology);
+            formdata.append("product_warranty", productwarranty !== "" ? productwarranty : panelsData?.product_warranty);
+            formdata.append("performance_warranty", performancewarranty !== "" ? performancewarranty : panelsData?.performance_warranty);
+            formdata.append("my_list", "false");
+            formdata.append("title", title !== "" ? title : panelsData?.title);
 
-            let requestOptions = {
+            const requestOptions = {
                 method: 'PATCH',
                 headers: myHeaders,
                 body: formdata,
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/module/${data.state.ele.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setTimeout(() => {
-                        setLoading(false)
-                        console.log(result)
-                    }, 1000);
+                    toast.update(loadingId, { render: "Product updated successfully...", isLoading: false, autoClose: true, type: 'success' })
+                    console.log(result)
+                    setDisplayForm(false)
+                    return fetchRecord()
                 })
                 .catch(error => console.log('error', error));
 
@@ -86,6 +83,54 @@ function PanlesOrders() {
             console.log(error)
         }
     }
+
+    const deleteRecord = () => {
+        try {
+            const loadingId = toast.loading('Please wait....')
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
+
+            const requestOptions = {
+                method: 'DELETE',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(`https://solar365.co.in/module/${data?.state?.ele?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    toast.update(loadingId, {render: 'Deleted Successfully...', type: 'success', autoClose: true, isLoading: false})
+                    return navigate(-1)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const fetchRecord = async () => {
+        try {
+            const url = `https://solar365.co.in/module/${data?.state?.ele?.id}/`
+            const headers = new Headers()
+            headers.append('Authorization', `Token ${cookies.Authorization}`)
+            const res = await fetch(url, {
+                headers: headers
+            })
+            const result = await res.json()
+            setPanelsData(result)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        const subscribe = fetchRecord()
+
+        return () => [subscribe]
+    }, [])
 
     if (loading) {
         return <Loading />
@@ -100,7 +145,7 @@ function PanlesOrders() {
                 </div>
                 <div className='flex justify-end gap-10'>
                     <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-                    <Button title="Delete" color="white" background="red" />
+                    <Button title="Delete" color="white" background="red" onclick={deleteRecord}/>
                 </div>
             </div>
             <div className='admin__card'>
@@ -110,16 +155,16 @@ function PanlesOrders() {
                     </div>
                     <hr></hr>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Code" value={data.state.ele.code} />
-                        <Line title="Title" value={data.state.ele.title} />
+                        <Line title="Code" value={panelsData?.code} />
+                        <Line title="Title" value={panelsData?.title} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Product Warranty" value={data.state.ele.product_warranty} />
-                        <Line title="Performance Warranty" value={data.state.ele.performance_warranty} />
+                        <Line title="Product Warranty" value={panelsData?.product_warranty} />
+                        <Line title="Performance Warranty" value={panelsData?.performance_warranty} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Technology" value={data.state.ele.technology} />
-                        <Line title="Manufacturer" value={data.state.ele.manufacturer} />
+                        <Line title="Technology" value={panelsData?.technology} />
+                        <Line title="Manufacturer" value={panelsData?.manufacturer} />
                     </div>
                 </div>
             </div>
@@ -128,7 +173,7 @@ function PanlesOrders() {
                     <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                         <Heading heading="Update your panels details..." size="200%" />
                     </div>
-                    <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
+                    <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Code" value={code} name="code" onChange={handleChange} />
                             <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
@@ -143,7 +188,7 @@ function PanlesOrders() {
                             <Input placeholder="Performance warranty" value={performancewarranty} name="performancewarranty" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
-                            <Button title="Submit" background="orange" color="white" />
+                            <Button title="Submit" background="orange" color="white" onclick={updateOrder} />
                             <Button title="Close" background="gray" color="white" onclick={() => setDisplayForm(false)} />
                         </div>
                     </form>
