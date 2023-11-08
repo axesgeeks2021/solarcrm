@@ -77,7 +77,7 @@ function AdminDashboard() {
 
             setTimeout(() => {
                 setLoading(false)
-                // console.log(data)
+                console.log('orderssss',data)
                 setOrderLists(data)
             }, 200);
 
@@ -246,9 +246,9 @@ function AdminDashboard() {
     }, [])
 
 
-    if (loading) {
-        return <Loading />
-    }
+    // if (loading) {
+    //     return <Loading />
+    // }
 
     return (
         <div className='container-fluid' style={{ display: 'flex', flexDirection: 'row' }}>

@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { toast } from 'react-toastify';
 import UploadFile from '../../../components/inputsfield/UploadFile';
 import Input from '../../../components/inputsfield/Input';
+import { Link } from 'react-router-dom';
 
 
 function RegisterTeam() {
@@ -111,8 +112,7 @@ function RegisterTeam() {
                     }
 
                     if (result.error === true) {
-                        setLoading(false)
-                        return toast.update(loadingId, { render: "Please Try Again!", isLoading: false, autoClose: true, type: 'success' })
+                        return toast.update(loadingId, { render: "Please Try Again!", isLoading: false, autoClose: true, type: 'error' })
                     }
                     console.log(result)
                 })
@@ -176,14 +176,16 @@ function RegisterTeam() {
                     {
                         teamList?.map((ele, idx) => {
                             return (
-                                <li className="table-row" key={idx}>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                </li>
+                                <Link to="/update-team" key={idx} state={{ele:ele}}>
+                                    <li className="table-row">
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    </li>
+                                </Link>
                             )
                         })
                     }

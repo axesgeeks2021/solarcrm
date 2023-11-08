@@ -25,7 +25,7 @@ function OtherComponentOrders() {
     }
 
     const [displayForm, setDisplayForm] = useState(false)
-
+    const [deleteForm, setDeleteForm] = useState(false)
     const [loading, setLoading] = useState(false)
     const [otherComponentData, setotherComponentData] = useState({})
     console.log('other', otherComponentData)
@@ -151,7 +151,18 @@ function OtherComponentOrders() {
                 </div>
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
                     <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-                    <Button title="Delete" color="white" background="red" onclick={deleteRecord}/>
+                    <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)}/>
+                 
+                    {
+                        deleteForm && 
+                        <div style={{ padding: '0px 20px',paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
+                        <p style={{margin: '20px 0'}}>Are you sure want to delete?</p>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                          <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord}/>
+                          <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)}/>
+                        </div>
+                      </div>
+                      }
                 </div>
             </div>
             <div className='admin__card'>
@@ -183,19 +194,10 @@ function OtherComponentOrders() {
                             <Input placeholder="Title" value={title} name="title" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Smart Meter" value={smartmeter} name="smartmeter" onChange={handleChange} />
                             <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Component Logo" type="file" onChange={handlefile} />
-                            <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Optimisor" value={optimisor} name="optimisor" onChange={handleChange} />
-                            <Input placeholder="Optimisor Heading" value={optimisorheading} name="optimisorheading" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Component Type" value={componenttype} name="componenttype" onChange={handleChange} />
+                            {/*<Input placeholder="Component Logo" type="file" onChange={handlefile} />*/}
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateOrder} />

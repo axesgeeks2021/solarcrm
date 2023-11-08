@@ -8,6 +8,7 @@ import Input from '../../../components/inputsfield/Input'
 import { toast } from 'react-toastify'
 import OtherComponent from './OtherComponent'
 import OrderList from '../../../components/orders/OrderList'
+import { Link } from 'react-router-dom'
 
 
 function UpdateOtherComponentPrice() {
@@ -75,7 +76,6 @@ function UpdateOtherComponentPrice() {
                 .then(result => {
                     setLoading(false)
                     setOtherComponentList(result)
-                    console.log('other component', result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -181,7 +181,7 @@ function UpdateOtherComponentPrice() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <div className="container py-5" style={{ background: '#eee', height: 'auto' }}>
-                        <p style={{ textAlign: 'center',  }}>Update price of other component</p>
+                        <p style={{ textAlign: 'center', }}>Update price of other component</p>
                         <form style={{ width: '100%' }} onSubmit={fetchUpdatePriceOtherComponent}>
                             <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
                                 <select required style={{ border: "2px solid gray", padding: '3px 10px' }} value={company} name='company' onChange={handleChange}>
@@ -189,32 +189,33 @@ function UpdateOtherComponentPrice() {
                                     {
                                         companyList && companyList.map((ele, idx) => {
                                             return (
-                                                <option key={idx} value={ele?.id}>{ele?.company_name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                                <select required style={{ border: "2px solid gray", padding: '3px 10px' }} value={component} name='component' onChange={handleChange}>
-                                    <option value="">Select Component</option>
-                                    {
-                                        otherComponentList && otherComponentList.map((ele, idx) => {
-                                            return (
-                                                <option key={idx} value={ele?.id}>{ele?.title}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
 
-                                <Input placeholder="Price" onChange={handleChange} name="price" value={price} required={true} />
-                            </div>
-                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', margin: '10px 0' }}>
-                                <Button type="submit" title="Submit" background="green" color="white" />
-                            </div>
-                        </form>
+                                                <option key={idx} value={ele?.id}>{ele?.company_name}</option>
+                                )
+                                        })
+                                    }
+                            </select>
+                            <select required style={{ border: "2px solid gray", padding: '3px 10px' }} value={component} name='component' onChange={handleChange}>
+                                <option value="">Select Component</option>
+                                {
+                                    otherComponentList && otherComponentList.map((ele, idx) => {
+                                        return (
+                                            <option key={idx} value={ele?.id}>{ele?.title}</option>
+                                        )
+                                    })
+                                }
+                            </select>
+
+                            <Input placeholder="Price" onChange={handleChange} name="price" value={price} required={true} />
                     </div>
-                    <div className="container py-5" style={{ height: 'auto', width: '100%' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', margin: '15px 0' }}>
-                            {/*  <p>Select a specific company to see their prices</p>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', margin: '10px 0' }}>
+                        <Button type="submit" title="Submit" background="green" color="white" />
+                    </div>
+                </form>
+            </div>
+            <div className="container py-5" style={{ height: 'auto', width: '100%' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', margin: '15px 0' }}>
+                    {/*  <p>Select a specific company to see their prices</p>
                         <select required style={{ border: "2px solid gray", padding: '3px 10px' }} value={companyId} onChange={e => setCompanyId(e.target.value)}>
                                     <option value="">Select Company</option>
                                     {
@@ -225,32 +226,34 @@ function UpdateOtherComponentPrice() {
                                         })
                                     }
                                 </select>*/}
-                        </div>
-                        <ul className="responsive-table" style={{ width: '100%' }}>
-                            <li className="table-header">
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">S.no</div>
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Company Name</div>
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Title</div>
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Code</div>
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Price</div>
-                            </li>
-                            {
-                                otherComponentListPrice?.length < 1 ? <h2>There is no order available right now...</h2> : otherComponentListPrice.filter(ele => ele?.company?.company_name?.toLowerCase().includes(companyId.toLowerCase())).map((ele, idx) => {
-                                    return (
-                                        <li className='table-header'>
-                                            <div className="col col-2 text-center text-slate-50 text-base font-bold">{idx + 1}</div>
-                                            <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.company?.company_name}</div>
-                                            <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.other_component?.title}</div>
-                                            <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.other_component?.code}</div>
-                                            <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.price}</div>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                    </div>
                 </div>
+                <ul className="responsive-table" style={{ width: '100%' }}>
+                    <li className="table-header">
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">S.no</div>
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Company Name</div>
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Title</div>
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Code</div>
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Price</div>
+                    </li>
+                    {
+                        otherComponentListPrice?.length < 1 ? <h2>There is no order available right now...</h2> : otherComponentListPrice.filter(ele => ele?.company?.company_name?.toLowerCase().includes(companyId.toLowerCase())).map((ele, idx) => {
+                            return (
+                                <Link key={idx} to="/other-component-price-details" state={{ele: ele}}>
+                                    <li className='table-header'>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold">{idx + 1}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.company?.company_name}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.other_component?.title}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.other_component?.code}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold">{ele?.price}</div>
+                                    </li>
+                                </Link>
+                            )
+                        })
+                    }
+                </ul>
             </div>
+        </div >
+            </div >
         </>
     )
 }
