@@ -29,10 +29,11 @@ function Inverter() {
         productWaranty: "",
         additionalPartWarranty: "",
         inverterType : "",
-        manufacturer: ""
+        manufacturer: "",
+        quantity: ''
     })
 
-    const {additionalPartWarranty, code,title, inverterType, manufacturer, productWaranty, ratedOutputPower} = text
+    const {additionalPartWarranty, code,title, inverterType, manufacturer, productWaranty, ratedOutputPower, quantity} = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -44,7 +45,7 @@ function Inverter() {
 
     const fetchRecord = async () => {
         try {
-            const url = "https://solar365.co.in/inverter_module/"
+            const url = "http://13.126.231.119/inverter_module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -81,6 +82,7 @@ function Inverter() {
             formdata.append("my_list", "true");
             formdata.append("default_inverter_range", "false");
             formdata.append("manufacturer", manufacturer);
+            formdata.append("add_new_quantity", quantity);
 
             const requestOptions = {
                 method: 'POST',
@@ -89,12 +91,11 @@ function Inverter() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/inverter_module/", requestOptions)
+            fetch("http://13.126.231.119/inverter_module/", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
                     setLoading(false)
                     setDisplayForm(false)
-                    console.log(result)
                     return fetchRecord()
         })
                 .catch(error => console.log('error', error));
@@ -143,10 +144,10 @@ function Inverter() {
                     </ul>
                 </div>
             </div>
-            <div style={{ transition: "0.4s", width: "60%", height: '90vh', background: 'white', display: displayForm ? 'flex' : 'none', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)', overflow: 'hidden', transform: 'translate(-50%, -50%)' }}>
+            <div style={{ transition: "0.4s", width: "60%", height: '90vh', background: 'white', display: displayForm ? 'flex' : 'none', justifyContent: 'flex-start', alignItems: 'center', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)', overflowY: 'scroll', transform: 'translate(-50%, -50%)', flexDirection:'column' }}>
                 {/* <ImCross style={{position: 'absolute', top: '5px', left: '10px', cursor: 'pointer'}} onClick={() => setDisplayForm(false)}/> */}
                 <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "80%" }}>
-                    <Heading heading="Enter details for creating new Inverters" />
+                    <Heading heading="Enter details for creating new Inverters" size="24px"/>
                     <form className='flex flex-col justify-center items-center gap-3' style={{ width: "100%" }} onSubmit={createInverter}>
                     <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
                     <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
@@ -156,6 +157,7 @@ function Inverter() {
                     <Input width="100%" placeholder="Product warranty" value={productWaranty} name="productWaranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Additional part warranty" value={additionalPartWarranty} name="additionalPartWarranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
+                    <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
                     <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
                         <Button title="Submit" background="orange" type="submit"/>
                         <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />

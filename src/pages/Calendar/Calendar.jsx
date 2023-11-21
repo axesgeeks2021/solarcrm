@@ -29,7 +29,7 @@ function Calendars() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/slots_list/", requestOptions)
+            fetch("http://13.126.231.119/slots_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

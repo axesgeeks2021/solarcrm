@@ -54,7 +54,7 @@ function Login() {
         body: formdata,
         redirect: 'follow'
       };
-      const url = `https://solar365.co.in/login/?user_type=${urlParams}`
+      const url = `http://13.126.231.119/login/?user_type=${urlParams}`
       console.log(url)
       fetch(url, requestOptions)
         .then(response => response.json())

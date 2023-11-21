@@ -33,10 +33,11 @@ function BatterOrders() {
         manufacturer: "",
         productwarranty: "",
         title: "",
-        mylist: ""
+        mylist: "",
+        quantity: ""
     })
 
-    const { code, manufacturer, mylist, productwarranty, title, totalenergy } = value
+    const { code, manufacturer, mylist, productwarranty, title, totalenergy, quantity } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -57,6 +58,7 @@ function BatterOrders() {
             formdata.append("total_energy", totalenergy !== "" ? totalenergy : batteryData?.total_energy);
             formdata.append("product_warranty", productwarranty !== "" ? productwarranty : batteryData?.product_warranty);
             formdata.append("my_list", "true");
+            formdata.append("add_new_quantity", quantity !== "" ? quantity : batteryData?.add_new_quantity);
 
             const requestOptions = {
                 method: 'PATCH',
@@ -65,7 +67,7 @@ function BatterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/battery_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/battery_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Product updated successfully', isLoading: false, autoClose: true, type: 'success' })
@@ -82,7 +84,7 @@ function BatterOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `https://solar365.co.in/battery_module/${data?.state?.ele?.id}`
+            const url = `http://13.126.231.119/battery_module/${data?.state?.ele?.id}`
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -116,7 +118,7 @@ function BatterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/battery_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/battery_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted Successfully', isLoading: false, autoClose: true, type: 'success'})
@@ -191,6 +193,9 @@ function BatterOrders() {
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Battery Logo" type="file" onChange={handlefile} />
                             <Input placeholder="Product Warranty" value={productwarranty} name="productwarranty" onChange={handleChange} />
+                        </div>
+                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="button" background="orange" color="white" onclick={updateOrder} />

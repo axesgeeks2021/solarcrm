@@ -91,7 +91,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -106,7 +106,7 @@ function NonAdminDashboard() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'http://13.126.231.119/inverter_module/')
         console.log(requestInverter)
         return setInverterList(requestInverter)
     }
@@ -123,7 +123,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/battery_module/", requestOptions)
+            fetch("http://13.126.231.119/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -146,7 +146,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/module/", requestOptions)
+            fetch("http://13.126.231.119/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)
@@ -169,7 +169,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -242,7 +242,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
+            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -270,7 +270,7 @@ function NonAdminDashboard() {
     //             redirect: 'follow'
     //         };
 
-    //         fetch("https://solar365.co.in/username_list_non_admin/", requestOptions)
+    //         fetch("http://13.126.231.119/username_list_non_admin/", requestOptions)
     //             .then(response => response.json())
     //             .then(result => {
     //                 console.log(result)

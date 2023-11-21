@@ -24,10 +24,11 @@ function UpdateOtherComponentPrice() {
     const [value, setValue] = useState({
         company: '',
         component: '',
-        price: ''
+        price: '',
+        freeQuantity: ''
     })
 
-    const { company, component, price } = value
+    const { company, component, price, freeQuantity } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -46,7 +47,7 @@ function UpdateOtherComponentPrice() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_none_admin_profile/", requestOptions)
+            fetch("http://13.126.231.119/get_none_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -71,7 +72,7 @@ function UpdateOtherComponentPrice() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/other_component/", requestOptions)
+            fetch("http://13.126.231.119/other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -96,6 +97,7 @@ function UpdateOtherComponentPrice() {
             formdata.append("price", price);
             formdata.append("other_component", component);
             formdata.append("company", company);
+            formdata.append("free_quantity", freeQuantity);
 
 
             const requestOptions = {
@@ -105,7 +107,7 @@ function UpdateOtherComponentPrice() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/pricing-other_component/", requestOptions)
+            fetch("http://13.126.231.119/pricing-other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -143,7 +145,7 @@ function UpdateOtherComponentPrice() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/pricing-other_component/", requestOptions)
+            fetch("http://13.126.231.119/pricing-other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log('price', result)
@@ -207,6 +209,7 @@ function UpdateOtherComponentPrice() {
                             </select>
 
                             <Input placeholder="Price" onChange={handleChange} name="price" value={price} required={true} />
+                            <Input placeholder="Free Quantity" onChange={handleChange} name="freeQuantity" value={freeQuantity} required={true} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end', width: '100%', margin: '10px 0' }}>
                         <Button type="submit" title="Submit" background="green" color="white" />

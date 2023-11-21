@@ -77,7 +77,7 @@ function OtherComponentOrders() {
               redirect: 'follow'
             };
             
-            fetch(`https://solar365.co.in/other_component/${data.state.ele.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/other_component/${data.state.ele.id}/`, requestOptions)
               .then(response => response.text())
               .then(result => {
                 setTimeout(() => {

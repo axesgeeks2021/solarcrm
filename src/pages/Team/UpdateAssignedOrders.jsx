@@ -75,7 +75,7 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_grid/${data?.state?.data?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_grid/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -126,7 +126,7 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_presite/${data?.state?.data?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_presite/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => console.log(result))
                 .catch(error => console.log('error', error));
@@ -156,7 +156,7 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/upload_meter_docs/${data?.state?.data?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/upload_meter_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if (result) {
@@ -194,7 +194,7 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_install_docs/${data?.state?.data?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_install_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if (result) {
@@ -220,7 +220,7 @@ function UpdateAssignedOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/order/${data?.state?.data?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/order/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setOrderDetails(result)

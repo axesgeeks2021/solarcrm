@@ -65,7 +65,7 @@ function AdminSideNavigation() {
             itemId: '/panels',
           },
           {
-            title: 'Inverteres',
+            title: 'Inverters',
             itemId: '/inverters',
           },
           {

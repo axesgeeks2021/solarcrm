@@ -50,7 +50,7 @@ function DocumentsUpload() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/upload_meter_docs/${data?.state?.id}/`, requestOptions)
+      fetch(`http://13.126.231.119/upload_meter_docs/${data?.state?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
             toast.update(loadingId, { render: 'Document updated Successfully...', type: 'success', isLoading: false, autoClose: true })
@@ -76,7 +76,7 @@ function DocumentsUpload() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/get_docs/", requestOptions)
+      fetch("http://13.126.231.119/get_docs/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)

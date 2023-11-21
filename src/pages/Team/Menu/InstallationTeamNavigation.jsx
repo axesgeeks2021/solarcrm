@@ -39,6 +39,7 @@ function NonAdminSideNavigation() {
       },
       {
         title: 'Completed Jobs',
+        itemId: '/team/completed-jobs',
         elemBefore: () => <BiUserCheck />
       },
       // {

@@ -73,7 +73,7 @@ function RegisterNonAdmin() {
             formdata.append("postcode", postcode)
             formdata.append("country", country)
 
-            const url = "https://solar365.co.in/register/?user_type=NON_ADMIN"
+            const url = "http://13.126.231.119/register/?user_type=NON_ADMIN"
 
             const myheaders = new Headers();
             myheaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -125,7 +125,7 @@ function RegisterNonAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_none_admin_profile/", requestOptions)
+            fetch("http://13.126.231.119/get_none_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

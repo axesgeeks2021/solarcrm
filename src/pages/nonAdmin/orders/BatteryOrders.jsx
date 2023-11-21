@@ -69,7 +69,7 @@ function BatterOrders() {
               redirect: 'follow'
             };
             
-            fetch(`https://solar365.co.in/battery_module/${data.state.ele.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/battery_module/${data.state.ele.id}/`, requestOptions)
               .then(response => response.text())
               .then(result => {
                 setTimeout(() => {

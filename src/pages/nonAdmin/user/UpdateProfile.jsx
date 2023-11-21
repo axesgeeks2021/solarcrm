@@ -142,7 +142,7 @@ function UpdateProfile() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_profile/${id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_profile/${id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setTimeout(() => {

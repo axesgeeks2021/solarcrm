@@ -40,7 +40,7 @@ import AllLogin from "./pages/admin/authentication/AllLogin"
 import RegisterAdmin from "./pages/admin/organization/RegisterAdmin";
 import PanelsOrders from "./pages/admin/orders/PanelsOrders";
 import InverterOrders from "./pages/admin/orders/InverterOrders";
-import BatterOrders from "./pages/admin/orders/BatteryOrders";
+import BatteryOrders from "./pages/admin/orders/BatteryOrders";
 import OtherComponent from "./pages/admin/products/OtherComponent";
 import OtherComponentOrders from "./pages/admin/orders/OtherComponentOrders";
 import UpdateProfile from "./pages/admin/user/UpdateProfile";
@@ -65,6 +65,7 @@ import Practice from "./pages/Practice";
 import UpdateOtherComponentPrice from "./pages/admin/products/UpdateOtherComponentPrice";
 import OtherComponentPriceDetails from "./pages/admin/orders/OtherComponentPriceDetails";
 import UpdateTeam from "./pages/admin/organization/UpdateTeam";
+import CompletedJobs from "./pages/Team/CompletedJobs";
 
 
 function App() {
@@ -150,7 +151,7 @@ function App() {
           <Route path="/admin-orders" element={<AdminOrders />} />
           <Route path="/panels-orders" element={<PanelsOrders />} />
           <Route path="/inverters-orders" element={<InverterOrders />} />
-          <Route path="/battery-orders" element={<BatterOrders />} />
+          <Route path="/battery-orders" element={<BatteryOrders />} />
           <Route path="/create-orders" element={<CreateOrders />} />
           <Route path="/panels" element={<Panels />} />
           <Route path="/inverters" element={<Inverter />} />
@@ -207,6 +208,7 @@ function App() {
         <Route path="/team/assigned-jobs" element={<AssignedJobs />} />
         <Route path="/team/assigned-jobs/update-orders" element={<UpdateAssignedOrders />} />
         <Route path="/team/practice" element={<Practice />} />
+        <Route path="/team/completed-jobs" element={<CompletedJobs />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )

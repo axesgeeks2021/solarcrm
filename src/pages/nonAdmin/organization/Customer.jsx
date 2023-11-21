@@ -90,7 +90,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
+            fetch("http://13.126.231.119/register/?user_type=CUSTOMER", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if(result.messsage === 'Success'){
@@ -142,7 +142,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/cust-profile/", requestOptions)
+            fetch("http://13.126.231.119/cust-profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log('customer resutl',result)

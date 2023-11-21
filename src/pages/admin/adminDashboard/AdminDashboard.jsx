@@ -63,7 +63,7 @@ function AdminDashboard() {
         try {
 
             setLoading(true)
-            const url = "https://solar365.co.in/order/"
+            const url = "http://13.126.231.119/order/"
 
             const headers = new Headers()
 
@@ -77,7 +77,6 @@ function AdminDashboard() {
 
             setTimeout(() => {
                 setLoading(false)
-                console.log('orderssss',data)
                 setOrderLists(data)
             }, 200);
 
@@ -89,6 +88,7 @@ function AdminDashboard() {
     const createOrder = (e) => {
         e.preventDefault()
         try {
+            const loadingId = toast.loading('Please wait....')
             setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -120,12 +120,14 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/order/", requestOptions)
+            fetch("http://13.126.231.119/order/", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
                     setLoading(false)
                     setShowForm(false)
                     console.log(result)
+                     toast.update(loadingId, {render: 'Order created successfully', type: 'success', isLoading: false, autoClose: true})
+                     return fetchOrder()
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -146,7 +148,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/username_list/", requestOptions)
+            fetch("http://13.126.231.119/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
@@ -170,7 +172,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/inverter_module/", requestOptions)
+            fetch("http://13.126.231.119/inverter_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInverterList(result)
@@ -193,7 +195,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/battery_module/", requestOptions)
+            fetch("http://13.126.231.119/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -216,7 +218,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/module/", requestOptions)
+            fetch("http://13.126.231.119/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)

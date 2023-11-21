@@ -26,10 +26,11 @@ function OtherComponent() {
         code: "",
         manufacturer: "",
         title: "",
-        mylist: null
+        mylist: null,
+        quantity: ""
     })
 
-    const {code, componentType, manufacturer, optimisor, optimisorHeading, productWarranty,smartMeter, smartMeterHeading, title, mylist } = text
+    const {code,quantity, componentType, manufacturer, optimisor, optimisorHeading, productWarranty,smartMeter, smartMeterHeading, title, mylist } = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -41,7 +42,7 @@ function OtherComponent() {
 
     const fetchRecord = async () => {
         try {
-            const url = "https://solar365.co.in/other_component/"
+            const url = "http://13.126.231.119/other_component/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -73,6 +74,7 @@ function OtherComponent() {
             formdata.append("manufacturer", manufacturer);
             formdata.append("my_list", mylist);
             formdata.append("title", title);
+            formdata.append("add_new_quantity", quantity);
 
             const requestOptions = {
                 method: 'POST',
@@ -81,7 +83,7 @@ function OtherComponent() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/other_component/", requestOptions)
+            fetch("http://13.126.231.119/other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -139,7 +141,7 @@ function OtherComponent() {
                     </ul>
                 </div>
             </div>
-            <div style={{ transition: "0.4s", width: "60%", height: '90vh', background: 'white', display: displayForm ? 'flex' : 'none', justifyContent: 'center', alignItems: 'flex-start', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)', overflow: 'hidden', transform: 'translate(-50%, -50%)', overflowY: 'scroll' }}>
+            <div style={{ transition: "0.4s", width: "60%", height: '90vh', background: 'white', display: displayForm ? 'flex' : 'none', justifyContent: 'flex-start', alignItems: 'flex-start', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)',  transform: 'translate(-50%, -50%)', overflowY: 'scroll' }}>
                 {/* <ImCross style={{position: 'absolute', top: '5px', left: '10px', cursor: 'pointer'}} onClick={() => setDisplayForm(false)}/> */}
                 <div className='my-10 flex flex-col justify-center gap-3' style={{ width: "80%" }}>
                     <Heading heading="Enter details for creating new other components" color="black"/>
@@ -148,6 +150,7 @@ function OtherComponent() {
                     <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
                     <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile} />
                     <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
+                    <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
                     <select onChange={handleText} value={mylist} name='mylist' style={{border: '2px solid gray'}}>
                         <option>Is Available</option>
                         <option value={true}>Yes</option>

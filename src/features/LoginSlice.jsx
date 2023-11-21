@@ -11,7 +11,7 @@ const initialState = {
 export const fetchLoginData = createAsyncThunk(
   "login/fetchLoginData",
   async (body) => {
-    const res = await axios.post("https://solar365.co.in/api/login/", body, {
+    const res = await axios.post("http://13.126.231.119/api/login/", body, {
       withCredentials: true,
       credentials: "include",
     });

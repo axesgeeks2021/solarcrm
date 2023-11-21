@@ -19,7 +19,7 @@ function BillingInfo() {
   const fetchInvoiceHistory = () => {
     try {
       const res = axios
-        .get("https://solar365.co.in/invoice_hist", {
+        .get("http://13.126.231.119/invoice_hist", {
           headers: {
             Authorization: `Token ${cookies.Authorization}`,
           },

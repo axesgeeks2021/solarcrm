@@ -52,7 +52,7 @@ function Dashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/order/", requestOptions)
+            fetch("http://13.126.231.119/order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -77,7 +77,7 @@ function Dashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/new-order-list/", requestOptions)
+            fetch("http://13.126.231.119/new-order-list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -105,7 +105,7 @@ function Dashboard() {
                 body: formdata,
                 redirect: 'follow'
             };
-            fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
+            fetch(`http://13.126.231.119/order/${orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -132,7 +132,7 @@ function Dashboard() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
+            fetch("http://13.126.231.119/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInstallerList(result)

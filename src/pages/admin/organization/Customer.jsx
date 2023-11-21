@@ -11,6 +11,7 @@ import UploadFile from '../../../components/inputsfield/UploadFile';
 import Dropdown from 'react-multilevel-dropdown'
 import Input from '../../../components/inputsfield/Input';
 import {Multiselect} from "multiselect-react-dropdown"
+import { toast } from 'react-toastify';
 
 function Customer() {
 
@@ -77,7 +78,7 @@ function Customer() {
     const registerCustomer = async (e) => {
         e.preventDefault()
         try {
-
+            const loadingId = toast.loading('Please wait')
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
@@ -113,7 +114,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
+            fetch("http://13.126.231.119/register/?user_type=CUSTOMER", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -141,6 +142,7 @@ function Customer() {
                         postcode: "",
                         country: ""
                     })
+                    toast.update(loadingId, {render: "Customer Registered successfully...", autoClose: true, type: 'success', isLoading: false})
                     setShowForm(false)
                     return fetchData()
                 })
@@ -163,7 +165,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_customer_profile/", requestOptions)
+            fetch("http://13.126.231.119/get_customer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -186,12 +188,10 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
+            fetch("http://13.126.231.119/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInstallerList(result)
-
-                    console.log('list of installler', result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -200,7 +200,7 @@ function Customer() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'http://13.126.231.119/inverter_module/')
         return setInverterList(requestInverter)
     }
 
@@ -216,7 +216,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/battery_module/", requestOptions)
+            fetch("http://13.126.231.119/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -239,7 +239,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/module/", requestOptions)
+            fetch("http://13.126.231.119/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)
@@ -308,15 +308,16 @@ function Customer() {
                                 <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
+                                {/*<UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
+                <Input type="file" placeholder="Profile" onChange={handleChange} value={alternatephone} name="alternatephone" />*/}
                                 <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
+                                <Input placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
                                 <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
                                 <Multiselect options={installerList?.Electrician?.admin} isObject={true} displayValue='city' placeholder='select electrician' />
                                 <Dropdown
                                     title='Assign To'

@@ -35,10 +35,11 @@ function InverterOrders() {
         additionalpartwarranty: "",
         defaultinverterrange: "",
         manufacturer: "",
-        title: ""
+        title: "",
+        quantity: ""
     })
 
-    const { additionalpartwarranty, code, defaultinverterrange, inverterType, manufacturer, productwarranty, ratedOutputPower, title } = value
+    const {quantity, additionalpartwarranty, code, defaultinverterrange, inverterType, manufacturer, productwarranty, ratedOutputPower, title } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -62,6 +63,7 @@ function InverterOrders() {
             formdata.append("default_inverter_range", defaultinverterrange !== "" ? defaultinverterrange : inverterData?.default_inverter_range);
             formdata.append("manufacturer", manufacturer !== "" ? manufacturer : inverterData?.manufacturer);
             formdata.append("title", title !== "" ? title : inverterData?.title);
+            formdata.append("add_new_quantity", quantity !== "" ? quantity : inverterData?.add_new_quantity);
 
             const requestOptions = {
                 method: 'PATCH',
@@ -70,7 +72,7 @@ function InverterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Product updated successfully...', autoClose: true, isLoading: false, type: 'success' })
@@ -98,7 +100,7 @@ function InverterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted Successfully...', isLoading: false, autoClose: true, type: 'success'})
@@ -113,7 +115,7 @@ function InverterOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `https://solar365.co.in/inverter_module/${data?.state?.ele?.id}`
+            const url = `http://13.126.231.119/inverter_module/${data?.state?.ele?.id}`
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
             const res = await fetch(url, {
@@ -205,6 +207,9 @@ function InverterOrders() {
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Default inverter range" value={defaultinverterrange} name="defaultinverterrange" onChange={handleChange} />
                             <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                        </div>
+                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateOrder} />

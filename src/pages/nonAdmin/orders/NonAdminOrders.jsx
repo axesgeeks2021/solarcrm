@@ -74,7 +74,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/slots_list/", requestOptions)
+      fetch("http://13.126.231.119/slots_list/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setListOfSlots(result)
@@ -101,7 +101,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/take-appointment/", requestOptions)
+      fetch("http://13.126.231.119/take-appointment/", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.messsage === 'Success') {
@@ -149,7 +149,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
+      fetch(`http://13.126.231.119/order/${data.state.ele.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setTimeout(() => {
@@ -178,7 +178,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/non-admin-order/${data?.state?.id}/`, requestOptions)
+      fetch(`http://13.126.231.119/non-admin-order/${data?.state?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => 
           {

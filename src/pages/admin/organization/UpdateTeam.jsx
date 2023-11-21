@@ -80,7 +80,7 @@ function UpdateTeam() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Updated successfully...', isLoading: false, type: 'success', autoClose: true })
@@ -107,7 +107,7 @@ function UpdateTeam() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/get_team_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/get_team_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     // console.log('profile....', result)
@@ -132,7 +132,7 @@ function UpdateTeam() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/update_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/update_profile/${data?.state?.ele?.admin?.user?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted Successfully...', type: 'success', isLoading: false, autoClose: true})

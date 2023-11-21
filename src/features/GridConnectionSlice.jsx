@@ -12,7 +12,7 @@ export const fetchGridConnection = createAsyncThunk(
   "grid/fetchGridConnection",
   async (token) => {
     try {
-      const res = await axios.get("https://solar365.co.in/grid_approval", {
+      const res = await axios.get("http://13.126.231.119/grid_approval", {
         headers: {
           Authorization: `Token ${token}`,
         },

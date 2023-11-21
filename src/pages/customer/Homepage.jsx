@@ -31,7 +31,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
   })
   
   const getOrderStatus = async () => {
-    const res = await axios.get("https://solar365.co.in/home_status", {
+    const res = await axios.get("http://13.126.231.119/home_status", {
       headers: {
         Authorization: `Token ${cookies.Authorization}`,
       },
@@ -51,7 +51,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/slots_list/", requestOptions)
+      fetch("http://13.126.231.119/slots_list/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setListOfSlots(result)
@@ -78,7 +78,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/take-appointment/", requestOptions)
+      fetch("http://13.126.231.119/take-appointment/", requestOptions)
         .then(response => response.json())
         .then(result => {
           if (result.messsage === 'Success') {

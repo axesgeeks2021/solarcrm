@@ -12,7 +12,7 @@ export const fetchDocumentWarranty = createAsyncThunk(
   "documentswarranty/fetchdocumentswarranty",
   async (token) => {
     try {
-      const res = await axios.get("https://solar365.co.in/warranty", {
+      const res = await axios.get("http://13.126.231.119/warranty", {
         headers: {
           Authorization: `Token ${token}`,
         },

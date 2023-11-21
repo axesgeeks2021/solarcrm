@@ -100,7 +100,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/register/?user_type=INSTALLER`, requestOptions)
+            fetch(`http://13.126.231.119/register/?user_type=INSTALLER`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -157,7 +157,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
+            fetch("http://13.126.231.119//", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

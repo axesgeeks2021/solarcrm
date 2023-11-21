@@ -55,7 +55,7 @@ function ReferAFriend() {
 
   const sendReffer = async (e) => {
     e.preventDefault();
-    const res = await axios.post("https://solar365.co.in/referral/", body, {
+    const res = await axios.post("http://13.126.231.119/referral/", body, {
       headers: {
         Authorization: `Token ${cookies.Authorization}`,
       },

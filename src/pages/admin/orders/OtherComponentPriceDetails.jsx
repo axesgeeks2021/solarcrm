@@ -28,10 +28,11 @@ function OtherComponentPriceDetails() {
   const [value, setValue] = useState({
     company: '',
     component: '',
-    price: ''
+    price: '',
+    freeQuantity: ""
   })
 
-  const { company, component, price } = value
+  const { company, component, price, freeQuantity } = value
 
   const handleChange = e => {
     setValue({ ...value, [e.target.name]: e.target.value })
@@ -50,7 +51,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/get_none_admin_profile/", requestOptions)
+      fetch("http://13.126.231.119/get_none_admin_profile/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)
@@ -75,7 +76,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/other_component/", requestOptions)
+      fetch("http://13.126.231.119/other_component/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)
@@ -99,7 +100,8 @@ function OtherComponentPriceDetails() {
 
       const formdata = new FormData();
       formdata.append("price", price);
-
+      formdata.append("price", price);
+      
       const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
@@ -107,7 +109,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
+      fetch(`http://13.126.231.119/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setDisplayForm(false)
@@ -135,10 +137,9 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
+      fetch(`http://13.126.231.119/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log('other details', result)
           setOtherComponentDetails(result)
         })
         .catch(error => console.log('error', error));

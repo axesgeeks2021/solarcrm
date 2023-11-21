@@ -21,7 +21,7 @@ function Inverter() {
 
     const fetchRecord = async () => {
         try {
-            const url = "https://solar365.co.in/inverter_module/"
+            const url = "http://13.126.231.119/inverter_module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)

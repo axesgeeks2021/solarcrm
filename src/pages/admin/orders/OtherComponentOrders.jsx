@@ -39,10 +39,11 @@ function OtherComponentOrders() {
         optimisor: "",
         optimisorheading: "",
         smartmeterheading: "",
-        title: ""
+        title: "",
+        quantity: "",
     })
 
-    const { code, componenttype, manufacturer, mylist, optimisor, optimisorheading, productwarranty, smartmeter, smartmeterheading, title } = value
+    const { code,quantity, componenttype, manufacturer, mylist, optimisor, optimisorheading, productwarranty, smartmeter, smartmeterheading, title } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -67,6 +68,7 @@ function OtherComponentOrders() {
             // formdata.append("optimisor_heading", optimisorheading !== "" ?  : otherComponentData?.);
             // formdata.append("smart_meter_heading", smartmeterheading !== "" ?  : otherComponentData?.);
             formdata.append("title", title !== "" ? title : otherComponentData?.title);
+            formdata.append("add_new_quantity", quantity !== "" ? quantity : otherComponentData?.add_new_quantity);
 
             const requestOptions = {
                 method: 'PATCH',
@@ -75,7 +77,7 @@ function OtherComponentOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/other_component/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/other_component/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Updated successfully...', autoClose: true, isLoading: false, type: 'success' })
@@ -102,7 +104,7 @@ function OtherComponentOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`https://solar365.co.in/other_component/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`http://13.126.231.119/other_component/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted successfully...', isLoading: false, type: 'success', autoClose: true})
@@ -118,7 +120,7 @@ function OtherComponentOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `https://solar365.co.in/other_component/${data?.state?.ele?.id}/`
+            const url = `http://13.126.231.119/other_component/${data?.state?.ele?.id}/`
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
             const res = await fetch(url, {
@@ -195,10 +197,12 @@ function OtherComponentOrders() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
+                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             {/*<Input placeholder="Component Logo" type="file" onChange={handlefile} />*/}
                         </div>
+
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateOrder} />
                             <Button title="Close" background="gray" color="white" onclick={() => setDisplayForm(false)} />
