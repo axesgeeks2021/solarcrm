@@ -91,7 +91,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -106,7 +106,7 @@ function NonAdminDashboard() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'http://13.126.231.119/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
         console.log(requestInverter)
         return setInverterList(requestInverter)
     }
@@ -123,7 +123,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/battery_module/", requestOptions)
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -146,7 +146,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/module/", requestOptions)
+            fetch("https://solar365.co.in/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)
@@ -169,7 +169,7 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
@@ -191,7 +191,7 @@ function NonAdminDashboard() {
         e.preventDefault()
         try {
 
-            setLoading(true)
+            const loadingId = toast.loading("Please wait....")
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             // myHeaders.append("Content-Type", "application/json");
@@ -229,7 +229,7 @@ function NonAdminDashboard() {
             formdata.append("batteries", batteries);
             formdata.append("roof_type", roofType);
             formdata.append("battery_quantity", batteriesQuantity);
-            formdata.append("company_Name", "SPN");
+            formdata.append("company_Name", "AVC Ltd");
             formdata.append("is_inverter_buy", "true");
             formdata.append("is_battery_buy", "true");
             formdata.append("is_panel_buy", "true");
@@ -242,12 +242,12 @@ function NonAdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/non-admin-order/", requestOptions)
+            fetch("https://solar365.co.in/non-admin-order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
                     if (result.messsage === 'Success') {
-                        toast.success('Order created successfully')
+                        toast.update(loadingId, {render: "Customer created successfully...", isLoading: false, type: 'success', autoClose: true})
                         setShowForm(false)
                         return fetchOrder()
                     }
@@ -270,7 +270,7 @@ function NonAdminDashboard() {
     //             redirect: 'follow'
     //         };
 
-    //         fetch("http://13.126.231.119/username_list_non_admin/", requestOptions)
+    //         fetch("https://solar365.co.in/username_list_non_admin/", requestOptions)
     //             .then(response => response.json())
     //             .then(result => {
     //                 console.log(result)
@@ -298,9 +298,9 @@ function NonAdminDashboard() {
     }, [])
 
 
-    if (loading) {
-        return <Loading />
-    }
+    // if (loading) {
+    //     return <Loading />
+    // }
 
     return (
         <div className='container-fluid' style={{ display: 'flex', flexDirection: 'row' }}>

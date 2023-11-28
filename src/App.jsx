@@ -66,6 +66,9 @@ import UpdateOtherComponentPrice from "./pages/admin/products/UpdateOtherCompone
 import OtherComponentPriceDetails from "./pages/admin/orders/OtherComponentPriceDetails";
 import UpdateTeam from "./pages/admin/organization/UpdateTeam";
 import CompletedJobs from "./pages/Team/CompletedJobs";
+import RegisterProfile from "./pages/nonAdmin/RegisterProfile";
+import CompleteJobs from "./pages/admin/completejobs/CompleteJobs";
+import CompletedJobsDetails from "./pages/admin/completejobs/CompletedJobsDetails";
 
 
 function App() {
@@ -93,8 +96,9 @@ function App() {
 
 
   useEffect(() => {
+    const routes = ['/login', '/register-admin-profile']
     if (!cookies.Authorization) {
-      locations.pathname === ("/login" && "/") ? navigate("/admin-dashboard") : navigate("*")
+      // locations.pathname === ("/login" && "/") ? navigate("/admin-dashboard") : navigate("*")
       return navigate('/login')
     }
 
@@ -171,6 +175,9 @@ function App() {
           <Route path="/admin-update-other-component-price" element={<UpdateOtherComponentPrice />} />
           <Route path="/other-component-price-details" element={<OtherComponentPriceDetails />} />
           <Route path="/update-team" element={<UpdateTeam />} />
+          <Route path="/register-admin-profile" element={<RegisterProfile />} />
+          <Route path="/complete-jobs" element={<CompleteJobs />} />
+          <Route path="/completed-jobs-details" element={<CompletedJobsDetails />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>
@@ -215,7 +222,13 @@ function App() {
   }
 
   return (
-    <Login />
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register-admin-profile" element={<RegisterProfile />} />
+      </Routes>
+    </>
+    
   )
 }
 

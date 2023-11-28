@@ -51,7 +51,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch("http://13.126.231.119/get_none_admin_profile/", requestOptions)
+      fetch("https://solar365.co.in/get_none_admin_profile/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)
@@ -76,7 +76,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch("http://13.126.231.119/other_component/", requestOptions)
+      fetch("https://solar365.co.in/other_component/", requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)
@@ -109,7 +109,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch(`http://13.126.231.119/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setDisplayForm(false)
@@ -137,7 +137,7 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch(`http://13.126.231.119/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setOtherComponentDetails(result)

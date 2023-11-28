@@ -63,7 +63,7 @@ function AdminDashboard() {
         try {
 
             setLoading(true)
-            const url = "http://13.126.231.119/order/"
+            const url = "https://solar365.co.in/order/"
 
             const headers = new Headers()
 
@@ -120,7 +120,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/order/", requestOptions)
+            fetch("https://solar365.co.in/order/", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
                     setLoading(false)
@@ -148,7 +148,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/username_list/", requestOptions)
+            fetch("https://solar365.co.in/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
@@ -172,7 +172,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/inverter_module/", requestOptions)
+            fetch("https://solar365.co.in/inverter_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInverterList(result)
@@ -195,7 +195,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/battery_module/", requestOptions)
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -218,7 +218,7 @@ function AdminDashboard() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/module/", requestOptions)
+            fetch("https://solar365.co.in/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)

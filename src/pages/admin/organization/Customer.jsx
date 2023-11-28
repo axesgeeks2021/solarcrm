@@ -114,7 +114,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/register/?user_type=CUSTOMER", requestOptions)
+            fetch("https://solar365.co.in/register/?user_type=CUSTOMER", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -165,7 +165,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/get_customer_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_customer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -188,7 +188,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/get_installer_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInstallerList(result)
@@ -200,7 +200,7 @@ function Customer() {
     }
 
     const getDetails = async () => {
-        const requestInverter = await fetchRequest(cookies.Authorization, 'http://13.126.231.119/inverter_module/')
+        const requestInverter = await fetchRequest(cookies.Authorization, 'https://solar365.co.in/inverter_module/')
         return setInverterList(requestInverter)
     }
 
@@ -216,7 +216,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/battery_module/", requestOptions)
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setBatteryList(result)
@@ -239,7 +239,7 @@ function Customer() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/module/", requestOptions)
+            fetch("https://solar365.co.in/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setPanelList(result)

@@ -83,6 +83,11 @@ function AdminSideNavigation() {
         ],
       },
       {
+        title: 'Complete Orders',
+        itemId: '/complete-jobs',
+        elemBefore: () => <MdHardware />
+      },
+      {
         title: 'Update Profile',
         itemId: '/update-profile',
         elemBefore: () => <CgProfile />,

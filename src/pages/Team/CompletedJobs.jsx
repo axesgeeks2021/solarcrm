@@ -22,7 +22,7 @@ function CompletedJobs() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/completed-order-list/", requestOptions)
+            fetch("https://solar365.co.in/completed-order-list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)

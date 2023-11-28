@@ -72,7 +72,7 @@ function InverterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Product updated successfully...', autoClose: true, isLoading: false, type: 'success' })
@@ -100,7 +100,7 @@ function InverterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted Successfully...', isLoading: false, autoClose: true, type: 'success'})
@@ -115,7 +115,7 @@ function InverterOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `http://13.126.231.119/inverter_module/${data?.state?.ele?.id}`
+            const url = `https://solar365.co.in/inverter_module/${data?.state?.ele?.id}`
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
             const res = await fetch(url, {

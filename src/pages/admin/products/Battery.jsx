@@ -44,7 +44,7 @@ function Battery() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://13.126.231.119/battery_module/"
+            const url = "https://solar365.co.in/battery_module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -88,7 +88,7 @@ function Battery() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/battery_module/", requestOptions)
+            fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     // setLoading(false)

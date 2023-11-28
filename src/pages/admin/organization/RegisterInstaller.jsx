@@ -64,7 +64,7 @@ function RegisterTeam() {
         setFile3(e.target.files[0])
     }
 
-    const registerTeam = async (e) => {
+    const registerInstaller = async (e) => {
         e.preventDefault();
         try {
             const loadingToast = toast.loading('Please wait')
@@ -100,7 +100,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/register/?user_type=INSTALLER`, requestOptions)
+            fetch(`https://solar365.co.in/register/?user_type=INSTALLER`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -157,7 +157,7 @@ function RegisterTeam() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119//", requestOptions)
+            fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -237,7 +237,7 @@ function RegisterTeam() {
                     <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
                         <Heading heading="Create or Register Installer" size="36px" weight="600" />
                     </div>
-                    <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerTeam}>
+                    <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerInstaller}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
                             <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
                             <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
@@ -253,8 +253,8 @@ function RegisterTeam() {
                             <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                             <select style={{width: '100%', padding: '5px 0', border: '2px solid #99A3BA'}} value={selectedDepartment} onChange={e => setSelectedDepartment(e.target.value)}>
                                 <option defaultChecked>Select Department</option>
-                                <option value="installer">Installer</option>
-                                <option value="electrician">Electrician</option>
+                                <option value="Installer">Installer</option>
+                                <option value="Electrician">Electrician</option>
                             </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>

@@ -61,7 +61,6 @@ function RegisterNonAdmin() {
             formdata.append("phone", phone)
             formdata.append("email", email)
             // formdata.append("profile_pic", file)
-            formdata.append("address", address)
             formdata.append("alternate_phone", alternatephone)
             formdata.append("abnnumber", abnnumber)
             formdata.append("acnnumber", acnnumber)
@@ -73,7 +72,7 @@ function RegisterNonAdmin() {
             formdata.append("postcode", postcode)
             formdata.append("country", country)
 
-            const url = "http://13.126.231.119/register/?user_type=NON_ADMIN"
+            const url = "https://solar365.co.in/register/?user_type=NON_ADMIN"
 
             const myheaders = new Headers();
             myheaders.append('Authorization', `Token ${cookies.Authorization}`)
@@ -104,6 +103,7 @@ function RegisterNonAdmin() {
                     postcode: "",
                     country: ""
                 })
+                setShowForm(false)
                 toast.update(loadingId, {render: "Non Admin Created Successfully...", isLoading: false, type: 'success', autoClose: true})
                 return fetchData()
             }
@@ -125,7 +125,7 @@ function RegisterNonAdmin() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/get_none_admin_profile/", requestOptions)
+            fetch("https://solar365.co.in/get_none_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -183,38 +183,36 @@ function RegisterNonAdmin() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerNonAdmin}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                            <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" />
+                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                            <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
+                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Profile Photo..." type="file" onChange={handlefile} name="profilepic" />
-                            <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
+                            <Input placeholder="Profile Photo" type="file" onChange={handlefile} name="profilepic" />
+                            <Input placeholder="Alternate_phone" onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                            <Input placeholder="Companyname..." onChange={handleChange} value={companyname} name="companyname" />
+                            <Input placeholder="Company Name" onChange={handleChange} value={companyname} name="companyname" />
+                            <Input placeholder="ABN Number" onChange={handleChange} value={abnnumber} name="abnnumber" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="ABN Number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
-                            <Input placeholder="ACN Number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
+                            <Input placeholder="ACN Number" onChange={handleChange} value={acnnumber} name="acnnumber" />
+                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
+                        </div>
+
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" />
+                            <Input placeholder="City" onChange={handleChange} value={city} name="city" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
+                            <Input placeholder="State" onChange={handleChange} value={state} name="state" />
+                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                            <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
-                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit"/>

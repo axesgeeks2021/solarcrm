@@ -67,7 +67,7 @@ function BatterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/battery_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/battery_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: 'Product updated successfully', isLoading: false, autoClose: true, type: 'success' })
@@ -84,7 +84,7 @@ function BatterOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `http://13.126.231.119/battery_module/${data?.state?.ele?.id}`
+            const url = `https://solar365.co.in/battery_module/${data?.state?.ele?.id}`
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -118,7 +118,7 @@ function BatterOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/battery_module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/battery_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, {render: 'Deleted Successfully', isLoading: false, autoClose: true, type: 'success'})

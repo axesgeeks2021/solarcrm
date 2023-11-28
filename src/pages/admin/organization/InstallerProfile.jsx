@@ -74,7 +74,7 @@ function AdminOrders() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/inst-avail/31/", requestOptions)
+            fetch("https://solar365.co.in/inst-avail/31/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     // console.log(result)
@@ -97,7 +97,7 @@ function AdminOrders() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/inst-avail-list/31/", requestOptions)
+            fetch("https://solar365.co.in/inst-avail-list/31/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log('history', result)
@@ -120,7 +120,7 @@ function AdminOrders() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/get_installer_profile/2/", requestOptions)
+            fetch("https://solar365.co.in/get_installer_profile/2/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setInstallerProfile(result)

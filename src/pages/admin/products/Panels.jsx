@@ -45,7 +45,7 @@ function Panels() {
     
     const fetchRecord = async () => {
         try {
-            const url = "http://13.126.231.119/module/"
+            const url = "https://solar365.co.in/module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -88,7 +88,7 @@ function Panels() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/module/", requestOptions)
+            fetch("https://solar365.co.in/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)

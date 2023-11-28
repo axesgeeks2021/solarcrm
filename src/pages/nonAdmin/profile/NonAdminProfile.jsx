@@ -43,7 +43,7 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://13.126.231.119/get_admin_profile/1/?query=ADMIN", requestOptions)
+      fetch("https://solar365.co.in/get_admin_profile/1/?query=ADMIN", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -77,7 +77,7 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://13.126.231.119/forgot-password/", requestOptions)
+      fetch("https://solar365.co.in/forgot-password/", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
@@ -108,7 +108,7 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("http://13.126.231.119/change-password/", requestOptions)
+      fetch("https://solar365.co.in/change-password/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)

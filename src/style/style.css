@@ -1,4 +1,5 @@
 /* @import url("http://cdn.syncfusion.com/ej2/material.css"); */
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,6 +24,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Rubik';
 }
 
 /* Login */
@@ -2543,3 +2545,38 @@ input[type=file] {
 }
 
 /* upload input design */
+.completeContainer{
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.completejobs__box{
+  width: 95%;
+  margin: 10px 0px;
+  /* width: calc(100% / 2 - 5%); */
+}
+.completejobs__box .header p{
+  font-size: 22px;
+  padding: 5px 0;
+  background-color: var(--dark-gray);
+  color: var(--white);
+}
+.completejobs__box .content{
+  width: 100%;
+  background-color: var(--input-placeholder);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.completejobs__box .content div{
+  width: 100%;
+  padding: 4px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -20,7 +20,7 @@ function Panels() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://13.126.231.119/module/"
+            const url = "https://solar365.co.in/module/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)

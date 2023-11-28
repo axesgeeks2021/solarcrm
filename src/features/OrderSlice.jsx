@@ -10,7 +10,7 @@ const initialState = {
 export const fetchingOrders = createAsyncThunk(
   "orders/fetchOrders",
   async (token) => {
-    const response = await axios.get("http://13.126.231.119/get_order/", {
+    const response = await axios.get("https://solar365.co.in/get_order/", {
       headers: {
         Authorization: `Token ${token}`,
       },

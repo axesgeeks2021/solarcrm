@@ -73,7 +73,7 @@ function PanlesOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     toast.update(loadingId, { render: "Product updated successfully...", isLoading: false, autoClose: true, type: 'success' })
@@ -101,7 +101,7 @@ function PanlesOrders() {
                 redirect: 'follow'
             };
 
-            fetch(`http://13.126.231.119/module/${data?.state?.ele?.id}/`, requestOptions)
+            fetch(`https://solar365.co.in/module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
@@ -116,7 +116,7 @@ function PanlesOrders() {
 
     const fetchRecord = async () => {
         try {
-            const url = `http://13.126.231.119/module/${data?.state?.ele?.id}/`
+            const url = `https://solar365.co.in/module/${data?.state?.ele?.id}/`
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
             const res = await fetch(url, {

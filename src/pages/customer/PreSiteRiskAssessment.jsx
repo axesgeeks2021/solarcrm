@@ -91,7 +91,7 @@ function PreSiteRiskAssessment() {
         redirect: 'follow'
       };
 
-      fetch(`http://13.126.231.119/update_presite/${location?.state?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/update_presite/${location?.state?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -119,7 +119,7 @@ function PreSiteRiskAssessment() {
         redirect: 'follow'
       };
 
-      fetch(`http://13.126.231.119/order/${location?.state?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/order/${location?.state?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log('presite', result)

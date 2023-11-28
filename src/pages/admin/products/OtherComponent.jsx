@@ -42,7 +42,7 @@ function OtherComponent() {
 
     const fetchRecord = async () => {
         try {
-            const url = "http://13.126.231.119/other_component/"
+            const url = "https://solar365.co.in/other_component/"
 
             const headers = new Headers()
             headers.append('Authorization', `Token ${cookies.Authorization}`)
@@ -83,7 +83,7 @@ function OtherComponent() {
                 redirect: 'follow'
             };
 
-            fetch("http://13.126.231.119/other_component/", requestOptions)
+            fetch("https://solar365.co.in/other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
