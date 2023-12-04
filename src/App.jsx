@@ -70,6 +70,8 @@ import RegisterProfile from "./pages/nonAdmin/RegisterProfile";
 import CompleteJobs from "./pages/admin/completejobs/CompleteJobs";
 import CompletedJobsDetails from "./pages/admin/completejobs/CompletedJobsDetails";
 
+import Pract from "./pages/nonAdmin/Practice"
+
 
 function App() {
 
@@ -198,6 +200,7 @@ function App() {
         <Route path="/non-admin/orders" element={<NonAdminOrders />} />
         <Route path="/non-admin/calendar" element={<Calendar />} />
         <Route path="/non-admin/update-profile" element={<NonAdminUpdateProfile />} />
+        <Route path="/non-admin/practice" element={<Pract />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )

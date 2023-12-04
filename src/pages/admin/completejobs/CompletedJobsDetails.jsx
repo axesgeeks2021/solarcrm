@@ -59,9 +59,9 @@ function CompletedJobsDetails() {
                 </div>
             </div>
             <div className="container__table completeContainer">
-            <div style={{width: '95%', display: 'flex', justifyContent: 'flex-end',}}>
-                <Button title="Download Invoice" background="green" color="#fff"/>
-            </div>
+                <div style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', }}>
+                    <Button title="Download Invoice" background="green" color="#fff" />
+                </div>
                 <div className="completejobs__box">
                     <div className="header">
                         <p>Personal Details</p>
@@ -115,9 +115,9 @@ function CompletedJobsDetails() {
                 {
                     ordersDetails && ordersDetails?.assign_to?.map((ele, idx) => {
                         return (
-                            <div className="completejobs__box">
+                            <div className="completejobs__box" key={idx}>
                                 <div className="header">
-                                    <p>Assign To {ele?.department}</p>
+                                    <p>Assign To {ele?.department.charAt(0).toUpperCase()+ele?.department?.substring(1, ele?.department.length)}</p>
                                 </div>
                                 <div className='content'>
                                     <div>
@@ -134,21 +134,7 @@ function CompletedJobsDetails() {
                         )
                     })
                 }
-                <div className="completejobs__box">
-                    <div className="header">
-                        <p>Working Details</p>
-                    </div>
-                    <div className='content'>
-                        <div>
-                            <p>Start Date & Time: {ordersDetails?.order_start_date}</p>
-                            <p>End Date & Time: {ordersDetails?.order_end_date}</p>
-                        </div>
-                        <div>
-                            <p>Working Hours: {ordersDetails?.working_hour}</p>
-                        </div>
 
-                    </div>
-                </div>
                 <div className="completejobs__box">
                     <div className="header">
                         <p>Inverter</p>
@@ -214,6 +200,52 @@ function CompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="completejobs__box">
+                    <div className="header">
+                        <p>Working Details</p>
+                    </div>
+                    <div className='content'>
+                        <div>
+                            <p>Start Date & Time: {ordersDetails?.order_start_date}</p>
+                            <p>End Date & Time: {ordersDetails?.order_end_date}</p>
+                        </div>
+                        <div>
+                            <p>Working Hours: {ordersDetails?.working_hour}</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div className="completejobs__box">
+                    <div className="header">
+                        <p>Invoice</p>
+                    </div>
+                    <div className='content'>
+                        <div>
+                            <p>Invoice Number: {ordersDetails?.invoice?.invoice_number}</p>
+                            <p>Due Date: {ordersDetails?.invoice?.due_date}</p>
+                        </div>
+                        <div>
+                            <p>Amount Due: {ordersDetails?.invoice?.amount_due}</p>
+                            <p>Payment Method: {ordersDetails?.invoice?.payment_method}</p>
+                        </div>
+                        <div>
+                            <p>Payment Status: {ordersDetails?.invoice?.payment_status}</p>
+                            <p>Installation Price: {ordersDetails?.invoice?.installation_price}</p>
+                        </div>
+                        <div>
+                            <p>Amount Paid: {ordersDetails?.invoice?.amount_paid}</p>
+                            <p>Payment Date: {ordersDetails?.invoice?.payment_date}</p>
+                        </div>
+                        <div>
+                            <p>Specail Discount: {ordersDetails?.invoice?.special_discount}</p>
+                            <p>Status: {ordersDetails?.invoice?.status}</p>
+                        </div>
+                        <div>
+                            <p>Tax: {ordersDetails?.invoice?.tax}</p>
+                            <p>Total Amount: {ordersDetails?.invoice?.total_amount}</p>
                         </div>
                     </div>
                 </div>

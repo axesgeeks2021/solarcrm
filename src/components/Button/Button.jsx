@@ -10,7 +10,8 @@ function Button(props) {
         margin: props.margin,
         padding: props.padding,
         alignSelf: props.alignSelf,
-        cursor: props.cursor
+        cursor: props.cursor,
+        letterSpacing: '1px'
       }}
       className={`button ${props.classname}`}
       type={props.type || 'button'}

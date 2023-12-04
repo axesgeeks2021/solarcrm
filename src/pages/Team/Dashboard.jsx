@@ -29,7 +29,6 @@ function Dashboard() {
 
         let installerElectricianId = [...selectedValue, userId]
         setSelectedValue(installerElectricianId)
-        console.log(installerElectricianId)
         if(installerElectricianId.length > 2){
             let arrayToString = installerElectricianId.toString().split(',').join(', ')
             setSelectedValue(arrayToString)
