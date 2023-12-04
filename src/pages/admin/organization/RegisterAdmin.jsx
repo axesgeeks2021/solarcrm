@@ -57,7 +57,6 @@ function RegisterAdmin() {
             formdata.append("phone", phone);
             formdata.append("email", email);
             formdata.append("profile_pic", file);
-            formdata.append("address", address);
             formdata.append("is_staff", isStaff);
             formdata.append("is_superuser", isSuper);
             formdata.append("address_line", addressline);
@@ -76,7 +75,10 @@ function RegisterAdmin() {
 
             fetch("https://solar365.co.in/register/?user_type=ADMIN", requestOptions)
                 .then(response => response.json())
-                .then(result => console.log(result))
+                .then(result => {
+                    console.log(result)
+                    return fetchData()
+                })
                 .catch(error => console.log('error', error));
 
         } catch (error) {
@@ -163,7 +165,7 @@ function RegisterAdmin() {
                             <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <UploadFile label="Profie Photo" width="100%" onchange={e => setProfilePhoto(e.target.files[0])} />
+                        <Input type="file" onchange={handlefile} placeholder="Profile Photo" name="file"/>
                             <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
