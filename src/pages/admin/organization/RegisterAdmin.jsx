@@ -56,7 +56,6 @@ function RegisterAdmin() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
             formdata.append("is_staff", isStaff);
             formdata.append("is_superuser", isSuper);
             formdata.append("address_line", addressline);
@@ -165,8 +164,7 @@ function RegisterAdmin() {
                             <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                        <Input type="file" onchange={handlefile} placeholder="Profile Photo" name="file"/>
-                            <Input placeholder="Address..." onChange={handleChange} value={address} name="address" />
+                            <Input type="file" onchange={handlefile} placeholder="Profile Photo" name="file" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Is-Staff..." onChange={handleChange} value={isStaff} name="isStaff" />
@@ -185,7 +183,7 @@ function RegisterAdmin() {
                             <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" />
+                            <Button title="Submit" background="orange" type="submit" />
                             <Button title="Close" background="lightgray" margin="0 10px" onclick={() => setShowForm(false)} />
                         </div>
                     </form>
