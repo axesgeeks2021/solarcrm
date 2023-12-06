@@ -68,10 +68,13 @@ function NonAdminDashboard() {
         panelsQuantity: "",
         inverterQuantity: "",
         batteries: "",
-        batteriesQuantity: ""
+        batteriesQuantity: "",
+        batteryPurchase: "",
+        inverterPurchase: "",
+        panelPurchase: ""
     })
 
-    const { addressline, batteries, roofType, batteriesQuantity, buildingType, city, country, descritpion, email, firstname, inverter, inverterQuantity, lastname, meterNumber, meterPhase, nmiNo, packingSlipReason,
+    const { addressline, batteryPurchase, inverterPurchase, panelPurchase, batteries, roofType, batteriesQuantity, buildingType, city, country, descritpion, email, firstname, inverter, inverterQuantity, lastname, meterNumber, meterPhase, nmiNo, packingSlipReason,
         panelLayoutReason, panels, panelsQuantity, phone, postcode, state, switchBoardReason, systemSize, westernPowerReason } = text
 
     const handleChange = e => {
@@ -163,10 +166,9 @@ function NonAdminDashboard() {
     }
 
     const fetchCreateOrder = e => {
-        console.log('hello world')
         e.preventDefault()
         try {
-            // const loadingId = toast.loading("Please wait....")
+            const loadingId = toast.loading("Please wait....")
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
@@ -176,7 +178,7 @@ function NonAdminDashboard() {
             // formdata.append("last_name", "Kumar");
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("company_Name", "AVC Ltd");
+            formdata.append("company_Name", "platinum");
             formdata.append("system_Size", systemSize);
             formdata.append("nmi_no", nmiNo);
             formdata.append("meter_Number", meterNumber);
@@ -199,9 +201,9 @@ function NonAdminDashboard() {
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("batteries", batteries);
             formdata.append("battery_quantity", batteriesQuantity);
-            formdata.append("is_inverter_buy", "true");
-            formdata.append("is_battery_buy", "true");
-            formdata.append("is_panel_buy", "true");
+            formdata.append("is_inverter_buy", inverterPurchase);
+            formdata.append("is_battery_buy", batteryPurchase);
+            formdata.append("is_panel_buy", panelPurchase);
 
 
             const requestOptions = {
@@ -215,11 +217,9 @@ function NonAdminDashboard() {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    if (result.messsage === 'Success') {
-                        // toast.update(loadingId, { render: "Customer created successfully...", isLoading: false, type: 'success', autoClose: true })
-                        setShowForm(false)
-                        return fetchOrder()
-                    }
+                    toast.update(loadingId, { render: "Customer created successfully...", isLoading: false, type: 'success', autoClose: true })
+                    setShowForm(false)
+                    return fetchOrder()
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -307,7 +307,7 @@ function NonAdminDashboard() {
                                         <td >{ele.building_Type}</td>
                                         <td >{ele.nmi_no}</td>
                                         <td >
-                                            <Button title="In Process" background="green" color="white" cursor="none" />
+                                            <Button title={ele?.order_status === "Completed" ? "Completed" : "In Process"} background={ele?.order_status === "Completed" ? "orange" : "green"} color="white" cursor="none" />
                                         </td>
                                         {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
                                     </tr>
@@ -453,10 +453,10 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                            <select value={panelPurchase} name='panelPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
                                 <option>Purchase From</option>
-                                <option value="Ground Floor">Himself</option>
-                                <option value="First Floor">From Company</option>
+                                <option value="false">Himself</option>
+                                <option value="true">From Company</option>
                             </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
@@ -480,10 +480,10 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                            <select value={inverterPurchase} name='inverterPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
                                 <option>Purchase From</option>
-                                <option value="Ground Floor">Himself</option>
-                                <option value="First Floor">From Company</option>
+                                <option value="false">Himself</option>
+                                <option value="true">From Company</option>
                             </select>
                         </div>
 
@@ -508,10 +508,10 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                            <select value={batteryPurchase} name='batteryPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
                                 <option>Purchase From</option>
-                                <option value="Ground Floor">Himself</option>
-                                <option value="First Floor">From Company</option>
+                                <option value="false">Himself</option>
+                                <option value="true">From Company</option>
                             </select>
                         </div>
 

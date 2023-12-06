@@ -75,6 +75,7 @@ function AdminDashboard() {
             const data = await res.json()
             setLoading(false)
             setOrderLists(data)
+            console.log('customer', data)
 
         } catch (error) {
             console.log(error)
@@ -102,7 +103,7 @@ function AdminDashboard() {
             formdata.append("installation_Type", installationType);
             formdata.append("panels_quantity", panelsQuantity);
             formdata.append("inverter_quantity", inverterQuantity);
-            formdata.append("other_component", otherComponent);
+            // formdata.append("other_component", otherComponent);
             formdata.append("batteries", batteries);
             formdata.append("battery_quantity", batteriesQuantity);
             // formdata.append("swms_doc", batteries);
@@ -119,7 +120,8 @@ function AdminDashboard() {
             fetch("https://solar365.co.in/order/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    if(result.message === "Success"){
+                    console.log('order ', result)
+                    if(result.message === "success"){
                         setShowForm(false)
                         toast.update(loadingId, { render: 'Order created successfully', type: 'success', isLoading: false, autoClose: true })
                         return fetchOrder()
@@ -432,7 +434,7 @@ function AdminDashboard() {
                                 }
                             </select>
                         </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                        {/*<div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={otherComponent} name="otherComponent" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
                                 <option defaultChecked>Select Other Component List</option>
                                 {
@@ -453,7 +455,7 @@ function AdminDashboard() {
                                     })
                                 }
                             </select>
-                        </div>
+                            </div>*/}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" type="submit" />
                             <Button title="Close" background="gray" color="white" onclick={() => setShowForm(false)} />

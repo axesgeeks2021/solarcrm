@@ -60,7 +60,7 @@ function RegisterAdmin() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
+            // formdata.append("profile_pic", file);
             formdata.append("is_staff", isStaff);
             formdata.append("is_superuser", isSuper);
             formdata.append("address_line", addressline);
@@ -80,6 +80,7 @@ function RegisterAdmin() {
             fetch("https://solar365.co.in/register/?user_type=ADMIN", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log(result)
                     if (result?.messsage === "Success") {
                         toast.update(loadingId, { render: 'Admin Created successfully', isLoading: false, type: 'success', autoClose: true })
                         setShowForm(false)
@@ -143,7 +144,7 @@ function RegisterAdmin() {
                                 <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
                                 <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
                                 <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
-                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
+                                {/*<div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>*/}
                             </li>
                             {
                                 adminList?.map((ele, idx) => {
@@ -155,7 +156,7 @@ function RegisterAdmin() {
                                                 <div className={`col col-2 text-center`}>{ele.user.phone}</div>
                                                 <div className={`col col-2 text-center`}>{ele.city} / {ele.state}</div>
                                                 <div className={`col col-2 text-center`}>{ele.user.user_type}</div>
-                                                <div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                                {/*<div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>*/}
                                             </li>
                                         </Link>
                                     )

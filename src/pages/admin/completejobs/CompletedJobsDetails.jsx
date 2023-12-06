@@ -29,7 +29,7 @@ function CompletedJobsDetails() {
             fetch(`https://solar365.co.in/order/${location?.state?.orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                    console.log('completed',result)
                     setOrdersDetails(result)
                 })
                 .catch(error => console.log('error', error));
@@ -60,7 +60,7 @@ function CompletedJobsDetails() {
             </div>
             <div className="container__table completeContainer">
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', }}>
-                    <Button title="Download Invoice" background="green" color="#fff" />
+                    <a style={{background:"green",color:"#fff"}} href={ordersDetails?.invoice?.invoice} download>Download Invoice</a>
                 </div>
                 <div className="completejobs__box">
                     <div className="header">

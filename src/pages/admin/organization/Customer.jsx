@@ -189,6 +189,7 @@ function Customer() {
                 .then(response => response.json())
                 .then(result => {
                     setInstallerList(result)
+                    console.log('installer', result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -314,7 +315,7 @@ function Customer() {
                                 <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
                                 <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" />
                             </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                            {/*<div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Multiselect options={installerList?.Electrician?.admin} isObject={true} displayValue='city' placeholder='select electrician' />
                                 <Dropdown
                                     title='Assign To'
@@ -354,8 +355,7 @@ function Customer() {
                                         </Dropdown.Submenu>
                                     </Dropdown.Item>
                                 </Dropdown>
-                                {/*<Input placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />*/}
-                            </div>
+                                        </div>*/}
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
                                     <option>Select Supply</option>

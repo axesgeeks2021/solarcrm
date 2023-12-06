@@ -23,6 +23,7 @@ function Homepage({showSlotModal, setShowSlotModal}) {
 
   const [userData, setUserData] = useState({})
   const [status, setStatus] = useState([]);
+  console.log('status', status)
 
   const [listOfSlots, setListOfSlots] = useState({})
   const [bookModal, setBookModal] = useState({

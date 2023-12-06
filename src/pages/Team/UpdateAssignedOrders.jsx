@@ -137,6 +137,7 @@ function UpdateAssignedOrders() {
 
     const fetchUpdateMeter = e => {
         e.preventDefault()
+        console.log('elec -->', electricityBillFile)
         try {
             const id = toast.loading('Please wait...')
             const myHeaders = new Headers();
@@ -159,9 +160,10 @@ function UpdateAssignedOrders() {
             fetch(`https://solar365.co.in/upload_meter_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('photos',result)
                     if (result) {
                         toast.update(id, { render: 'Meter Details updated...', type: 'success', isLoading: false, autoClose: true })
-                        console.log(result)
+                        return
                     }
                 })
                 .catch(error => console.log('error', error));
@@ -173,6 +175,7 @@ function UpdateAssignedOrders() {
     const fetchInstallDocs = e => {
         e.preventDefault()
         try {
+            console.log('done')
             const id = toast.loading('Please wait...')
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -197,9 +200,10 @@ function UpdateAssignedOrders() {
             fetch(`https://solar365.co.in/update_install_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('install',result)
                     if (result) {
                         toast.update(id, { render: 'Meter Details updated...', type: 'success', isLoading: false, autoClose: true })
-                        console.log(result)
+                        return
                     }
                 })
                 .catch(error => console.log('error', error));
@@ -252,8 +256,8 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === "" ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date !== "" ? true : false}/>
-                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === "" ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date !== "" ? true : false}/>
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === "" ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date === "" ? true : false}/>
+                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === "" ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date === "" ? true : false}/>
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
@@ -284,11 +288,11 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showMeter ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateMeter}>
-                                <UploadFile id="elect" name="electricityBillFile" value={electricityBillFile} width="100%" label="Electricity Bill" onchange={e => setElectricityBillFile(e.target.files[0])} />
-                                <UploadFile id="counc" name="councilRateFile" value={councilRateFile} width="100%" label="Council Rate" onchange={e => setCouncilRateFile(e.target.files[0])} />
-                                <UploadFile id="meter" name="meterBoxFile" value={meterBoxFile} width="100%" label="Meterbox" onchange={e => setMeterBoxFile(e.target.files[0])} />
-                                <UploadFile id="contact" name="contractFile" value={contractFile} width="100%" label="Contract File" onchange={e => setContractFile(e.target.files[0])} />
-                                <UploadFile id="misc" name="miscellaneousFile" value={miscellaneousFile} width="100%" label="Miscellaneous File" onchange={e => setMiscellaneousFile(e.target.files[0])} />
+                                <Input type="file" placeholder="Electricity Bill" id="elect" width="100%" onChange={e => setElectricityBillFile(e.target.files[0])} />
+                                <Input type="file" placeholder="Council Rate" onChange={e => setCouncilRateFile(e.target.files[0])} />
+                                <Input type="file" placeholder="Meterbox" onChange={e => setMeterBoxFile(e.target.files[0])} />
+                                <Input type="file" placeholder="Contract File" onChange={e => setContractFile(e.target.files[0])} />
+                                <Input type="file" placeholder="Miscellaneous File" onChange={e => setMiscellaneousFile(e.target.files[0])} />
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
@@ -303,14 +307,14 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showInstall ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchInstallDocs}>
-                                <UploadFile id="contract" name="contractDocs" value={contractDocs} width="100%" label="Contract Documents" onchange={e => setContractDocs(e.target.files[0])} />
-                                <UploadFile id="grid" name="gridApprovalDocs" value={gridApprovalDocs} width="100%" label="Grid Approval Documents" onchange={e => setGridApprovalDocs(e.target.files[0])} />
-                                <UploadFile id="compliance" name="complianceDocs" value={complianceDocs} width="100%" label="Compliance Documents" onchange={e => setComplianceDocs(e.target.files[0])} />
-                                <UploadFile id="user" name="userManual" value={userManual} width="100%" label="User Mannual" onchange={e => setUserMannual(e.target.files[0])} />
-                                <UploadFile id="pvsite" name="pvSiteInfoDocs" value={pvSiteInfoDocs} width="100%" label="Pv Site Info Documents" onchange={e => setPvSiteInfoDocs(e.target.files[0])} />
-                                <UploadFile id="energy" name="eneryYieldReportDocs" value={energyYieldReportDocs} width="100%" label="Energy Yield Report Documents" onchange={e => setEnergyYieldReportDocs(e.target.files[0])} />
-                                <UploadFile id="safety" name="safetyCertificateDocs" value={safetyCertificateDocs} width="100%" label="Safety Certificate Documents" onchange={e => setSafetyCertificateDocs(e.target.files[0])} />
-                                <UploadFile id="noc" name="nocDocs" value={nocDocs} width="100%" label="Noc Documents" onchange={e => setNocDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Contract Documents" onChange={e => setContractDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Grid Approval Documents" onChange={e => setGridApprovalDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Compliance Documents" onChange={e => setComplianceDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="User Mannual" onChange={e => setUserMannual(e.target.files[0])} />
+                                <Input type="file" placeholder="Pv Site Info Documents" onChange={e => setPvSiteInfoDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Energy Yield Report Documents" onChange={e => setEnergyYieldReportDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Safety Certificate Documents" onChange={e => setSafetyCertificateDocs(e.target.files[0])} />
+                                <Input type="file" placeholder="Noc Documents" onChange={e => setNocDocs(e.target.files[0])} />
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
