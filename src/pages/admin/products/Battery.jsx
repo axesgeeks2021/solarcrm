@@ -19,9 +19,7 @@ function Battery() {
     const [loading, setLoading] = useState(false)
 
     const [cookies] = useCookies();
-
     const [file, setFile] = useState(null)
-
     const [text, setText] = useState({
         code: "",
         manufacturer: "",
@@ -65,7 +63,6 @@ function Battery() {
     const createBattery = (e) => {
         e.preventDefault()
         try {
-            // setLoading(true)
             const loadingId = toast.loading('Please wait...')
             const myHeaders = new Headers();
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
@@ -73,7 +70,7 @@ function Battery() {
 
             const formdata = new FormData();
             formdata.append("code", code);
-            // formdata.append("battery_logo", file);
+            formdata.append("battery_logo", file);
             formdata.append("manufacturer", manufacturer);
             formdata.append("title", title);
             formdata.append("total_energy", totalEnergy);
@@ -91,11 +88,19 @@ function Battery() {
             fetch("https://solar365.co.in/battery_module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    // setLoading(false)
+                    if (result?.message === "success") {
                     toast.update(loadingId, {render: 'New battery successfully addedd...', isLoading: false, type: 'success', autoClose: true})
+                    setText({
+                        code: "",
+                        manufacturer: "",
+                        productWarranty: "",
+                        quantity: "",
+                        title: "",
+                        totalEnergy: ""
+                    })
                     setDisplayForm(false)
-                    console.log(result)
                     return fetchRecord()
+                    }
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -121,7 +126,7 @@ function Battery() {
                 </div>
                 <div className="container py-5">
                     <div className='py-2 flex justify-end'>
-                        <Button title="Create New Battries" background="aqua" color="gray" onclick={() => setDisplayForm(true)} />
+                        <Button title="Create New Battries" background="green" color="#fff" onclick={() => setDisplayForm(true)} />
                     </div>
                     <ul className="responsive-table">
                         <li className="table-header">
@@ -147,25 +152,28 @@ function Battery() {
                     </ul>
                 </div>
             </div>
-            <div style={{ transition: "0.4s", width: "60%", height: '90vh', background: 'white', display: displayForm ? 'flex' : 'none', justifyContent: 'flex-start', alignItems: 'center', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)', overflowY: 'scroll', transform: 'translate(-50%, -50%)', flexDirection: "column" }}>
-                {/* <ImCross style={{position: 'absolute', top: '5px', left: '10px', cursor: 'pointer'}} onClick={() => setDisplayForm(false)}/> */}
-                <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "80%" }}>
-                <Heading heading="Enter details for creating new Panels" size="24px"/>
-                    <form style={{width: '100%'}} className='my-10 flex flex-col justify-center items-center gap-3' onSubmit={createBattery}>
-                        <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}  />
-                        <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}  />
-                        <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}  />
-                        <Input width="100%" placeholder="Rated Output Power..." value={totalEnergy} name="totalEnergy" onChange={handleText}  />
-                        <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}  />
-                        <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}  />
-                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
-                        <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
-                            <Button title="Submit" background="orange" type="submit"/>
-                            <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />
-                        </div>
-                    </form>
+            {
+                displayForm &&
+                <div style={{ transition: "0.4s", width: "50%", height: '90vh', background: 'white', display: 'flex' ,justifyContent: 'flex-start', alignItems: 'center', position: 'absolute', left: '50%', top: "50%", boxShadow: '2px 2px 10px 1px rgba(0,0,0,0.2),-2px -2px 10px 1px rgba(0,0,0,0.2)', overflowY: 'scroll', transform: 'translate(-50%, -50%)', flexDirection: "column" }}>
+                    {/* <ImCross style={{position: 'absolute', top: '5px', left: '10px', cursor: 'pointer'}} onClick={() => setDisplayForm(false)}/> */}
+                    <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "100%" }}>
+                    <Heading heading="Enter details for creating new Battery" size="24px"/>
+                        <form style={{width: '100%'}} className='my-10 flex flex-col justify-center items-center gap-3' onSubmit={createBattery}>
+                            <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}  />
+                            <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}  />
+                            <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}  />
+                            <Input width="100%" placeholder="Rated Output Power..." value={totalEnergy} name="totalEnergy" onChange={handleText}  />
+                            <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}  />
+                            <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}  />
+                            <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
+                            <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
+                                <Button title="Submit" background="orange" type="submit"/>
+                                <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            }
         </>
     )
 }

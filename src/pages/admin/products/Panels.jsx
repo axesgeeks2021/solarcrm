@@ -10,6 +10,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
 import Loading from '../../../components/loading/Loading';
+import { toast } from 'react-toastify';
 
 
 
@@ -65,7 +66,7 @@ function Panels() {
     const createPanels = e => {
         e.preventDefault()
         try {
-            setLoading(true)
+            const loadingId = toast.loading('Please wait....')
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
@@ -91,10 +92,20 @@ function Panels() {
             fetch("https://solar365.co.in/module/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setLoading(false)
-                    setDisplayForm(false)
-                    console.log(result)
-                    return fetchRecord()
+                    if(result?.message === "success"){
+                        toast.update(loadingId, {render: 'Panel created successfully', isLoading: false, autoClose: true, type: 'success'})
+                        setDisplayForm(false)
+                        setText({
+                            code: "",
+                            manufacturer: "",
+                            performanceWarranty: "",
+                            productWarranty: "",
+                            quantity: "",
+                            technology: "",
+                            title: ""
+                        })
+                        return fetchRecord()
+                    }
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -120,7 +131,7 @@ function Panels() {
                 </div>
                 <div className="container py-5 flex flex-col overflow-hidden">
                     <div className='py-2 flex justify-end'>
-                        <Button title="Create New Panel" background="aqua" color="gray" onclick={() => setDisplayForm(true)} />
+                        <Button title="Create New Panel" background="green" color="#fff" onclick={() => setDisplayForm(true)} />
                     </div>
                     <ul className="responsive-table">
                         <li className="table-header">

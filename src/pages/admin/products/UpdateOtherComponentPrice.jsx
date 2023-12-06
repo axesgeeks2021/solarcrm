@@ -115,7 +115,8 @@ function UpdateOtherComponentPrice() {
                         setValue({
                             component: "",
                             price: '',
-                            company: company
+                            company: company,
+                            freeQuantity: ""
                         })
                         toast.update(loadingId, { render: 'Price updated successfully', isLoading: false, autoClose: true, type: 'success' })
                         return fetchOtherComponentPriceList()

@@ -9,6 +9,7 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input';
+import { toast } from 'react-toastify';
 
 
 
@@ -66,7 +67,7 @@ function Inverter() {
     const createInverter = e => {
         e.preventDefault()
         try {
-            setLoading(true)
+            const loadingId = toast.loading('Please wait....')
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd");
@@ -94,9 +95,21 @@ function Inverter() {
             fetch("https://solar365.co.in/inverter_module/", requestOptions)
                 .then(response => response.json())
                 .then(result =>{
-                    setLoading(false)
+                    if(result?.message === "success"){
+                    toast.update(loadingId, {render: 'Inverter created successfully', isLoading: false, autoClose: true, type: 'success'})
                     setDisplayForm(false)
+                    setText({
+                        title: '',
+                        additionalPartWarranty: "",
+                        code: "",
+                        inverterType: "",
+                        manufacturer: "",
+                        productWaranty: "",
+                        quantity: "",
+                        ratedOutputPower: ""
+                    })
                     return fetchRecord()
+                    }
         })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -118,7 +131,7 @@ function Inverter() {
                 </div>
                 <div className="container py-5">
                     <div className='py-2 flex justify-end'>
-                        <Button title="Create New Inverters" background="aqua" color="gray" onclick={() => setDisplayForm(true)} />
+                        <Button title="Create New Inverters" background="green" color="white" onclick={() => setDisplayForm(true)} />
                     </div>
                     <ul className="responsive-table">
                         <li className="table-header">

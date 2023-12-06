@@ -15,7 +15,7 @@ function UnapprovedCompany() {
 
     const [loading, setLoading] = useState(false)
 
-    const fetchData =  () => {
+    const fetchData = () => {
         try {
             setLoading(true)
             const myHeaders = new Headers();
@@ -31,10 +31,8 @@ function UnapprovedCompany() {
                 .then(response => response.json())
                 .then(result => {
 
-                    setTimeout(() => {
                         setLoading(false)
                         setUnapprovedCompanyList(result)
-                    }, 800);
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -42,35 +40,6 @@ function UnapprovedCompany() {
         }
     }
 
-    const approveCompany =  (id) => {
-        try {
-            setLoading(true)
-            const myHeaders = new Headers();
-            myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
-
-            const formdata = new FormData();
-            formdata.append("has_approve", "true");
-
-            const requestOptions = {
-                method: 'PUT',
-                headers: myHeaders,
-                body: formdata,
-                redirect: 'follow'
-            };
-
-            fetch(`https://solar365.co.in/update_profile/${id}/`, requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    setTimeout(() => {
-                        setLoading(false)
-                        return fetchData()
-                    }, 700)
-                })
-                .catch(error => console.log('error', error));
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     useEffect(() => {
         const subscribe = fetchData()
@@ -78,7 +47,7 @@ function UnapprovedCompany() {
         return () => subscribe
     }, [])
 
-    if(loading){
+    if (loading) {
         return <Loading />
     }
 
@@ -89,9 +58,6 @@ function UnapprovedCompany() {
                     <AdminSideNavigation />
                 </div>
                 <div className="container py-5">
-                    {/* <div className='py-2 flex justify-end'>
-                        <Button title="Create New Panel" background="aqua" color="gray" />
-                    </div> */}
                     <ul className="responsive-table">
                         <li className="table-header">
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Id</div>
@@ -100,36 +66,21 @@ function UnapprovedCompany() {
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Address Line</div>
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">User Type</div>
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Aprrove Status</div>
-                            {/* <div className="col col-1 text-center">Panels</div>
-                        <div className="col col-1 text-center">Inverter</div> */}
-                            {/* <div className="col col-1 text-center">Meter Phase</div> */}
-                            {/* <div className="col col-1 text-center">Order Status</div> */}
-                            {/* <div className="col col-1 text-center">Manufacturer</div> */}
-                            {/* <div className="col col-1 text-center">Smart Meter</div> */}
                         </li>
                         {
                             unapprovedCompanyList.length < 1 ? <h2>There is no order available right now...</h2> : unapprovedCompanyList.map((ele, idx) => {
                                 return (
-                                    // <Link to="/admin-orders" state={{ ele }} key={idx}>
+                                    <Link to="/unapprove-company-details" key={idx} state={{ele}}>
                                         <OrderList
-                                        key={idx}
                                             Id={ele.id}
                                             Project={ele?.admin?.user?.username}
                                             CustomerName={ele?.company_name}
                                             SystemSize={ele.admin?.address_line}
                                             BuildingType={ele?.admin?.user?.user_type}
-                                            NmiNo={ele?.admin?.user?.has_approve === false ? <Button title="Not Approved" background="red" color="white" onclick={() => approveCompany(ele?.admin?.id)} /> : <Button title="Approved" background="green" color="white" disabled={true} />
+                                            NmiNo={<Button title="Not Approved" background="red" color="white" disabled={true} />
                                             }
-                                        // Panels={ele.panels}
-                                        // Inverter={ele.inverter}
-                                        // MeterPhase={ele.meter_Phase}
-                                        // OrderStatus={ele.order_status}
-                                        // Manufacturer={ele.other_component.map((ele , idx) => {
-                                        //     return ele.manufacturer
-                                        // })}
-                                        // SmartMeter={ele.other_component[0].smart_meter} 
                                         />
-                                    // </Link>
+                                    </Link>
                                 )
                             })
                         }

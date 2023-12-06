@@ -104,7 +104,7 @@ function AdminSideNavigation() {
       },
       {
         title: 'Profiles',
-        itemId: "/admin-profile",
+        itemId: "/profile",
         elemBefore: () => <HiBuildingOffice2 />,
         // subNav: [
         //   {

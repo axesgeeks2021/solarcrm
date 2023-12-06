@@ -10,13 +10,17 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import UploadFile from '../../../components/inputsfield/UploadFile';
 import Input from '../../../components/inputsfield/Input';
+import { toast } from 'react-toastify';
+import BarLoader from '../../../components/BarLoader/BarLoader';
+import { Link } from 'react-router-dom';
 
 
 function RegisterAdmin() {
 
     const [cookies] = useCookies();
 
-    const [file, setFile] = useState()
+    const [loading, setLoading] = useState(false)
+    const [file, setFile] = useState(null)
     const [showForm, setShowForm] = useState(false)
     const [adminList, setAdminList] = useState([])
     const [value, setValue] = useState({
@@ -24,7 +28,6 @@ function RegisterAdmin() {
         lastname: "",
         phone: "",
         email: "",
-        address: "",
         isStaff: "",
         isSuper: "",
         addressline: "",
@@ -32,10 +35,10 @@ function RegisterAdmin() {
         state: "",
         street: "",
         postcode: "",
-        country: ""
+        country: "Australia"
     })
 
-    const { firstname, lastname, phone, email, address, isStaff, isSuper, addressline, street, city, state, postcode, country } = value
+    const { firstname, lastname, phone, email, isStaff, isSuper, addressline, street, city, state, postcode, country } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -48,6 +51,7 @@ function RegisterAdmin() {
     const register = async (e) => {
         e.preventDefault()
         try {
+            const loadingId = toast.loading('Please wait....')
             let myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
@@ -56,6 +60,7 @@ function RegisterAdmin() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
+            formdata.append("profile_pic", file);
             formdata.append("is_staff", isStaff);
             formdata.append("is_superuser", isSuper);
             formdata.append("address_line", addressline);
@@ -75,8 +80,13 @@ function RegisterAdmin() {
             fetch("https://solar365.co.in/register/?user_type=ADMIN", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
-                    return fetchData()
+                    if (result?.messsage === "Success") {
+                        toast.update(loadingId, { render: 'Admin Created successfully', isLoading: false, type: 'success', autoClose: true })
+                        setShowForm(false)
+                        setValue(prev => prev !== "" ? "" : "")
+                        return fetchData()
+                    }
+                    return toast.update('Please try agian...!', { isLoading: false, type: 'warning', autoClose: true })
                 })
                 .catch(error => console.log('error', error));
 
@@ -87,6 +97,7 @@ function RegisterAdmin() {
 
     const fetchData = () => {
         try {
+            setLoading(true)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Content-Type", "application/json");
@@ -101,7 +112,7 @@ function RegisterAdmin() {
             fetch("https://solar365.co.in/get_admin_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                    setLoading(false)
                     setAdminList(result)
                 })
                 .catch(error => console.log('error', error));
@@ -123,30 +134,35 @@ function RegisterAdmin() {
             </div>
             <div style={{ width: '100%', padding: '20px 10px' }}>
                 <Button title="Create New Admin" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
-                <ul className="responsive-table">
-                    <li className="table-header">
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
-                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
-                    </li>
-                    {
-                        adminList?.map((ele, idx) => {
-                            return (
-                                <li className="table-row" key={idx}>
-                                    <div className={`col col-2 text-center`}>{ele.user.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.user.email}</div>
-                                    <div className={`col col-2 text-center`}>{ele.user.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele.city} / {ele.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele.user.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
+                {
+                    loading ? <BarLoader /> :
+                        <ul className="responsive-table">
+                            <li className="table-header">
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">City / State</div>
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Type</div>
+                                <div className="col col-2 text-center text-slate-50 text-base font-bold">Apporved Status</div>
+                            </li>
+                            {
+                                adminList?.map((ele, idx) => {
+                                    return (
+                                        <Link to="/admins-profile" state={{ele}}>
+                                            <li className="table-row py-3" key={idx}>
+                                                <div className={`col col-2 text-center`}>{ele.user.first_name}</div>
+                                                <div className={`col col-2 text-center`}>{ele.user.email}</div>
+                                                <div className={`col col-2 text-center`}>{ele.user.phone}</div>
+                                                <div className={`col col-2 text-center`}>{ele.city} / {ele.state}</div>
+                                                <div className={`col col-2 text-center`}>{ele.user.user_type}</div>
+                                                <div className={`col col-2 text-center`}>{ele.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                            </li>
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </ul>
+                }
             </div>
             {
                 showForm &&
@@ -156,31 +172,45 @@ function RegisterAdmin() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={register}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                            <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" />
+                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                            <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
+                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input type="file" onchange={handlefile} placeholder="Profile Photo" name="file" />
+                            <Input type="file" onChange={handlefile} placeholder="Profile Photo" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Is-Staff..." onChange={handleChange} value={isStaff} name="isStaff" />
-                            <Input placeholder="Is_Superuser..." onChange={handleChange} value={isSuper} name="isSuper" />
+                            <select value={isStaff} name="isStaff" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
+                                <option>Is Staff</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                            <select value={isSuper} name="isSuper" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
+                                <option>Is Superuser</option>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
-                            <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
+                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
+                            <Input placeholder="City" onChange={handleChange} value={city} name="city" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
-                            <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" />
+                            <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
+                                <option selected>Select State</option>
+                                <option value="Queensland">Queensland</option>
+                                <option value="New South Wales">New South Wales</option>
+                                <option value="Victoria">Victoria</option>
+                                <option value="Western Australia">Western Australia</option>
+                            </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
-                            <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" />
+                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit" />

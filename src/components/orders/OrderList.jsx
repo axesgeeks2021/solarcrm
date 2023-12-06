@@ -4,7 +4,7 @@ function OrderList(props) {
 
   return (
     <li className="table-row" style={{display: 'flex', alignItems: 'center', padding: '10px 0'}}>
-      <div className={`col col-1 text-center`}>{props.Id}</div>
+      <div className={`col col-2 text-center`}>{props.Id}</div>
       <div className={`col col-2 text-center`}>{props.Project}</div>
       <div className={`col col-2 text-center`}>{props.CustomerName}</div>
       <div className={`col col-2 text-center`}>{props.SystemSize}</div>

@@ -2580,3 +2580,43 @@ input[type=file] {
   justify-content: space-between;
   align-items: center;
 }
+.popup__form{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-30%, -50%);
+  background-color: #eee;
+  flex-direction: column;
+  box-shadow: 4px 4px 10px 0 rgba(0,0,0,0.2);
+  border-radius: 3px;
+  padding: 20px 10px;
+}
+.bar__loader__container{
+  width: 90%;
+  height: 10px;
+  background-color: var(--input-color);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+.bar__loader__container .loading{
+  width: 50%;
+  height: 100%;
+  background-color: var(--orange);
+  animation: progress 1s linear infinite;
+}
+@keyframes progress {
+  0%{
+      transform: translateX(-130%);
+  }
+  
+  100%{
+      transform: translateX(230%);
+  }
+}

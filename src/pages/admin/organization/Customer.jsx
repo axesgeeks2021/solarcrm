@@ -10,18 +10,15 @@ import { useEffect } from 'react';
 import UploadFile from '../../../components/inputsfield/UploadFile';
 import Dropdown from 'react-multilevel-dropdown'
 import Input from '../../../components/inputsfield/Input';
-import {Multiselect} from "multiselect-react-dropdown"
+import { Multiselect } from "multiselect-react-dropdown"
 import { toast } from 'react-toastify';
 
 function Customer() {
 
     const [cookies] = useCookies();
-
     const [showForm, setShowForm] = useState(false)
-
     const [customerList, setCustomerList] = useState([])
     const [installerList, setInstallerList] = useState({})
-
     const [file, setFile] = useState(null)
     const [selectedValue, setSelectedValue] = useState([])
     const [othersBoolean, setOtherBoolean] = useState(false)
@@ -67,7 +64,7 @@ function Customer() {
 
         let installerElectricianId = [...selectedValue, userId]
         setSelectedValue(installerElectricianId)
-        if(installerElectricianId.length > 2){
+        if (installerElectricianId.length > 2) {
             let arrayToString = installerElectricianId.toString().split(',').join(', ')
             setSelectedValue(arrayToString)
             return
@@ -142,7 +139,7 @@ function Customer() {
                         postcode: "",
                         country: ""
                     })
-                    toast.update(loadingId, {render: "Customer Registered successfully...", autoClose: true, type: 'success', isLoading: false})
+                    toast.update(loadingId, { render: "Customer Registered successfully...", autoClose: true, type: 'success', isLoading: false })
                     setShowForm(false)
                     return fetchData()
                 })
@@ -315,13 +312,13 @@ function Customer() {
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
-                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%"/>
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Multiselect options={installerList?.Electrician?.admin} isObject={true} displayValue='city' placeholder='select electrician' />
                                 <Dropdown
                                     title='Assign To'
-                                    
+
                                 >
                                     <Dropdown.Item
                                     >
@@ -360,13 +357,13 @@ function Customer() {
                                 {/*<Input placeholder="Assign To..." onChange={handleChange} value={assignto} name="assignto" />*/}
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={supply} onChange={handleChange}  >
+                                <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
                                     <option>Select Supply</option>
                                     <option value="Single Phase">Single Phase</option>
                                     <option value="Double Phase">Double Phase</option>
                                     <option value="Three Phase">Three Phase</option>
                                 </select>
-                                <select name='rooftype' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={rooftype} onChange={handleChange}  >
+                                <select name='rooftype' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={rooftype} onChange={handleChange}  >
                                     <option>Select Roof Type</option>
                                     <option value="Tin">Tin</option>
                                     <option value="Tilt">Tilt</option>
@@ -378,7 +375,7 @@ function Customer() {
                                 </select>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={floor} onChange={handleChange}  >
+                                <select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={floor} onChange={handleChange}  >
                                     <option>Select Floor Type</option>
                                     <option value="Ground Floor">Ground Floor</option>
                                     <option value="First Floor">First Floor</option>
@@ -388,14 +385,14 @@ function Customer() {
                                 <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={buyingoptions} onChange={handleChange}  >
+                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  >
                                     <option>Choose Buying Option</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Card">Card</option>
                                     <option value="Paypal">Paypal</option>
                                     <option value="Online Transfer">Online Transfer</option>
                                 </select>
-                                <select name='followsup1' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={followsup1} onChange={handleChange}  >
+                                <select name='followsup1' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={followsup1} onChange={handleChange}  >
                                     <option>Select Lead Type</option>
                                     <option value="Facebook">Facebook</option>
                                     <option value="Google">Google</option>
@@ -412,11 +409,11 @@ function Customer() {
                                 <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
+                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange}  >
                                     <option selected>Select State</option>
                                     <option value="Queensland">Queensland</option>
                                     <option value="New South Wales">New South Wales</option>
-                                    <option value="Victoria">Victoria</option>
+                                   <option value="Victoria">Victoria</option>
                                     <option value="Western Australia">Western Australia</option>
                                 </select>
                                 <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />

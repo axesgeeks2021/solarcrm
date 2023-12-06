@@ -10,19 +10,16 @@ import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Input from '../../../components/inputsfield/Input';
+import { Link } from 'react-router-dom';
 
 
 
 function RegisterNonAdmin() {
 
     const [cookies] = useCookies();
-
     const [showForm, setShowForm] = useState(false)
-
     const [nonAdminList, setNonAdminList] = useState([])
-
     const [file, setFile] = useState(null)
-
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -38,10 +35,11 @@ function RegisterNonAdmin() {
         state: "",
         street: "",
         postcode: "",
-        country: ""
+        country: "Australia",
+        installationPrice: ""
     })
 
-    const { abnnumber, acnnumber, firstname, lastname, phone, email, address, alternatephone, companyname, addressline, street, city, state, postcode, country } = value
+    const { abnnumber, acnnumber, installationPrice, firstname, lastname, phone, email, address, alternatephone, companyname, addressline, street, city, state, postcode, country } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -54,13 +52,19 @@ function RegisterNonAdmin() {
     const registerNonAdmin = async (e) => {
         e.preventDefault()
         try {
+            const url = "https://solar365.co.in/register/?user_type=NON_ADMIN"
+
             const loadingId = toast.loading("Please wait....")
+
+            const myheaders = new Headers();
+            myheaders.append('Authorization', `Token ${cookies.Authorization}`)
+
             const formdata = new FormData()
             formdata.append("first_name", firstname)
             formdata.append("last_name", lastname)
             formdata.append("phone", phone)
             formdata.append("email", email)
-            // formdata.append("profile_pic", file)
+            formdata.append("profile_pic", file)
             formdata.append("alternate_phone", alternatephone)
             formdata.append("abnnumber", abnnumber)
             formdata.append("acnnumber", acnnumber)
@@ -71,11 +75,8 @@ function RegisterNonAdmin() {
             formdata.append("state", state)
             formdata.append("postcode", postcode)
             formdata.append("country", country)
+            formdata.append("installation_price", installationPrice);
 
-            const url = "https://solar365.co.in/register/?user_type=NON_ADMIN"
-
-            const myheaders = new Headers();
-            myheaders.append('Authorization', `Token ${cookies.Authorization}`)
 
             const res = await fetch(url, {
                 method: "POST",
@@ -83,28 +84,12 @@ function RegisterNonAdmin() {
                 body: formdata
             })
 
-            
+
             const data = await res.json()
-            if(data?.messsage === 'Success'){
-                setValue({
-                    firstname: "",
-                    lastname: "",
-                    phone: "",
-                    email: "",
-                    address: "",
-                    alternatephone: "",
-                    abnnumber: "",
-                    acnnumber: "",
-                    companyname: "",
-                    addressline: "",
-                    city: "",
-                    state: "",
-                    street: "",
-                    postcode: "",
-                    country: ""
-                })
+            if (data?.messsage === 'Success') {
+                setValue(prev => prev !== "" ? "" : "")
                 setShowForm(false)
-                toast.update(loadingId, {render: "Non Admin Created Successfully...", isLoading: false, type: 'success', autoClose: true})
+                toast.update(loadingId, { render: "Non Admin Created Successfully...", isLoading: false, type: 'success', autoClose: true })
                 return fetchData()
             }
             console.log(data)
@@ -162,14 +147,16 @@ function RegisterNonAdmin() {
                     {
                         nonAdminList?.map((ele, idx) => {
                             return (
-                                <li className="table-row" key={idx}>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.company_name}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
-                                    <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                </li>
+                                <Link to="/non-admins-profile" key={idx} state={{ele}}>
+                                    <li className="table-row" >
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele.company_name}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.city} / {ele.admin.state}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.user_type}</div>
+                                        <div className={`col col-2 text-center`}>{ele.admin.user.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                    </li>
+                                </Link>
                             )
                         })
                     }
@@ -177,9 +164,9 @@ function RegisterNonAdmin() {
             </div>
             {
                 showForm &&
-                <div style={{background: '#fff', width: "100%",display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column', position: 'absolute' }}>
-                <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                <Heading heading="Create or Register Non Admin" size="36px" weight="600" />
+                <div style={{ background: '#fff', width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'column', position: 'absolute' }}>
+                    <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                        <Heading heading="Create or Register Non Admin" size="36px" weight="600" />
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerNonAdmin}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
@@ -191,32 +178,39 @@ function RegisterNonAdmin() {
                             <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Profile Photo" type="file" onChange={handlefile} name="profilepic" />
+                            <Input placeholder="Profile Photo" type="file" onChange={handlefile} />
                             <Input placeholder="Alternate_phone" onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Company Name" onChange={handleChange} value={companyname} name="companyname" />
-                            <Input placeholder="ABN Number" onChange={handleChange} value={abnnumber} name="abnnumber" />
+                            <Input placeholder="Installation Price" onChange={handleChange} value={installationPrice} name="installationPrice" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                            <Input placeholder="ABN Number" onChange={handleChange} value={abnnumber} name="abnnumber" />
                             <Input placeholder="ACN Number" onChange={handleChange} value={acnnumber} name="acnnumber" />
-                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
                         </div>
 
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
                             <Input placeholder="Street" onChange={handleChange} value={street} name="street" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="City" onChange={handleChange} value={city} name="city" />
+                            <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
+                                <option selected>Select State</option>
+                                <option value="Queensland">Queensland</option>
+                                <option value="New South Wales">New South Wales</option>
+                                <option value="Victoria">Victoria</option>
+                                <option value="Western Australia">Western Australia</option>
+                            </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="State" onChange={handleChange} value={state} name="state" />
                             <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Country" onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Button title="Submit" background="orange" type="submit"/>
-                            <Button title="Close" background="lightgray"  onclick={() => setShowForm(false)} margin="0 10px"/>
+                            <Button title="Submit" background="orange" type="submit" />
+                            <Button title="Close" background="lightgray" onclick={() => setShowForm(false)} margin="0 10px" />
                         </div>
                     </form>
                 </div>

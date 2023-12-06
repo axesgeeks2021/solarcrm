@@ -50,7 +50,7 @@ import NonAdminDashboard from "./pages/nonAdmin/NonAdminDashboard";
 import Calendar from "./pages/Calendar/Calendar";
 import UnapprovedCompany from "./pages/admin/approval/UnapprovedCompany";
 import ApprovedCompany from "./pages/admin/approval/ApprovedCompany";
-import AdminProfile from "./pages/admin/profile/AdminProfile";
+import Profile from "./pages/admin/profile/Profile";
 import NonAdminProfile from "./pages/nonAdmin/profile/NonAdminProfile";
 import Accordian from "./components/Accordian";
 
@@ -71,6 +71,9 @@ import CompleteJobs from "./pages/admin/completejobs/CompleteJobs";
 import CompletedJobsDetails from "./pages/admin/completejobs/CompletedJobsDetails";
 
 import Pract from "./pages/nonAdmin/Practice"
+import UnapproveCompanydetails from "./pages/admin/approval/UnapproveCompanydetails";
+import AdminsProfile from "./pages/admin/profile/AdminsProfile";
+import NonAdminsProfile from "./pages/admin/profile/NonAdminsProfile";
 
 
 function App() {
@@ -172,8 +175,11 @@ function App() {
           <Route path="/register-non-admin" element={<RegisterNonAdmin />} />
           <Route path="/update-profile" element={<UpdateProfile />} />
           <Route path="/unapproved-company" element={<UnapprovedCompany />} />
+          <Route path="/unapprove-company-details" element={<UnapproveCompanydetails />} />
           <Route path="/approved-company" element={<ApprovedCompany />} />
-          <Route path="/admin-profile" element={<AdminProfile />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/admins-profile" element={<AdminsProfile />} />
+          <Route path="/non-admins-profile" element={<NonAdminsProfile />} />
           <Route path="/admin-update-other-component-price" element={<UpdateOtherComponentPrice />} />
           <Route path="/other-component-price-details" element={<OtherComponentPriceDetails />} />
           <Route path="/update-team" element={<UpdateTeam />} />

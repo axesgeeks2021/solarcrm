@@ -17,7 +17,6 @@ function OtherComponentPriceDetails() {
   const navigate = useNavigate()
   const data = useLocation()
 
-  console.log('new lsdf', data)
   const [cookies, removeCookies] = useCookies()
   const [displayForm, setDisplayForm] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -101,7 +100,7 @@ function OtherComponentPriceDetails() {
       const formdata = new FormData();
       formdata.append("price", price);
       formdata.append("price", price);
-      
+
       const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
@@ -175,16 +174,16 @@ function OtherComponentPriceDetails() {
           <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
           <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)} />
           {
-            deleteForm && 
-            <div style={{ padding: '0px 20px',paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
-            <p style={{margin: '20px 0'}}>Are you sure want to delete?</p>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-              <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord}/>
-              <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)}/>
+            deleteForm &&
+            <div style={{ padding: '0px 20px', paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
+              <p style={{ margin: '20px 0' }}>Are you sure want to delete?</p>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord} />
+                <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)} />
+              </div>
             </div>
-          </div>
           }
-         
+
         </div>
       </div>
       <div className='admin__card'>

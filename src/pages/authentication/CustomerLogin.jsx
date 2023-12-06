@@ -92,24 +92,20 @@ function Login() {
   return (
     <>
       <section className="login">
-        <div className="login-box">
-          <div className="flex justify-start items-start overflow-hidden flex-col">
+        <div className="login-box" >
+          <div className="flex justify-start items-start overflow-hidden flex-col" >
             <img
               src={logo}
               alt="website logo"
               style={{ width: "50%", objectFit: "cover", position: "relative" }}
             />
-            <Heading
-              heading="welcome to the solar panel"
-              size="2.5rem"
-              weight="600"
-            />
+            <Heading heading="Welcome to solar365" size="2rem" weight="600" />
           </div>
           <p>
             Login to access your solar system details, warranty information &
             refer friends.
           </p>
-          <div className="flex justify-start items-center gap-6 flex-wrap w-72">
+          <div className="flex justify-start items-center gap-6 flex-wrap" >
             <span className="solar-related">Solar</span>
             <span className="solar-related">Inverter</span>
             <span className="solar-related">Battery</span>
@@ -117,17 +113,17 @@ function Login() {
             <span className="solar-related">Residential</span>
           </div>
           <form
-            style={{ width: "100%" }}
-            className="flex justify-center items-start gap-5 flex-col"
+            style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: 0, gap: '10px' }}
+            className=""
             onSubmit={getLogin}
           >
-          <select value={urlParams} onChange={e => setUrlParams(e.target.value)} style={{width: '100%', border: '2px solid #CDD9ED', padding: '5px 0'}} required>
-          <option defaultChecked>Select User Type</option>
-            <option value="ADMIN">Admin</option>
-            <option value="NON_ADMIN">Non Admin</option>
-            <option value="CUSTOMER">Customer</option>
-            <option value="TEAM">Team</option>
-          </select>
+            <select value={urlParams} onChange={e => setUrlParams(e.target.value)} style={{ width: '100%', border: '2px solid #CDD9ED', padding: '5px 0' }} required>
+              <option defaultChecked>Select User Type</option>
+              <option value="ADMIN">Admin</option>
+              <option value="NON_ADMIN">Non Admin</option>
+              <option value="CUSTOMER">Customer</option>
+              <option value="TEAM">Team</option>
+            </select>
             <Input
               type="text"
               placeholder="Project ID"

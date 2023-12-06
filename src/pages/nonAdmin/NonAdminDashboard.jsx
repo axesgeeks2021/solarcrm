@@ -448,7 +448,7 @@ function NonAdminDashboard() {
                                 {
                                     [...Array(100)].map((_, idx) => {
                                         return (
-                                            <option key={idx}>{idx + 1}</option>
+                                            <option key={idx} value={idx + 1}>{idx + 1}</option>
                                         )
                                     })
                                 }
@@ -475,7 +475,7 @@ function NonAdminDashboard() {
                                 {
                                     [...Array(100)].map((_, idx) => {
                                         return (
-                                            <option key={idx}>{idx + 1}</option>
+                                            <option key={idx} value={idx + 1}>{idx + 1}</option>
                                         )
                                     })
                                 }
@@ -503,7 +503,7 @@ function NonAdminDashboard() {
                                 {
                                     [...Array(100)].map((_, idx) => {
                                         return (
-                                            <option key={idx}>{idx + 1}</option>
+                                            <option key={idx} value={idx + 1}>{idx + 1}</option>
                                         )
                                     })
                                 }
