@@ -7,6 +7,7 @@ import { BiLogOut } from "react-icons/bi"
 import { useNavigate } from 'react-router-dom'
 
 import Dropdown from 'react-multilevel-dropdown'
+import Multiselect from 'multiselect-react-dropdown'
 
 
 function Dashboard() {
@@ -25,17 +26,24 @@ function Dashboard() {
     const [selectedValue, setSelectedValue] = useState([])
     const [orderId, setOrderId] = useState('')
 
-    const handleChange = (userId, orderId) => {
+    const [installerId, setInstallerId] = useState(null)
+    const [electricianId, setElecticianId] = useState(null)
 
-        let installerElectricianId = [...selectedValue, userId]
-        setSelectedValue(installerElectricianId)
-        if(installerElectricianId.length > 2){
-            let arrayToString = installerElectricianId.toString().split(',').join(', ')
-            setSelectedValue(arrayToString)
-            setOrderId(orderId)
-            setModal(true)
-            return
-        }
+    const handleChange = (userId, orderId) => {
+        console.log('user id -->', installerId)
+        console.log('electrician id -->', electricianId)
+        setInstallerId([...installerId, userId])
+        // console.log('order id -->', orderId)
+
+        // let installerElectricianId = [...selectedValue, userId]
+        // setSelectedValue(installerElectricianId)
+        // if (installerElectricianId.length > 2) {
+        //     let arrayToString = installerElectricianId.toString().split(',').join(', ')
+        //     setSelectedValue(arrayToString)
+        //     setOrderId(orderId)
+        //     setModal(true)
+        //     return
+        // }
     }
 
     const fetchOrder = () => {
@@ -63,7 +71,7 @@ function Dashboard() {
             console.log(error)
         }
     }
-
+ 
     const fetchPendingOrder = () => {
         try {
             setLoading(true)
@@ -91,11 +99,13 @@ function Dashboard() {
     const fetchUpdateAssignOrder = () => {
 
         try {
+            const assignValue = installerId.concat(electricianId).toString().split(',').join(', ')
+            console.log('electrician id -->', assignValue)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
             const formdata = new FormData();
-            formdata.append("assign_to", selectedValue);
+            formdata.append("assign_to", assignValue);
             formdata.append("order_status", "");
 
             const requestOptions = {
@@ -104,17 +114,17 @@ function Dashboard() {
                 body: formdata,
                 redirect: 'follow'
             };
-            fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    console.log(result)
-                    if (result.messsage === "Success") {
-                        toast.success('Order successfully assigned')
-                        setModal(false)
-                        return fetchPendingOrder()
-                    }
-                })
-                .catch(error => console.log('error', error));
+            // fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
+            //     .then(response => response.json())
+            //     .then(result => {
+            //         console.log(result)
+            //         if (result.message === "success") {
+            //             toast.success('Order successfully assigned')
+            //             setModal(false)
+            //             return fetchPendingOrder()
+            //         }
+            //     })
+            //     .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -134,10 +144,33 @@ function Dashboard() {
             fetch("https://solar365.co.in/get_installer_profile/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    setInstallerList(result)
-                    console.log('installer ', result)
+
+                    // setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const fetchInstallerList = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/get_installer/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setInstallerList(result)
+                })
+                .catch(error => console.log('error', error));
+
         } catch (error) {
             console.log(error)
         }
@@ -150,17 +183,19 @@ function Dashboard() {
 
 
     const logout = () => {
-        removeCookies('Authorization')
+        removeCookies('Authorization', { path: "/" })
         return navigate('/login')
     }
+
     useEffect(() => {
         const subscribe = fetchOrder()
 
         const subscribe1 = fetchPendingOrder()
 
         const subscribe2 = fetchGetInstaller()
+        const subscribe3 = fetchInstallerList()
 
-        return () => [subscribe, subscribe1, subscribe2]
+        return () => [subscribe, subscribe1, subscribe2, subscribe3]
     }, [])
 
     return (
@@ -180,84 +215,20 @@ function Dashboard() {
                         <button onClick={handleClosePopup} style={{ background: '', margin: '3% 1%', padding: '4px 15px', borderRadius: '3px', fontWeight: '600' }}>Cancel</button>
                     </div>
                 </div>
-                {/* <div style={{ width: '100%', padding: '20px 10px' }}>
-                    <ul className="responsive-table">
-                        <li className="table-header">
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Project</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Customer Name</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Building Type</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Panels Qty</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Status</div>
-                            <div className="col col-2 text-center text-slate-50 text-base font-bold">Assign</div>
-                        </li>
-                        {
-                            pendingList?.map((ele, idx) => {
-                                return (
-                                    <li className="table-row" key={idx}>
-                                        <div className={`col col-2 text-center`}>{ele?.project}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.building_Type}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.panels_quantity}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</div>
-                                        <div className={`col col-2 text-center`}>
-                                            <Dropdown
-                                                title='Assign To'
-                                            >
-                                                <Dropdown.Item
-                                                >
-                                                    Electrician
-                                                    <Dropdown.Submenu>
-                                                        {
-                                                            installerList?.Electrician?.map((eles, idx) => {
-                                                                return (
-                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-                                                                        {
-                                                                            eles?.admin?.user?.first_name
-                                                                        }
-                                                                    </Dropdown.Item>
-                                                                )
-                                                            })
-                                                        }
-                                                    </Dropdown.Submenu>
-                                                </Dropdown.Item>
-                                                <Dropdown.Item >
-                                                    Installer
-                                                    <Dropdown.Submenu>
-                                                        {
-                                                            installerList?.Installer?.map((eles, idx) => {
-                                                                return (
-                                                                    <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-                                                                        {
-                                                                            eles?.admin?.user?.first_name
-                                                                        }
-                                                                    </Dropdown.Item>
-                                                                )
-                                                            })
-                                                        }
-                                                    </Dropdown.Submenu>
-                                                </Dropdown.Item>
-                                            </Dropdown>
-                                        </div>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-                </div> */}
+
                 <div className="container__table">
                     <div className='py-2 flex justify-end'>
-                        <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
+                        <Button title="confirm" background="green" color="white" onclick={fetchUpdateAssignOrder} />
                     </div>
                     <table className="responsive-table">
-                        {/* <caption>Top 10 Grossing Animated Films of All Time</caption> */}
                         <thead>
                             <tr>
                                 <th scope="col">Project</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Building Type</th>
-                                <th scope="col">Panels Qty</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Assign</th>
+                                <th scope="col">Select Electrician</th>
+                                <th scope="col">Select Installer</th>
                                 {/* <th scope="col">Budget</th> */}
                             </tr>
                         </thead>
@@ -267,13 +238,18 @@ function Dashboard() {
                                     return (
                                         // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
                                         <tr key={idx}>
-                                            <th scope="row">{ele?.project}</th>
-                                            <td data-title="Released">{ele?.to_address?.user?.first_name}</td>
-                                            <td data-title="Studio">{ele?.building_Type}</td>
-                                            <td data-title="Worldwide Gross" data-type="currency">{ele?.panels_quantity}</td>
-                                            <td data-title="Domestic Gross" data-type="currency">{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
-                                            <td data-title="International Gross" data-type="currency">
-                                                <Dropdown
+                                            <th >{ele?.project}</th>
+                                            <td >{ele?.to_address?.user?.first_name}</td>
+                                            <td >{ele?.building_Type}</td>
+                                            <td >{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
+                                            <td >
+                                                <Multiselect
+                                                    hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
+                                            </td>
+                                            <td >
+                                                <Multiselect
+                                                    hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
+                                                {/*<Dropdown
                                                     title='Assign To'
                                                 >
                                                     <Dropdown.Item
@@ -309,9 +285,9 @@ function Dashboard() {
                                                             }
                                                         </Dropdown.Submenu>
                                                     </Dropdown.Item>
-                                                </Dropdown>
+                                                        </Dropdown>*/}
                                             </td>
-                                            {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
+
                                         </tr>
                                         // </Link>
                                     )

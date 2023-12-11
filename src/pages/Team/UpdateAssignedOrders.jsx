@@ -15,7 +15,7 @@ function UpdateAssignedOrders() {
     const [cookies] = useCookies()
     const data = useLocation()
 
-    const [todayDate, setTodayDate] = useState(new Date().toISOString().slice(0, 10))
+    const [todayDate] = useState(new Date().toISOString().slice(0, 10))
     const [orderDetails, setOrderDetails] = useState({})
     const [showState, setShowState] = useState(false)
     const [showPresite, setShowPresite] = useState(false)
@@ -27,20 +27,21 @@ function UpdateAssignedOrders() {
         meterApproveDate: ''
     })
 
-    const [electricityBillFile, setElectricityBillFile] = useState(null)
-    const [councilRateFile, setCouncilRateFile] = useState(null)
-    const [miscellaneousFile, setMiscellaneousFile] = useState(null)
-    const [meterBoxFile, setMeterBoxFile] = useState(null)
-    const [contractFile, setContractFile] = useState(null)
+    const [electricityBillFile, setElectricityBillFile] = useState()
+    const [councilRateFile, setCouncilRateFile] = useState()
+    const [miscellaneousFile, setMiscellaneousFile] = useState()
+    const [meterBoxFile, setMeterBoxFile] = useState()
+    const [contractFile, setContractFile] = useState()
 
-    const [contractDocs, setContractDocs] = useState(null)
-    const [gridApprovalDocs, setGridApprovalDocs] = useState(null)
-    const [complianceDocs, setComplianceDocs] = useState(null)
-    const [userManual, setUserMannual] = useState(null)
-    const [pvSiteInfoDocs, setPvSiteInfoDocs] = useState(null)
-    const [energyYieldReportDocs, setEnergyYieldReportDocs] = useState(null)
-    const [safetyCertificateDocs, setSafetyCertificateDocs] = useState(null)
-    const [nocDocs, setNocDocs] = useState(null)
+    const [contractDocs, setContractDocs] = useState()
+    const [gridApprovalDocs, setGridApprovalDocs] = useState()
+    const [complianceDocs, setComplianceDocs] = useState()
+    const [userManual, setUserMannual] = useState()
+    const [pvSiteInfoDocs, setPvSiteInfoDocs] = useState()
+    const [energyYieldReportDocs, setEnergyYieldReportDocs] = useState()
+    const [safetyCertificateDocs, setSafetyCertificateDocs] = useState()
+    const [nocDocs, setNocDocs] = useState()
+    const [documentStatus, setDocumentStatus] = useState({})
 
     const { meterApproveDate, meterDate } = selectDate
 
@@ -51,10 +52,10 @@ function UpdateAssignedOrders() {
     const fetchUpdateGrid = (e) => {
         e.preventDefault()
 
-        if(new Date(meterDate).valueOf() < new Date().valueOf()){
+        if (new Date(meterDate).valueOf() < new Date().valueOf()) {
             return alert('Please select valid date!')
         }
-        if(new Date(meterApproveDate).valueOf() < new Date().valueOf()){
+        if (new Date(meterApproveDate).valueOf() < new Date().valueOf()) {
             return alert('Please select valid date!')
         }
         try {
@@ -64,8 +65,8 @@ function UpdateAssignedOrders() {
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
             const formdata = new FormData();
-            formdata.append("meter_date",orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date);
-            formdata.append("meter_Approved_date",orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date);
+            formdata.append("meter_date", orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date);
+            formdata.append("meter_Approved_date", orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date);
             formdata.append("energy_provider", "Energy");
 
             const requestOptions = {
@@ -137,7 +138,6 @@ function UpdateAssignedOrders() {
 
     const fetchUpdateMeter = e => {
         e.preventDefault()
-        console.log('elec -->', electricityBillFile)
         try {
             const id = toast.loading('Please wait...')
             const myHeaders = new Headers();
@@ -160,7 +160,7 @@ function UpdateAssignedOrders() {
             fetch(`https://solar365.co.in/upload_meter_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log('photos',result)
+                    console.log('photos', result)
                     if (result) {
                         toast.update(id, { render: 'Meter Details updated...', type: 'success', isLoading: false, autoClose: true })
                         return
@@ -175,7 +175,6 @@ function UpdateAssignedOrders() {
     const fetchInstallDocs = e => {
         e.preventDefault()
         try {
-            console.log('done')
             const id = toast.loading('Please wait...')
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -200,7 +199,7 @@ function UpdateAssignedOrders() {
             fetch(`https://solar365.co.in/update_install_docs/${data?.state?.data?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log('install',result)
+                    console.log('install', result)
                     if (result) {
                         toast.update(id, { render: 'Meter Details updated...', type: 'success', isLoading: false, autoClose: true })
                         return
@@ -228,7 +227,7 @@ function UpdateAssignedOrders() {
                 .then(response => response.json())
                 .then(result => {
                     setOrderDetails(result)
-                    console.log('order',result)
+                    // console.log('order',result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -236,11 +235,38 @@ function UpdateAssignedOrders() {
         }
     }
 
+    const fetchDocumentStatus = () => {
+        try {
+            setLoading(true)
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(`https://solar365.co.in/get_docs/${data?.state?.data?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setLoading(false)
+                    console.log('doc status', result)
+                    setDocumentStatus(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     useEffect(() => {
         const subscribe = fetchOrder()
-    
-        return () => [subscribe]
-      },[])
+        const subscribe2 = fetchDocumentStatus()
+
+        return () => [subscribe, subscribe2]
+    }, [])
 
     return (
         <>
@@ -256,8 +282,8 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === "" ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date === "" ? true : false}/>
-                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === "" ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date === "" ? true : false}/>
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date === null ? false : true} />
+                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date === null ? false : true} />
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
@@ -272,14 +298,14 @@ function UpdateAssignedOrders() {
                         </div>
                         <div style={{ height: showPresite ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
                             <form style={{ margin: '20px auto' }} onSubmit={fetchUpdatePresite}>
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={meterDate} />
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterApproveDate" value={meterApproveDate} />
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterDate" value={meterDate} />
+                                <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterApproveDate" value={meterApproveDate} />
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>
                     </div>
                     <div className='accordian__box'>
-                        <div className='accordian__question' onClick={() => setShowMeter(!showMeter)}>Update Meters
+                        <div className='accordian__question' onClick={() => setShowMeter(!showMeter)}>Update Document Submission
                             {
                                 !showMeter ?
                                     <AiOutlinePlus size={40} onClick={() => setShowMeter(true)} style={{ transition: '0.3s' }} /> :
@@ -287,12 +313,46 @@ function UpdateAssignedOrders() {
                             }
                         </div>
                         <div style={{ height: showMeter ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                            <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateMeter}>
-                                <Input type="file" placeholder="Electricity Bill" id="elect" width="100%" onChange={e => setElectricityBillFile(e.target.files[0])} />
-                                <Input type="file" placeholder="Council Rate" onChange={e => setCouncilRateFile(e.target.files[0])} />
-                                <Input type="file" placeholder="Meterbox" onChange={e => setMeterBoxFile(e.target.files[0])} />
-                                <Input type="file" placeholder="Contract File" onChange={e => setContractFile(e.target.files[0])} />
-                                <Input type="file" placeholder="Miscellaneous File" onChange={e => setMiscellaneousFile(e.target.files[0])} />
+                            <form style={{ margin: '20px auto', gap: '10px' }} onSubmit={fetchUpdateMeter}>
+                                {
+                                    documentStatus?.electricity?.map((ele, idx) => {
+                                        return (
+                                            ele?.electricity_status === "Completed" ?
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                    <p style={{margin: 'auto 0',}}>{ele?.electricity_bill}</p>
+                                                    <a href={'https://solar365.co.in' + ele?.electricity_bill} className="p-1 rounded" style={{ color: '#fff', background: 'green'}} download target='_blan'>Download</a>
+                                                </div>
+                                                : <Input type="file" placeholder="Electricity Bill" id="elect" width="100%" onChange={e => setElectricityBillFile(e.target.files[0])} />
+                                        )
+                                    })
+                                }
+                                {
+                                    documentStatus?.meter?.map((ele, idx) => {
+                                        return (
+                                            ele?.meter_status === "Completed" ?
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',width: "100%",borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                    <p style={{margin: 'auto 0',}}>{ele?.meter_box}</p>
+                                                    <a href={'https://solar365.co.in' + ele?.meter_box} className="p-1 rounded" style={{ color: '#fff', background: 'green'}} download target='_blan'>Download</a>
+                                                </div>
+                                                :  <Input type="file" placeholder="Meterbox" onChange={e => setMeterBoxFile(e.target.files[0])} />
+                                        )
+                                    })
+                                }
+                                {
+                                    documentStatus?.miscellaneous?.map((ele, idx) => {
+                                        return (
+                                            ele?.miscellaneous_status === "Completed" ?
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',width: "100%" }}>
+                                                    <p style={{margin: 'auto 0',}}>{ele?.miscellaneous_file}</p>
+                                                    <a href={'https://solar365.co.in' + ele?.miscellaneous_file} className="p-1 rounded" style={{ color: '#fff', background: 'green'}} download target='_blan'>Download</a>
+                                                </div>
+                                                :  <Input type="file" placeholder="Miscellaneous File" onChange={e => setMiscellaneousFile(e.target.files[0])} />
+                                        )
+                                    })
+                                }
+                                
+                               
+                                
                                 <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
                             </form>
                         </div>

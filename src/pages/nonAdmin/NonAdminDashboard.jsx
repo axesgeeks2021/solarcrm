@@ -35,7 +35,7 @@ function NonAdminDashboard() {
     const [inverterList, setInverterList] = useState([])
     const [batteryList, setBatteryList] = useState([])
     const [panelList, setPanelList] = useState([])
-    const [ordersList, setOrdersLists] = useState([])
+    const [nonAdminProfile, setNonAdminProfile] = useState({})
     const [packingSlipFile, setPackingSlipFile] = useState()
     const [westernPowerFile, setwesternPowerFile] = useState()
     const [switchBoardFile, setswitchBoardFile] = useState()
@@ -159,10 +159,29 @@ function NonAdminDashboard() {
         }
     }
 
+    const fetchProfile = () => {
+        try {
+            const auth = JSON.parse(localStorage.getItem('auth'))
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
 
-    const logout = () => {
-        removeCookies('Authorization')
-        return navigate('/login')
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(`https://solar365.co.in/update_profile/${auth?.user?.admin?.user?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    setNonAdminProfile(result)
+                    console.log(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const fetchCreateOrder = e => {
@@ -178,7 +197,7 @@ function NonAdminDashboard() {
             // formdata.append("last_name", "Kumar");
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("company_Name", "platinum");
+            formdata.append("company_Name", nonAdminProfile?.company_name);
             formdata.append("system_Size", systemSize);
             formdata.append("nmi_no", nmiNo);
             formdata.append("meter_Number", meterNumber);
@@ -227,7 +246,6 @@ function NonAdminDashboard() {
         }
     }
 
-
     // const getAllUserList = () => {
     //     try {
     //         const myHeaders = new Headers();
@@ -252,6 +270,11 @@ function NonAdminDashboard() {
     // }
 
 
+    const logout = () => {
+        removeCookies('Authorization', { path: "/" })
+        return navigate('/login')
+    }
+
     const goToOrders = (url, data) => {
         return navigate(url, data)
     }
@@ -262,7 +285,9 @@ function NonAdminDashboard() {
         // const subscribe2 = getAllUserList()
         const subscribe4 = getBatteryDetails()
         const subscribe5 = getPanelDetails()
-        return () => [subscribe, subscribe1, subscribe4, subscribe5]
+        const subscribe6 = fetchProfile()
+
+        return () => [subscribe, subscribe1, subscribe4, subscribe5, subscribe6]
     }, [])
 
 

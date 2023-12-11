@@ -63,6 +63,7 @@ function AdminsProfile() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
+                    console.log('profile', result)
                     return setProfile(result)
                 })
                 .catch(error => console.log('error', error));
@@ -134,8 +135,8 @@ function AdminsProfile() {
             fetch(`https://solar365.co.in/register/${location?.state?.ele?.user?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    if(result?.message === "success"){
-                        toast.update(loadingId, {render: "user deleted successfully...", isLoading: false, autoClose: true, type: 'success'})
+                    if (result?.message === "success") {
+                        toast.update(loadingId, { render: "user deleted successfully...", isLoading: false, autoClose: true, type: 'success' })
                         return navigate('/register-admin')
                     }
                 })
@@ -157,16 +158,16 @@ function AdminsProfile() {
     }, [])
     return (
         <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
-        {
-            deletePopup &&
-            <div className='popup__form'>
-                <p style={{fontSize: '1.2rem'}}>Are you sure want to delete ?</p>
-                <div style={{display: 'flex', gap: '20px', marginTop: '20px'}}>
-                <Button title="Confirm" background="green" color="#fff" onclick={deleteRecord} />
-                <Button title="Cancel" background="gray" color="#fff" onclick={() => setDeletePopup(false)}/>
+            {
+                deletePopup &&
+                <div className='popup__form'>
+                    <p style={{ fontSize: '1.2rem' }}>Are you sure want to delete ?</p>
+                    <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+                        <Button title="Confirm" background="green" color="#fff" onclick={deleteRecord} />
+                        <Button title="Cancel" background="gray" color="#fff" onclick={() => setDeletePopup(false)} />
+                    </div>
                 </div>
-            </div>
-        }
+            }
             <div>
                 <AdminSideNavigation />
                 <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
@@ -187,22 +188,25 @@ function AdminsProfile() {
                     <div className='content'>
                         <div>
                             <p>Username: {profile?.user?.username}</p>
+                            <p>Password: {profile?.user?.pin}</p>
+                        </div>
+                        <div>
                             <p>Name: {profile?.user?.first_name} {profile?.user?.last_name}</p>
-                        </div>
-                        <div>
                             <p>Email: {profile?.user?.email}</p>
+                        </div>
+                        <div>
                             <p>Phone: {profile?.user?.phone}</p>
-                        </div>
-                        <div>
                             <p>Address: {profile?.address_line}</p>
+                        </div>
+                        <div>
                             <p>City: {profile?.city}</p>
-                        </div>
-                        <div>
                             <p>State: {profile?.state?.toUpperCase()}</p>
-                            <p>Country: {profile?.country?.toUpperCase()}</p>
                         </div>
                         <div>
+                            <p>Country: {profile?.country?.toUpperCase()}</p>
                             <p>Department: {profile?.user?.department}</p>
+                        </div>
+                        <div>
                             <p>User Type: {profile?.user?.user_type}</p>
                         </div>
                     </div>
@@ -224,9 +228,9 @@ function AdminsProfile() {
                             <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
                             <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
                         </div>
-                        {/*<div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input type="file" onChange={handlefile} placeholder="Profile Photo" />
-            </div>*/}
+                        </div>
                         {/*<div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                     <select value={isStaff} name="isStaff" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
                         <option>Is Staff</option>

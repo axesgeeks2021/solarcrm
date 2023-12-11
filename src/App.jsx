@@ -74,18 +74,19 @@ import Pract from "./pages/nonAdmin/Practice"
 import UnapproveCompanydetails from "./pages/admin/approval/UnapproveCompanydetails";
 import AdminsProfile from "./pages/admin/profile/AdminsProfile";
 import NonAdminsProfile from "./pages/admin/profile/NonAdminsProfile";
+import AdminAssignedJobs from "./pages/admin/AdminAssignedJobs/AdminAssignedJobs";
 
 
 function App() {
 
   const locations = useLocation()
+  const navigate = useNavigate();
 
   const [cookies, setCookies, removeCookies] = useCookies();
-
   const [show, setShow] = useState(true);
   const [showSlotModal, setShowSlotModal] = useState(false)
+  const [bookingStatus, setBookingStatus] = useState({})
 
-  const navigate = useNavigate();
 
   const showmenu = () => {
     setShow(!show);
@@ -93,7 +94,7 @@ function App() {
 
   const logout = () => {
     // setShow(false)
-    removeCookies("Authorization");
+    removeCookies("Authorization", {path: "/"});
     return navigate("/login");
   };
 
@@ -118,7 +119,7 @@ function App() {
       <>
         {
           cookies.Authorization && auth?.user?.user_type === "CUSTOMER" ? (
-            <Header showmenu={showmenu} logout={logout} setShowSlotModal={setShowSlotModal} />
+            <Header showmenu={showmenu} logout={logout} setShowSlotModal={setShowSlotModal} bookingStatus={bookingStatus}/>
           ) : null
         }
         <Sidemenu
@@ -129,7 +130,7 @@ function App() {
 
         />
         <Routes>
-          <Route path="/" element={<Homepage showSlotModal={showSlotModal} setShowSlotModal={setShowSlotModal} />} />
+          <Route path="/" element={<Homepage showSlotModal={showSlotModal} setShowSlotModal={setShowSlotModal} setBookingStatus={setBookingStatus}/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/customer/order-details" element={<OrderDetails />} />
           <Route path="/customer/documents-upload" element={<DocumentsUpload />} />
@@ -184,8 +185,9 @@ function App() {
           <Route path="/other-component-price-details" element={<OtherComponentPriceDetails />} />
           <Route path="/update-team" element={<UpdateTeam />} />
           <Route path="/register-admin-profile" element={<RegisterProfile />} />
-          <Route path="/complete-jobs" element={<CompleteJobs />} />
-          <Route path="/completed-jobs-details" element={<CompletedJobsDetails />} />
+          <Route path="/admin/complete-jobs" element={<CompleteJobs />} />
+          <Route path="/admin/completed-jobs-details" element={<CompletedJobsDetails />} />
+          <Route path="admin-assigned-jobs" element={<AdminAssignedJobs />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>

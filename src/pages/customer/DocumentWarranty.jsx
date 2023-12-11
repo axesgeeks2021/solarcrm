@@ -16,6 +16,8 @@ function DocumentWarranty() {
 
   const [cookies] = useCookies();
 
+  console.log('docuemnts', document)
+
   useEffect(() => {
     dispatch(fetchDocumentWarranty(cookies.Authorization));
   }, []);

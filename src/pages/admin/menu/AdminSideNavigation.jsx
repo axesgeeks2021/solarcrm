@@ -2,7 +2,7 @@ import React from 'react'
 import 'react-minimal-side-navigation/lib/ReactMinimalSideNavigation.css';
 import {Navigation} from 'react-minimal-side-navigation';
 
-import {AiOutlineHome} from "react-icons/ai"
+import {AiFillMinusSquare, AiOutlineHome} from "react-icons/ai"
 import {MdHardware} from "react-icons/md"
 import {CgProfile} from "react-icons/cg"
 import {BiUserCheck} from "react-icons/bi"
@@ -83,8 +83,13 @@ function AdminSideNavigation() {
         ],
       },
       {
+        title: 'Assigned Jobs',
+        itemId: "/admin/admin-assigned-jobs",
+        elemBefore: () => <AiFillMinusSquare />
+      },
+      {
         title: 'Complete Orders',
-        itemId: '/complete-jobs',
+        itemId: '/admin/complete-jobs',
         elemBefore: () => <MdHardware />
       },
       {

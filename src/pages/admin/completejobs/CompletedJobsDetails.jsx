@@ -60,7 +60,9 @@ function CompletedJobsDetails() {
             </div>
             <div className="container__table completeContainer">
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', }}>
-                    <a style={{background:"green",color:"#fff"}} href={ordersDetails?.invoice?.invoice} download>Download Invoice</a>
+                    <a href={'https://solar365.co.in'+ordersDetails?.invoice?.invoice} download target='_blank'>
+                    <Button title="Download Invoice" background="green" color="white" />
+            </a>
                 </div>
                 <div className="completejobs__box">
                     <div className="header">

@@ -12,8 +12,6 @@ function GridConnection() {
 
   const grid = useSelector((state) => state.grid);
 
-  console.log(grid.data)
-
   useEffect(() => {
     dispatch(fetchGridConnection(cookies.Authorization));
   }, []);
@@ -38,22 +36,18 @@ function GridConnection() {
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
               <p>
-                {grid?.data?.grid_approval?.meter_date === null ? null : grid?.data?.grid_approval?.meter_date
-                  .toString()
-                  .substring(0, 10)}
+                {grid?.data?.meter_date === null ? null : grid?.data?.meter_date}
               </p>
               <p>Meter Application Date</p>
             </div>
           </div>
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              {grid?.data?.grid_approval?.meter_Approved_date === null ? (
+              {grid?.data?.meter_Approved_date === null ? (
                 <p>Not Apporved Yet</p>
               ) : (
                 <p>
-                  {grid?.data?.grid_approval?.meter_Approved_date
-                    .toString()
-                    .substring(0, 10)}
+                  {grid?.data?.meter_Approved_date}
                 </p>
               )}
               <p>Meter Application Approved Date</p>
@@ -67,7 +61,7 @@ function GridConnection() {
                   </div>*/}
           <div className="grid__connection__card">
             <div className="grid__connection__details" style={{ width: "70%" }}>
-              <p>{grid?.data?.grid_approval?.nmi_no}</p>
+              <p>{grid?.data?.nmi_no}</p>
               <p>NMI Number</p>
             </div>
           </div>

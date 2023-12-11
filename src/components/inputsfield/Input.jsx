@@ -14,6 +14,7 @@ function Input(props) {
           name={props.name}
           disabled={props.disabled}
           required={props.required}                                                                                                                                                                                                                                                                                              
+          min={props.min}
         />
       </div>
     </>

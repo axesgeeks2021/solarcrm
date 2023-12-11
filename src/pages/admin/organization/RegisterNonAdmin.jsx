@@ -64,7 +64,7 @@ function RegisterNonAdmin() {
             formdata.append("last_name", lastname)
             formdata.append("phone", phone)
             formdata.append("email", email)
-            formdata.append("profile_pic", file)
+            formdata.append("profile_pic", null)
             formdata.append("alternate_phone", alternatephone)
             formdata.append("abnnumber", abnnumber)
             formdata.append("acnnumber", acnnumber)

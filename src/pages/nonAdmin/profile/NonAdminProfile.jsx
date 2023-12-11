@@ -43,10 +43,10 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/get_admin_profile/1/?query=ADMIN", requestOptions)
+      fetch("https://solar365.co.in/get_admin_profile/4/", requestOptions)
         .then(response => response.json())
         .then(result => {
-          console.log(result)
+          console.log('none admin profile',result)
           setAdminProfile(result)
         })
         .catch(error => console.log('error', error));

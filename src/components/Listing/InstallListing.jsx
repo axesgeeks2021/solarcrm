@@ -8,10 +8,12 @@ function DocumentWarrantyListing({ document }) {
           <span>Compliance</span>
           <span>{document.data?.install_docs?.compliance_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.compliance_docs}`}
+            href={`https://solar365.co.in${document.data?.install_docs?.compliance_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.compliance_status === "Received"
+              document.data?.install_docs?.compliance_status !== "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
             }`}
@@ -23,10 +25,12 @@ function DocumentWarrantyListing({ document }) {
           <span>Contract</span>
           <span>{document.data?.install_docs?.contract_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.contract_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.contract_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.contract_status === "Received"
+              document.data?.install_docs?.contract_status !== "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
             }`}
@@ -38,10 +42,12 @@ function DocumentWarrantyListing({ document }) {
           <span>Energy Yield Report</span>
           <span>{document.data?.install_docs?.energy_yield_report_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.energy_yield_report_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.energy_yield_report_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.energy_yield_report_status ===
+              document.data?.install_docs?.energy_yield_report_status !==
               "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
@@ -54,10 +60,12 @@ function DocumentWarrantyListing({ document }) {
           <span>Grid Approval</span>
           <span>{document.data?.install_docs?.grid_approval_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.grid_approval_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.grid_approval_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.grid_approval_status === "Received"
+              document.data?.install_docs?.grid_approval_status !== "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
             }`}
@@ -69,10 +77,12 @@ function DocumentWarrantyListing({ document }) {
           <span>NOC</span>
           <span>{document.data?.install_docs?.noc_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.noc_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.noc_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.noc_status === "Received"
+              document.data?.install_docs?.noc_status !== "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
             }`}
@@ -84,10 +94,12 @@ function DocumentWarrantyListing({ document }) {
           <span>PV Site Info</span>
           <span>{document.data?.install_docs?.pv_site_info_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.pv_site_info_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.pv_site_info_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.pv_site_info_status === "Received"
+              document.data?.install_docs?.pv_site_info_status !== "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"
             }`}
@@ -99,10 +111,12 @@ function DocumentWarrantyListing({ document }) {
           <span>Safety Certificate</span>
           <span>{document.data?.install_docs?.safety_certificate_status}</span>
           <a
-            href={`http://3.111.192.129:8000/${document.data?.install_docs?.safety_certificate_docs}`}
+            href={`https://solar365.co.in/${document.data?.install_docs?.safety_certificate_docs}`}
             download
+            style={{background: 'green'}}
+            target="_blank"
             className={`${
-              document.data?.install_docs?.safety_certificate_status ===
+              document.data?.install_docs?.safety_certificate_status !==
               "Received"
                 ? "document__warranty li a download"
                 : "document__warranty li a disabled"

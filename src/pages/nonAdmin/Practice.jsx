@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import { FaPlus } from "react-icons/fa";
 import Select from 'react-select';
+import { Multiselect } from "multiselect-react-dropdown"
 
 function Practice() {
 
@@ -14,16 +15,38 @@ function Practice() {
 
     const [obj, setObj] = useState([])
 
-    console.log('list ', obj)
+    const [inslist, setInslist] = useState({})
 
-    
     const options = [
         { value: 'chocolate', label: 'Chocolate' },
         { value: 'strawberry', label: 'Strawberry' },
         { value: 'vanilla', label: 'Vanilla' }
     ]
 
-   
+    const getlist = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token 7c859bcce8fbd61832220b2cf262b1460c251797`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/get_installer/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log('ins', result)
+                    setInslist(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const fetchGetInstaller = () => {
         try {
             const myHeaders = new Headers();
@@ -41,7 +64,7 @@ function Practice() {
                     // console.log('installer ', result)
                     setList(result?.Installer)
                     list?.map(ele => {
-                        setObj([...obj, {value: ele?.admin?.user?.first_name}])
+                        setObj([...obj, { value: ele?.admin?.user?.first_name }])
                     })
                 })
                 .catch(error => console.log('error', error));
@@ -53,8 +76,9 @@ function Practice() {
 
     useEffect(() => {
         const subscribe2 = fetchGetInstaller()
-        
-        return () => [subscribe2]
+        const subscribe3 = getlist()
+
+        return () => [subscribe2, subscribe3]
     }, [])
 
 
@@ -62,17 +86,20 @@ function Practice() {
         <>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100vh', background: '#eee', flexDirection: 'column' }}>
                 <Select
-                    options={options}
+                    options={inslist?.Installer?.first_name}
                     isMulti
                     closeMenuOnSelect={false}
+                    
                 />
-                {
-                    list?.map(ele => {
-                        return <p>{ele?.admin?.user?.first_name}</p>
-                    })
+                <Multiselect
+                    isObject={true}
+                    options={inslist?.Installer}
+                    displayValue="full_name"
+                    placeholder='Select Installer'
+                    onSelect={(e) => console.log('multi',e?.map(ele => ele?.id))}
+                />
 
-                }
-            
+
             </div >
         </>
     )

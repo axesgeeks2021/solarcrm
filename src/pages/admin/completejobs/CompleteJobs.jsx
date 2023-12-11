@@ -75,7 +75,7 @@ function CompleteJobs() {
                         {
                             orderDetails && orderDetails.map((ele, idx) => {
                                 return (
-                                    <tr key={idx} onClick={() => navigate('/completed-jobs-details', {state: {orderId: ele?.id}})}>
+                                    <tr key={idx} onClick={() => navigate('/admin/completed-jobs-details', {state: {orderId: ele?.id}})}>
                                         {
                                             ele?.order_status === "Completed" ?
                                                 <>
@@ -101,6 +101,3 @@ function CompleteJobs() {
 }
 
 export default CompleteJobs
-// <tr key={idx}>
-
-//                                     </tr>
