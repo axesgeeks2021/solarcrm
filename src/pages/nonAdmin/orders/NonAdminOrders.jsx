@@ -104,7 +104,7 @@ function AdminOrders() {
       fetch("https://solar365.co.in/take-appointment/", requestOptions)
         .then(response => response.json())
         .then(result => {
-          if (result.messsage === 'Success') {
+          if (result.message === 'success') {
             toast.success('Your appointment has been booked')
             setBookModal({
               status: false,

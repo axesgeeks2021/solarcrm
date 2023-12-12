@@ -63,7 +63,9 @@ function Customer() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            // formdata.append("profile_pic", file);
+            {
+                file !== null ? formdata.append("profile_pic", file) : null
+            }
             formdata.append("alternate_phone", alternatephone);
             formdata.append("looking_for", lookingfor);
             formdata.append("project_capacity", projectcapacity);

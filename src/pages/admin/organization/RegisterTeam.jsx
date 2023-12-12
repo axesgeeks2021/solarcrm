@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 function RegisterTeam() {
 
-    const [cookies] = useCookies();
+    const [cookies] = useCookies(); 
 
     const [showForm, setShowForm] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -66,7 +66,9 @@ function RegisterTeam() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            formdata.append("profile_pic", file);
+            {
+                file !== null ? formdata.append("profile_pic", file) : null
+            }
             formdata.append("alternate_phone", alternatephone);
             formdata.append("department", department);
             formdata.append("description", description);
@@ -89,7 +91,7 @@ function RegisterTeam() {
                 .then(response => response.json())
                 .then(result => {
                     setLoading(false)
-                    if (result.messsage === "Success") {
+                    if (result?.message === "success") {
                         toast.update(loadingId, { render: "Team member created successfully", autoClose: true, isLoading: false, type: 'success' })
                         setShowForm(false)
                         setValue({

@@ -60,7 +60,9 @@ function RegisterAdmin() {
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            // formdata.append("profile_pic", file);
+            {
+                file !== null ? formdata.append("profile_pic", file) : null
+            }
             formdata.append("is_staff", isStaff);
             formdata.append("is_superuser", isSuper);
             formdata.append("address_line", addressline);
@@ -81,7 +83,7 @@ function RegisterAdmin() {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    if (result?.messsage === "Success") {
+                    if (result?.message === "success") {
                         toast.update(loadingId, { render: 'Admin Created successfully', isLoading: false, type: 'success', autoClose: true })
                         setShowForm(false)
                         setValue(prev => prev !== "" ? "" : "")

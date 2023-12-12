@@ -224,7 +224,7 @@ function UpdateAssignedOrders() {
                 .then(response => response.json())
                 .then(result => {
                     console.log('install', result)
-                    if (result.message === 'success') {
+                    if (result?.message === 'success') {
                         toast.update(id, { render: 'Document updated...', type: 'success', isLoading: false, autoClose: true })
                         return fetchInstallDocsStatus()
                     }

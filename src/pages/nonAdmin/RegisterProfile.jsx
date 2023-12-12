@@ -43,7 +43,9 @@ function RegisterProfile() {
             formdata.append("last_name", lastname)
             formdata.append("phone", phone)
             formdata.append("email", email)
-            // formdata.append("profile_pic", file)
+            {
+                file !== null ? formdata.append("profile_pic", file) : null
+            }
             formdata.append("address", address)
             formdata.append("alternate_phone", alternatephone)
             formdata.append("abnnumber", abnnumber)
@@ -68,7 +70,7 @@ function RegisterProfile() {
             })
 
             const data = await res.json()
-            if (data?.messsage === 'Success') {
+            if (data?.message === 'success') {
                 setValue({
                     firstname: "",
                     lastname: "",

@@ -88,7 +88,7 @@ function RegisterNonAdmin() {
 
 
             const data = await res.json()
-            if (data?.messsage === 'Success') {
+            if (data?.message === 'success') {
                 setValue(prev => prev !== "" ? "" : "")
                 setShowForm(false)
                 toast.update(loadingId, { render: "Non Admin Created Successfully...", isLoading: false, type: 'success', autoClose: true })
