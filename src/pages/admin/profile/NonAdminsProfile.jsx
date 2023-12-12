@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
+import { useLocation } from 'react-router-dom';
 
 function NonAdminProfile() {
 
+  const location = useLocation()
+  const [cookies] = useCookies()
+
+  console.log('location ,', location)
   const fetchData = () => {
-    try {
+    try { 
         const myHeaders = new Headers();
         myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
         myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");

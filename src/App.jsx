@@ -75,6 +75,9 @@ import UnapproveCompanydetails from "./pages/admin/approval/UnapproveCompanydeta
 import AdminsProfile from "./pages/admin/profile/AdminsProfile";
 import NonAdminsProfile from "./pages/admin/profile/NonAdminsProfile";
 import AdminAssignedJobs from "./pages/admin/AdminAssignedJobs/AdminAssignedJobs";
+import CustomerProfiles from "./pages/admin/profile/CustomerProfiles";
+import TeamProfiles from "./pages/admin/profile/TeamProfiles";
+import InstallersProfiles from "./pages/admin/profile/InstallersProfiles";
 
 
 function App() {
@@ -181,6 +184,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/admins-profile" element={<AdminsProfile />} />
           <Route path="/non-admins-profile" element={<NonAdminsProfile />} />
+          <Route path="/admin/customers-profile" element={<CustomerProfiles />} />
+          <Route path="/admin/teams-profile" element={<TeamProfiles />} />
+          <Route path="/admin/installers-profile" element={<InstallersProfiles />} />
           <Route path="/admin-update-other-component-price" element={<UpdateOtherComponentPrice />} />
           <Route path="/other-component-price-details" element={<OtherComponentPriceDetails />} />
           <Route path="/update-team" element={<UpdateTeam />} />

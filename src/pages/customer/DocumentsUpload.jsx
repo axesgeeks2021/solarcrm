@@ -35,8 +35,6 @@ function DocumentsUpload() {
     setModal(true);
   };
 
-
-
   const uploadDocument = () => {
     try {
       const loadingId = toast.loading("Please wait....")
@@ -241,14 +239,15 @@ function DocumentsUpload() {
                   })}
                 </div>
               </div>
-              <div className="flex w-full justify-center items-center p-3 border-t-2 border-slate-200 " style={{ fontSize: '1rem' }}>
+              <div className="misc__files flex w-full justify-center items-center p-3 border-t-2 border-slate-200 " style={{ fontSize: '1rem' }}>
                 Miscellaneous
               </div>
 {
-  allStatus?.miscellaneous?.length < 3 ? allStatus?.miscellaneous?.map((ele, idx) => {
-    return ele?.miscellaneous_file === "" ? <p key={idx}>4 Files Lefts</p> : <p key={idx}>3 Files Lefts</p>
-  }) : <p>{4 - allStatus?.miscellaneous?.length} Files Left</p>
+  allStatus?.miscellaneous?.length > 0 ? allStatus?.miscellaneous?.map((ele, idx) => {
+    return ele?.miscellaneous_status === "Completed" ?  <p key={idx} className={`files__left__indicator-${idx}`} >{4 - (1 + idx)} Files Lefts e</p> : <p style={{color: "red"}} key={idx}>4 Files Lefts d</p>
+  }) : null
 }
+
             </div>
             <div className="documents__connected__line"></div>
             <div className="status__uploading">

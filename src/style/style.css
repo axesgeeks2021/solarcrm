@@ -2622,3 +2622,6 @@ input[type=file] {
       transform: translateX(230%);
   }
 }
+/* .files__left__indicator-1{
+  display: none;
+} */

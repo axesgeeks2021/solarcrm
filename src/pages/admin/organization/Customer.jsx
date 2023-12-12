@@ -363,7 +363,18 @@ function Customer() {
                                     <option value="Double Phase">Double Phase</option>
                                     <option value="Three Phase">Three Phase</option>
                                 </select>
-                                <select name='rooftype' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={rooftype} onChange={handleChange}  >
+                                <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
+                                
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                {/*<select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={floor} onChange={handleChange}  >
+                                    <option>Select Floor Type</option>
+                                    <option value="Ground Floor">Ground Floor</option>
+                                    <option value="First Floor">First Floor</option>
+                                    <option value="Second Floor">Second Floor</option>
+                                    <option value="More">More</option>
+                                </select>*/}
+                                {/*<select name='rooftype' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={rooftype} onChange={handleChange}  >
                                     <option>Select Roof Type</option>
                                     <option value="Tin">Tin</option>
                                     <option value="Tilt">Tilt</option>
@@ -372,17 +383,8 @@ function Customer() {
                                     <option value="Others">
                                         Others
                                     </option>
-                                </select>
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={floor} onChange={handleChange}  >
-                                    <option>Select Floor Type</option>
-                                    <option value="Ground Floor">Ground Floor</option>
-                                    <option value="First Floor">First Floor</option>
-                                    <option value="Second Floor">Second Floor</option>
-                                    <option value="More">More</option>
-                                </select>
-                                <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
+                                    </select>*/}
+                               
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  >

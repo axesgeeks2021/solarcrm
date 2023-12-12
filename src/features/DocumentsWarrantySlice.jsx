@@ -19,7 +19,6 @@ export const fetchDocumentWarranty = createAsyncThunk(
       });
 
       const data = await res.data;
-      console.log('warranty', data)
       return data;
     } catch (error) {
       console.log(error);

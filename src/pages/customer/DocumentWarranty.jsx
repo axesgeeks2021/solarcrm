@@ -49,7 +49,7 @@ function DocumentWarranty() {
 
           <InstallListing document={document} />
         </div>
-        <div className="listing">
+        {/*<div className="listing">
           <Heading
             heading="List of Warranty Documents"
             size="1.4rem"
@@ -57,7 +57,7 @@ function DocumentWarranty() {
             align="justify"
           />
           <WarrantyListing document={document} />
-        </div>
+  </div>*/}
       </section>
     </>
   );
