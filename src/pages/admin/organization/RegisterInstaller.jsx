@@ -180,7 +180,7 @@ function RegisterTeam() {
                         installerList?.Installer?.map((ele, idx) => {
                             return (
                                 <Link key={idx} to="/admin/installers-profile" state={{ ele }}>
-                                    <li className="table-row" >
+                                    <li className="table-row py-2" >
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
@@ -195,8 +195,8 @@ function RegisterTeam() {
                     {
                         installerList?.Electrician?.map((ele, idx) => {
                             return (
-                                <Link key={idx} to="/installer-profile">
-                                    <li className="table-row" >
+                                <Link key={idx} to="/admin/installers-profile" state={{ ele }}>
+                                    <li className="table-row py-2" >
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>

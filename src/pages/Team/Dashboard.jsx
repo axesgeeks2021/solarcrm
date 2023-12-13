@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button'
 import { useCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
 import { BiLogOut } from "react-icons/bi"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import Dropdown from 'react-multilevel-dropdown'
 import Multiselect from 'multiselect-react-dropdown'
@@ -181,6 +181,9 @@ function Dashboard() {
         setModal(false)
     }
 
+    const gotoPage = (data) => {
+        return navigate('/team/order-details', {state: {data}})
+    }
 
     const logout = () => {
         removeCookies('Authorization', { path: "/" })
@@ -226,9 +229,9 @@ function Dashboard() {
                                 <th scope="col">Project</th>
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Building Type</th>
+                                <th scope="col">Meter Phase</th>
+                                <th scope="col">Nmi Number</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Select Electrician</th>
-                                <th scope="col">Select Installer</th>
                                 {/* <th scope="col">Budget</th> */}
                             </tr>
                         </thead>
@@ -236,60 +239,16 @@ function Dashboard() {
                             {
                                 pendingList?.length < 1 ? <h2>There is no order available right now...</h2> : pendingList?.map((ele, idx) => {
                                     return (
-                                        // <Link to="/non-admin/orders" state={{ ele }} key={idx}>
-                                        <tr key={idx}>
+                                        <tr key={idx} onClick={() => gotoPage(ele)}>
                                             <th >{ele?.project}</th>
                                             <td >{ele?.to_address?.user?.first_name}</td>
                                             <td >{ele?.building_Type}</td>
+                                            <td >{ele?.meter_Phase}</td>
+                                            <td >{ele?.nmi_no}</td>
                                             <td >{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
-                                            <td >
-                                                <Multiselect
-                                                    hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
-                                            </td>
-                                            <td >
-                                                <Multiselect
-                                                    hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
-                                                {/*<Dropdown
-                                                    title='Assign To'
-                                                >
-                                                    <Dropdown.Item
-                                                    >
-                                                        Electrician
-                                                        <Dropdown.Submenu>
-                                                            {
-                                                                installerList?.Electrician?.map((eles, idx) => {
-                                                                    return (
-                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-                                                                            {
-                                                                                eles?.admin?.user?.first_name
-                                                                            }
-                                                                        </Dropdown.Item>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </Dropdown.Submenu>
-                                                    </Dropdown.Item>
-                                                    <Dropdown.Item >
-                                                        Installer
-                                                        <Dropdown.Submenu>
-                                                            {
-                                                                installerList?.Installer?.map((eles, idx) => {
-                                                                    return (
-                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-                                                                            {
-                                                                                eles?.admin?.user?.first_name
-                                                                            }
-                                                                        </Dropdown.Item>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </Dropdown.Submenu>
-                                                    </Dropdown.Item>
-                                                        </Dropdown>*/}
-                                            </td>
+                                           
 
                                         </tr>
-                                        // </Link>
                                     )
                                 })
                             }
@@ -302,3 +261,49 @@ function Dashboard() {
 }
 
 export default Dashboard
+
+// <td >
+// <Multiselect
+//     hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
+// </td>
+// <td >
+// <Multiselect
+//     hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
+// {/*<Dropdown
+//     title='Assign To'
+// >
+//     <Dropdown.Item
+//     >
+//         Electrician
+//         <Dropdown.Submenu>
+//             {
+//                 installerList?.Electrician?.map((eles, idx) => {
+//                     return (
+//                         <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+//                             {
+//                                 eles?.admin?.user?.first_name
+//                             }
+//                         </Dropdown.Item>
+//                     )
+//                 })
+//             }
+//         </Dropdown.Submenu>
+//     </Dropdown.Item>
+//     <Dropdown.Item >
+//         Installer
+//         <Dropdown.Submenu>
+//             {
+//                 installerList?.Installer?.map((eles, idx) => {
+//                     return (
+//                         <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+//                             {
+//                                 eles?.admin?.user?.first_name
+//                             }
+//                         </Dropdown.Item>
+//                     )
+//                 })
+//             }
+//         </Dropdown.Submenu>
+//     </Dropdown.Item>
+//         </Dropdown>*/}
+// </td>

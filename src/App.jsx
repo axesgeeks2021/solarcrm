@@ -78,6 +78,7 @@ import AdminAssignedJobs from "./pages/admin/AdminAssignedJobs/AdminAssignedJobs
 import CustomerProfiles from "./pages/admin/profile/CustomerProfiles";
 import TeamProfiles from "./pages/admin/profile/TeamProfiles";
 import InstallersProfiles from "./pages/admin/profile/InstallersProfiles";
+import TeamOrderDetails from "./pages/Team/TeamOrderDetails/TeamOrderDetails"
 
 
 function App() {
@@ -233,6 +234,7 @@ function App() {
         <Route path="/team/assigned-jobs/update-orders" element={<UpdateAssignedOrders />} />
         <Route path="/team/practice" element={<Practice />} />
         <Route path="/team/completed-jobs" element={<CompletedJobs />} />
+        <Route path="/team/order-details" element={<TeamOrderDetails />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )
