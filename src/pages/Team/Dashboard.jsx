@@ -22,8 +22,8 @@ function Dashboard() {
     const [modal, setModal] = useState(false)
     const [selectedValue, setSelectedValue] = useState([])
     const [orderId, setOrderId] = useState('')
-    const [installerId, setInstallerId] = useState(null)
-    const [electricianId, setElecticianId] = useState(null)
+    const [installerId, setInstallerId] = useState([])
+    const [electricianId, setElecticianId] = useState([])
 
     const handleChange = (userId, orderId) => {
         console.log('user id -->', installerId)
@@ -31,15 +31,15 @@ function Dashboard() {
         setInstallerId([...installerId, userId])
         // console.log('order id -->', orderId)
 
-        // let installerElectricianId = [...selectedValue, userId]
-        // setSelectedValue(installerElectricianId)
-        // if (installerElectricianId.length > 2) {
-        //     let arrayToString = installerElectricianId.toString().split(',').join(', ')
-        //     setSelectedValue(arrayToString)
-        //     setOrderId(orderId)
-        //     setModal(true)
-        //     return
-        // }
+        let installerElectricianId = [...selectedValue, userId]
+        setSelectedValue(installerElectricianId)
+        if (installerElectricianId.length > 2) {
+            let arrayToString = installerElectricianId.toString().split(',').join(', ')
+            setSelectedValue(arrayToString)
+            setOrderId(orderId)
+            setModal(true)
+            return
+        }
     }
 
     const fetchOrder = () => {
@@ -68,7 +68,7 @@ function Dashboard() {
             console.log(error)
         }
     }
- 
+
     const fetchPendingOrder = () => {
         try {
             setLoading(true)
@@ -86,7 +86,7 @@ function Dashboard() {
                 .then(result => {
                     console.log('pending list', result)
                     setLoading(false)
-                    setPendingList(result)  
+                    setPendingList(result)
                     return
                 })
                 .catch(error => console.log('error', error));
@@ -98,12 +98,11 @@ function Dashboard() {
     const fetchUpdateAssignOrder = () => {
         try {
             const assignValue = installerId.concat(electricianId).toString().split(',').join(', ')
-            console.log('electrician id -->', assignValue)
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
             const formdata = new FormData();
-            formdata.append("assign_to", assignValue);
+            formdata.append("assign_to", selectedValue);
             formdata.append("order_status", "");
 
             const requestOptions = {
@@ -112,17 +111,17 @@ function Dashboard() {
                 body: formdata,
                 redirect: 'follow'
             };
-            // fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
-            //     .then(response => response.json())
-            //     .then(result => {
-            //         console.log(result)
-            //         if (result.message === "success") {
-            //             toast.success('Order successfully assigned')
-            //             setModal(false)
-            //             return fetchPendingOrder()
-            //         }
-            //     })
-            //     .catch(error => console.log('error', error));
+            fetch(`https://solar365.co.in/order/${orderId}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    if (result.message === "success") {
+                        toast.success('Order successfully assigned')
+                        setModal(false)
+                        return fetchPendingOrder()
+                    }
+                })
+                .catch(error => console.log('error', error));
         } catch (error) {
             console.log(error)
         }
@@ -143,7 +142,7 @@ function Dashboard() {
                 .then(response => response.json())
                 .then(result => {
 
-                    // setInstallerList(result)
+                    setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -167,7 +166,7 @@ function Dashboard() {
                 .then(result => {
                     console.log('list', result)
 
-                    setInstallerList(result)
+                    // setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));
 
@@ -182,7 +181,7 @@ function Dashboard() {
     }
 
     const gotoPage = (data) => {
-        return navigate('/team/order-details', {state: {data}})
+        return navigate('/team/order-details', { state: { data } })
     }
 
     const logout = () => {
@@ -230,8 +229,9 @@ function Dashboard() {
                                 <th scope="col">Customer Name</th>
                                 <th scope="col">Building Type</th>
                                 <th scope="col">Meter Phase</th>
-                                <th scope="col">Nmi Number</th>
+                                {/*<th scope="col">Nmi Number</th>*/}
                                 <th scope="col">Status</th>
+                                <th scope="col">Assign</th>
                                 {/* <th scope="col">Budget</th> */}
                             </tr>
                         </thead>
@@ -239,15 +239,52 @@ function Dashboard() {
                             {
                                 pendingList?.length < 1 ? <h2>There is no order available right now...</h2> : pendingList?.map((ele, idx) => {
                                     return (
-                                        <tr key={idx} onClick={() => gotoPage(ele)}>
+                                        <tr key={idx} >
                                             <th >{ele?.project}</th>
                                             <td >{ele?.to_address?.user?.first_name}</td>
                                             <td >{ele?.building_Type}</td>
                                             <td >{ele?.meter_Phase}</td>
-                                            <td >{ele?.nmi_no}</td>
+                                            {/*<td >{ele?.nmi_no}</td>*/}
                                             <td >{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
-                                           
-
+                                            <td >
+                                                <Dropdown
+                                                    title='Assign To'
+                                                >
+                                                    <Dropdown.Item
+                                                    >
+                                                        Electrician
+                                                        <Dropdown.Submenu>
+                                                            {
+                                                                installerList?.Electrician?.map((eles, idx) => {
+                                                                    return (
+                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+                                                                            {
+                                                                                eles?.admin?.user?.first_name
+                                                                            }
+                                                                        </Dropdown.Item>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Dropdown.Submenu>
+                                                    </Dropdown.Item>
+                                                    <Dropdown.Item >
+                                                        Installer
+                                                        <Dropdown.Submenu>
+                                                            {
+                                                                installerList?.Installer?.map((eles, idx) => {
+                                                                    return (
+                                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
+                                                                            {
+                                                                                eles?.admin?.user?.first_name
+                                                                            }
+                                                                        </Dropdown.Item>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Dropdown.Submenu>
+                                                    </Dropdown.Item>
+                                                </Dropdown>
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -266,44 +303,5 @@ export default Dashboard
 // <Multiselect
 //     hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
 // </td>
-// <td >
 // <Multiselect
-//     hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
-// {/*<Dropdown
-//     title='Assign To'
-// >
-//     <Dropdown.Item
-//     >
-//         Electrician
-//         <Dropdown.Submenu>
-//             {
-//                 installerList?.Electrician?.map((eles, idx) => {
-//                     return (
-//                         <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-//                             {
-//                                 eles?.admin?.user?.first_name
-//                             }
-//                         </Dropdown.Item>
-//                     )
-//                 })
-//             }
-//         </Dropdown.Submenu>
-//     </Dropdown.Item>
-//     <Dropdown.Item >
-//         Installer
-//         <Dropdown.Submenu>
-//             {
-//                 installerList?.Installer?.map((eles, idx) => {
-//                     return (
-//                         <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id, ele?.id)}>
-//                             {
-//                                 eles?.admin?.user?.first_name
-//                             }
-//                         </Dropdown.Item>
-//                     )
-//                 })
-//             }
-//         </Dropdown.Submenu>
-//     </Dropdown.Item>
-//         </Dropdown>*/}
-// </td>
+// hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
