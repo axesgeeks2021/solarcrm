@@ -8,7 +8,6 @@ import AdminSideNavigation from '../menu/AdminSideNavigation';
 
 import { useCookies } from "react-cookie";
 import { useEffect } from 'react';
-import UploadFile from '../../../components/inputsfield/UploadFile';
 import Input from '../../../components/inputsfield/Input';
 import { toast } from 'react-toastify';
 import BarLoader from '../../../components/BarLoader/BarLoader';
@@ -97,7 +96,7 @@ function RegisterAdmin() {
             console.log(error)
         }
     }
-
+ 
     const fetchData = () => {
         try {
             setLoading(true)

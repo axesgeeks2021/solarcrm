@@ -169,7 +169,7 @@ function UpdateTeam() {
                                 <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)} />
                             </div>
                         </div>
-                    }
+                    } 
                 </div>
             </div>
             <div className='admin__card'>

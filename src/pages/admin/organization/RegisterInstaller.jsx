@@ -17,7 +17,7 @@ import Input from '../../../components/inputsfield/Input';
 
 
 function RegisterTeam() {
- 
+
     const [cookies] = useCookies();
     const [installerList, setInstallerList] = useState([])
     const [showForm, setShowForm] = useState(false)
@@ -68,22 +68,20 @@ function RegisterTeam() {
         e.preventDefault();
         try {
             const loadingToast = toast.loading('Please wait')
-            let myHeaders = new Headers();
+            const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
-            let formdata = new FormData();
+            const formdata = new FormData();
             formdata.append("first_name", firstname);
             formdata.append("last_name", lastname);
             formdata.append("phone", phone);
             formdata.append("email", email);
-            {
-                file !== null ? formdata.append("profile_pic", file) : null
-            }
+            file !== null ? formdata.append("profile_pic", file) : null
+            file2 !== null ? formdata.append("ec_file", file2) : null;
+            file2 !== null ? formdata.append("el_file", file3) : null;
             formdata.append("alternate_phone", alternatephone);
             formdata.append("department", selectedDepartment);
-            formdata.append("ec_file", file2);
             formdata.append("ec_number", ecnumber);
-            formdata.append("el_file", file3);
             formdata.append("el_number", elnumber);
             formdata.append("abm_number", abnnumber);
             formdata.append("acn_number", acnnumber);
@@ -108,28 +106,7 @@ function RegisterTeam() {
                     console.log(result)
                     if (result?.message === 'success') {
                         toast.update(loadingToast, { render: 'Installer profile created Successfully...', type: 'success', isLoading: false, autoClose: true })
-                        setValue({
-                            firstname: "",
-                            lastname: "",
-                            phone: "",
-                            email: "",
-                            address: "",
-                            alternatephone: "",
-                            department: "",
-                            ecfile: "",
-                            ecnumber: "",
-                            elfile: "",
-                            elnumber: "",
-                            abnnumber: "",
-                            acnnumber: "",
-                            tfnnumber: "",
-                            addressline: "",
-                            street: "",
-                            city: "",
-                            state: "",
-                            postcode: "",
-                            country: ""
-                        })
+                        setValue(prev => prev !== "" ? "" : "")
                         setFile(null)
                         setFile2(null)
                         setFile3(null)
@@ -137,7 +114,7 @@ function RegisterTeam() {
                         return fetchData()
                     }
 
-                    if(result.error){
+                    if (result.error) {
                         return toast.update(loadingToast, { render: 'Please Try again...', type: 'warning', isLoading: false, autoClose: true })
                     }
                 })
@@ -185,7 +162,7 @@ function RegisterTeam() {
             </div>
             <div style={{ width: '100%', padding: '20px 10px' }}>
                 <Button title="Create New Installer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
-                <select style={{background: 'green', padding: '10px 10px', margin: '0 10px', borderRadius: '5px', color: 'white'}}> 
+                <select style={{ background: 'green', padding: '10px 10px', margin: '0 10px', borderRadius: '5px', color: 'white' }}>
                     <option disabled selected>Filter</option>
                     <option>Installer</option>
                     <option>Electrician</option>
@@ -202,7 +179,7 @@ function RegisterTeam() {
                     {
                         installerList?.Installer?.map((ele, idx) => {
                             return (
-                                <Link key={idx} to="/installer-profile">
+                                <Link key={idx} to="/admin/installers-profile" state={{ ele }}>
                                     <li className="table-row" >
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
@@ -250,40 +227,38 @@ function RegisterTeam() {
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Profile Photo..." type="file" onChange={handlefile} />
+                            <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Alternate_phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                            <select style={{width: '100%', padding: '5px 0', border: '2px solid #99A3BA'}} value={selectedDepartment} onChange={e => setSelectedDepartment(e.target.value)}>
+                            <select style={{ width: '100%', padding: '5px 0', border: '2px solid #99A3BA' }} value={selectedDepartment} onChange={e => setSelectedDepartment(e.target.value)}>
                                 <option defaultChecked>Select Department</option>
                                 <option value="Installer">Installer</option>
                                 <option value="Electrician">Electrician</option>
                             </select>
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Ec_file" onChange={handlefile2} type="file" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Ec_number..." onChange={handleChange} value={ecnumber} name="ecnumber" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="El_file..." onChange={handlefile3} type="file" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="El_number..." onChange={handleChange} value={elnumber} name="elnumber" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Abn_number..." onChange={handleChange} value={abnnumber} name="abnnumber" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Acn_number..." onChange={handleChange} value={acnnumber} name="acnnumber" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Tfn_number..." onChange={handleChange} value={tfnnumber} name="tfnnumber" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Address_line..." onChange={handleChange} value={addressline} name="addressline" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
+                        </div>
+                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
-                        </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="State..." onChange={handleChange} value={state} name="state" />
-                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                            <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                             <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>

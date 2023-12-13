@@ -20,11 +20,8 @@ function RegisterTeam() {
 
     const [showForm, setShowForm] = useState(false)
     const [loading, setLoading] = useState(false)
-
     const [teamList, setTeamList] = useState([])
-
     const [file, setFile] = useState()
-
     const [value, setValue] = useState({
         firstname: "",
         lastname: "",
@@ -174,7 +171,7 @@ function RegisterTeam() {
                     {
                         teamList?.map((ele, idx) => {
                             return (
-                                <Link to="/update-team" key={idx} state={{ ele: ele }}>
+                                <Link to="/admin/teams-profile" key={idx} state={{ ele: ele }}>
                                     <li className="table-row">
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>

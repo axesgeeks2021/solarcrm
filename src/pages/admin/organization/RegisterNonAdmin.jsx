@@ -86,7 +86,6 @@ function RegisterNonAdmin() {
                 body: formdata
             })
 
-
             const data = await res.json()
             if (data?.message === 'success') {
                 setValue(prev => prev !== "" ? "" : "")

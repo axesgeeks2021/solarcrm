@@ -18,14 +18,10 @@ function Dashboard() {
     const [orderList, setOrderList] = useState([])
     const [loading, setLoading] = useState(false)
     const [pendingList, setPendingList] = useState([])
-
     const [installerList, setInstallerList] = useState([])
-
     const [modal, setModal] = useState(false)
-
     const [selectedValue, setSelectedValue] = useState([])
     const [orderId, setOrderId] = useState('')
-
     const [installerId, setInstallerId] = useState(null)
     const [electricianId, setElecticianId] = useState(null)
 
@@ -65,6 +61,7 @@ function Dashboard() {
                     setLoading(false)
                     // console.log(result)
                     setOrderList(result)
+                    return
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -87,8 +84,10 @@ function Dashboard() {
             fetch("https://solar365.co.in/new-order-list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('pending list', result)
                     setLoading(false)
-                    setPendingList(result)
+                    setPendingList(result)  
+                    return
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -97,7 +96,6 @@ function Dashboard() {
     }
 
     const fetchUpdateAssignOrder = () => {
-
         try {
             const assignValue = installerId.concat(electricianId).toString().split(',').join(', ')
             console.log('electrician id -->', assignValue)
@@ -167,6 +165,8 @@ function Dashboard() {
             fetch("https://solar365.co.in/get_installer/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('list', result)
+
                     setInstallerList(result)
                 })
                 .catch(error => console.log('error', error));

@@ -36,11 +36,11 @@ function NonAdminDashboard() {
     const [batteryList, setBatteryList] = useState([])
     const [panelList, setPanelList] = useState([])
     const [nonAdminProfile, setNonAdminProfile] = useState({})
-    const [packingSlipFile, setPackingSlipFile] = useState()
-    const [westernPowerFile, setwesternPowerFile] = useState()
-    const [switchBoardFile, setswitchBoardFile] = useState()
-    const [panelLayoutFile, setpanelLayoutFile] = useState()
-    const [extrasFile, setextrasFile] = useState()
+    const [packingSlipFile, setPackingSlipFile] = useState(null)
+    const [westernPowerFile, setwesternPowerFile] = useState(null)
+    const [switchBoardFile, setswitchBoardFile] = useState(null)
+    const [panelLayoutFile, setpanelLayoutFile] = useState(null)
+    const [extrasFile, setextrasFile] = useState(null)
 
     const [text, setText] = useState({
         firstname: '',
@@ -201,11 +201,11 @@ function NonAdminDashboard() {
             formdata.append("system_Size", systemSize);
             formdata.append("nmi_no", nmiNo);
             formdata.append("meter_Number", meterNumber);
-            formdata.append("packing_slip", packingSlipFile);
-            formdata.append("western_power", westernPowerFile);
-            formdata.append("switch_board", switchBoardFile);
-            formdata.append("panel_layout", panelLayoutFile);
-            formdata.append("extras", extrasFile);
+            packingSlipFile !== null ? formdata.append("packing_slip", packingSlipFile) : null;
+            westernPowerFile !== null ? formdata.append("western_power", westernPowerFile) : null;
+            switchBoardFile !== null ? formdata.append("switch_board", switchBoardFile) : null;
+            panelLayoutFile !== null ? formdata.append("panel_layout", panelLayoutFile) : null;
+            extrasFile !== null ? formdata.append("extras", extrasFile) : null;
             formdata.append("roof_type", roofType);
             formdata.append("state", state);
             formdata.append("address_line", addressline);
