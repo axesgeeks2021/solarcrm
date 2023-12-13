@@ -11,6 +11,7 @@ function AssignedJobs() {
     const navigate = useNavigate()
     const [orderList, setOrderList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [installerList, setInstallerList] = useState({})
 
     const fetchOrder = () => {
         try {
@@ -36,6 +37,32 @@ function AssignedJobs() {
             console.log(error)
         }
     }
+    
+    const fetchInstallerList = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/get_installer/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log('list', result)
+                    setInstallerList(result)
+                    return
+                })
+                .catch(error => console.log('error', error));
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const gotNextPage = (data) => {
         return navigate('update-orders', {state: {data}})
@@ -43,8 +70,9 @@ function AssignedJobs() {
 
     useEffect(() => {
         const subscribe = fetchOrder()
+        const subscribe2 = fetchInstallerList()
 
-        return () => [subscribe]
+        return () => [subscribe, subscribe2]
     }, [])
 
     return (

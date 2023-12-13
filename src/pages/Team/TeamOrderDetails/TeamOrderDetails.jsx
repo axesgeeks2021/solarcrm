@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Button from '../../../components/Button/Button'
-import NonAdminSideNavigation from '../Menu/InstallationTeamNavigation'
+import Navigation from "../Menu/InstallationTeamNavigation"
 import { BiLogOut } from 'react-icons/bi'
+import Multiselect from 'multiselect-react-dropdown'
 
 function OrderDetails() {
   const location = useLocation()
@@ -61,13 +62,15 @@ function OrderDetails() {
       <div className='popup__form'>
         <p style={{ fontSize: '1.2rem' }}>Are you sure want to delete ?</p>
         <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+        <Multiselect
+       hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
           <Button title="Confirm" background="green" color="#fff" />
           <Button title="Cancel" background="gray" color="#fff"  />
         </div>
       </div>
     }
     <div>
-      <NonAdminSideNavigation />
+    <Navigation />
       <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
         <BiLogOut />
         <Button title="Logout" onclick={logout} />

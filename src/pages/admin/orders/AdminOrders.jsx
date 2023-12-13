@@ -18,9 +18,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"
 function AdminOrders() {
 
   const [cookies] = useCookies();
-
   const data = useLocation()
-
   const navigate = useNavigate()
 
   const [showState, setShowState] = useState(false)
@@ -30,11 +28,8 @@ function AdminOrders() {
 
 
   const [displayForm, setDisplayForm] = useState(false)
-
   const [loading, setLoading] = useState(false)
-
-  const [orderDetails, setOrderDetails] = useState([])
-
+  const [ordersDetails, setOrderDetails] = useState([])
   const [file, setFile] = useState()
 
   const handleFile = e => {
@@ -86,11 +81,9 @@ function AdminOrders() {
       fetch(`https://solar365.co.in/order/${data.state.ele.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          setTimeout(() => {
             setLoading(false)
             console.log(result)
             setOrderDetails(result)
-          }, 1000);
         })
         .catch(error => console.log('error', error));
 
@@ -116,7 +109,7 @@ function AdminOrders() {
         .then(response => response.json())
         .then(result => {
           // setLoading(false)
-          // console.log('order detials',result)
+          console.log('order detials',result)
           setOrderDetails(result)
         })
         .catch(error => console.log('error', error));
@@ -151,162 +144,153 @@ function AdminOrders() {
         {/* <div className='admin__order__image'>
           <img src={airplane} alt={airplane} className='img-fluid' />
         </div> */}
-        <div className='admin__order__details'>
-          {/* <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Heading heading="Customer Details" size="32px" weight="600" color="#F95738" classname="heading__background" />
-          </div>
-          <hr></hr> */}
-          {/* Customer Details */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
-            <div className='accordian__box'>
-              <div className='accordian__question' onClick={() => setShowState(!showState)}>Customer Details
-                {
-                  !showState ? <AiOutlinePlus size={40} onClick={() => setShowState(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState(false)} style={{ transition: '0.3s' }} />
-                }
-
-              </div>
-              <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                <Line title="Project" value={orderDetails?.order_details?.project} />
-                <Line title="Customer Email" value={orderDetails?.order_details?.customer_name} />
-                <Line title="Installation Type" value={orderDetails?.order_details?.installation_type} />
-                <Line title="Building Type" value={orderDetails?.order_details?.building_Type} />
-                <Line title="Quotation" value={orderDetails?.order_details?.quotation} />
-                <Line title="Nmi Number" value={orderDetails?.order_details?.nmi_no} />
-                <Line title="Meter Phase" value={orderDetails?.order_details?.meter_Phase} />
-                <Line title="Status" value={orderDetails?.order_details?.order_status} />
-              </div>
+        <div className="container__table completeContainer">
+     
+        <div className="completejobs__box">
+            <div className="header">
+                <p>Personal Details</p>
             </div>
-            {/* <Line title="Project" value={data.state.ele.project} />
-            <Line title="Customer Email" value={data.state.ele.customer_name} /> */}
-          </div>
-          {/* <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Kilowatt" value={data.state.ele.system_Size} />
-            <Line title="Building Type" value={data.state.ele.building_Type} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Quotation" value={data.state.ele.quotation} />
-            <Line title="Nmi Number" value={data.state.ele.nmi_no} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Meter Phase" value={data.state.ele.meter_Phase} />
-            <Line title="Status" value={data.state.ele.order_status} />
-          </div> */}
-          {/* Panels Details */}
-          <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
-            <div className='accordian__box'>
-              <div className='accordian__question' onClick={() => setShowState1(!showState1)}>Panels Details
-                {
-                  !showState1 ? <AiOutlinePlus size={40} onClick={() => setShowState1(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState1(false)} style={{ transition: '0.3s' }} />
-                }
-
-              </div>
-              <div style={{ height: showState1 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                <Line title="Title" value={orderDetails?.order_details?.panels?.title} />
-                <Line title="Code" value={orderDetails?.order_details?.panels?.code} />
-                <Line title="Manufacturer" value={orderDetails?.order_details?.panels?.manufacturer} />
-                <Line title="Performance Warranty" value={orderDetails?.order_details?.panels?.performance_warranty} />
-                <Line title="Product Warranty" value={orderDetails?.order_details?.panels?.product_warranty} />
-                <Line title="Technology" value={orderDetails?.order_details?.panels?.technology} />
-              </div>
+            <div className='content'>
+                <div>
+                    <p>Project Id: {ordersDetails?.project}</p>
+                    <p>Name: {ordersDetails?.to_address?.user?.first_name} {ordersDetails?.to_address?.user?.last_name}</p>
+                </div>
+                <div>
+                    <p>Email: {ordersDetails?.to_address?.user?.email}</p>
+                    <p>Phone: {ordersDetails?.to_address?.user?.phone}</p>
+                </div>
+                <div>
+                    <p>Address: {ordersDetails?.to_address?.address_line}</p>
+                    <p>City: {ordersDetails?.to_address?.city}</p>
+                </div>
+                <div>
+                    <p>State: {ordersDetails?.to_address?.state}</p>
+                    <p>Country: {ordersDetails?.to_address?.country}</p>
+                </div>
+                <div>
+                    <p>Latitude: {ordersDetails?.to_address?.latitude}</p>
+                    <p>Longitude: {ordersDetails?.to_address?.longitude}</p>
+                </div>
             </div>
-            {/* <Line title="Project" value={data.state.ele.project} />
-            <Line title="Customer Email" value={data.state.ele.customer_name} /> */}
-          </div>
-          {/* <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Heading heading="Panel Details" size="32px" weight="600" color="#F95738" classname="heading__background" />
-          </div>
-          <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Panels" value={data.state.ele.panels.title} />
-            <Line title="Code" value={data.state.ele.panels.code} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Technology" value={data.state.ele.panels.technology} />
-            <Line title="Performance Warranty" value={data.state.ele.panels.performance_warranty} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Product Warranty" value={data.state.ele.panels.product_warranty} />
-            <Line title="Manufacturer" value={data.state.ele.panels.manufacturer} />
-          </div> */}
-          {/* Panels Details */}
-          <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
-            <div className='accordian__box'>
-              <div className='accordian__question' onClick={() => setShowState2(!showState2)}>Inverter Details
-                {
-                  !showState2 ? <AiOutlinePlus size={40} onClick={() => setShowState2(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState2(false)} style={{ transition: '0.3s' }} />
-                }
-
-              </div>
-              <div style={{ height: showState2 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                <Line title="Title" value={orderDetails?.order_details?.inverter?.title} />
-                <Line title="Code" value={orderDetails?.order_details?.inverter?.code} />
-                <Line title="Manufacturer" value={orderDetails?.order_details?.inverter?.manufacturer} />
-                <Line title="Inverter Type" value={orderDetails?.order_details?.inverter?.inverter_type} />
-                <Line title="Product Warranty" value={orderDetails?.order_details?.inverter?.product_warranty} />
-                <Line title="Rated Output Power" value={orderDetails?.order_details?.inverter?.rated_ouptut_power} />
-              </div>
-            </div>
-            {/* <Line title="Project" value={data.state.ele.project} />
-            <Line title="Customer Email" value={data.state.ele.customer_name} /> */}
-          </div>
-          <hr></hr>
-
-          {/* <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Heading heading="Inverter Details" size="32px" weight="600" color="#F95738" classname="heading__background" />
-          </div>
-          <hr></hr>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Inverter" value={data.state.ele.inverter.title} />
-            <Line title="Code" value={data.state.ele.inverter.code} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Product Warranty" value={data.state.ele.inverter.product_warranty} />
-            <Line title="Inverter Type" value={data.state.ele.inverter.inverter_type} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Line title="Rated Output Power" value={data.state.ele.inverter.rated_output_power} />
-            <Line title="Manufacturer" value={data.state.ele.inverter.manufacturer} />
-          </div> */}
-          {/* Other Component */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
-            <div className='accordian__box'>
-              <div className='accordian__question' onClick={() => setShowState3(!showState3)}>Other Component Details
-                {
-                  !showState3 ? <AiOutlinePlus size={40} onClick={() => setShowState3(true)} style={{ transition: '0.3s' }} /> : <AiOutlineMinus size={40} onClick={() => setShowState3(false)} style={{ transition: '0.3s' }} />
-                }
-
-              </div>
-              <div style={{ height: showState3 ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                {
-                  orderDetails?.order_details?.other_component?.map((ele, idx) => {
-                    return (
-                      <div key={idx} style={{borderRight: '1px solid black'}}>
-                        <Line title="Title" value={ele.title} />
-                        <Line title="Code" value={ele.code} />
-                        <Line title="Manufacturer" value={ele.manufacturer} />
-                        <Line title="Optimisor" value={ele.optimisor} />
-                        <Line title="Optimisor Heading" value={ele.optimisor_heading} />
-                        <Line title="Product Warranty" value={ele.product_warranty} />
-                        <Line title="Smart Meter" value={ele.smart_meter} />
-                        <Line title="Smart Meter Heading" value={ele.smart_meter_heading} />
-                      </div>
-                    ) 
-                  })
-                }
-                {/* <Line title="Title" value={orderDetails?.inverter?.title} />
-                <Line title="Code" value={orderDetails?.inverter?.code} />
-                <Line title="Manufacturer" value={orderDetails?.inverter?.manufacturer} />
-                <Line title="Inverter Type" value={orderDetails?.inverter?.inverter_type} />
-                <Line title="Product Warranty" value={orderDetails?.inverter?.product_warranty} />
-                <Line title="Rated Output Power" value={orderDetails?.inverter?.rated_ouptut_power} /> */}
-              </div>
-            </div>
-            {/* <Line title="Project" value={data.state.ele.project} />
-            <Line title="Customer Email" value={data.state.ele.customer_name} /> */}
-          </div>
         </div>
+        <div className="completejobs__box">
+            <div className="header">
+                <p>Project Details</p>
+            </div>
+            <div className='content'>
+                <div>
+                    <p>Building Type: {ordersDetails?.building_Type}</p>
+                    <p>Meter Phase: {ordersDetails?.meter_Phase}</p>
+                </div>
+                <div>
+                    <p>Monitoring: {ordersDetails?.monitoring}</p>
+                    <p>Monitoring Qty: {ordersDetails?.monitoring_quantity}</p>
+                </div>
+                <div>
+                    <p>NMI No: {ordersDetails?.nmi_no}</p>
+                    <p>Number of Roof: {ordersDetails?.no_of_Roofs}</p>
+                </div>
+                <div>
+                    <p>System Size: {ordersDetails?.system_Size}</p>
+                </div>
+
+            </div>
+        </div>
+        {
+            ordersDetails && ordersDetails?.assign_to?.map((ele, idx) => {
+                return (
+                    <div className="completejobs__box" key={idx}>
+                        <div className="header">
+                            <p>Assign To {ele?.department.charAt(0).toUpperCase()+ele?.department?.substring(1, ele?.department.length)}</p>
+                        </div>
+                        <div className='content'>
+                            <div>
+                                <p>Username: {ele?.username}</p>
+                                <p>Name: {ele?.first_name} {ele?.last_name}</p>
+                            </div>
+                            <div>
+                                <p>Phone: {ele?.phone}</p>
+                                <p>Email: {ele?.email}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                )
+            })
+        }
+
+        <div className="completejobs__box">
+            <div className="header">
+                <p>Inverter</p>
+            </div>
+            <div className='content'>
+                <div>
+                    <p>Title: {ordersDetails?.inverter?.title}</p>
+                    <p>Code: {ordersDetails?.inverter?.code}</p>
+                </div>
+                <div>
+                    <p>Price: {ordersDetails?.inverter?.inverter_price}</p>
+                    <p>Type: {ordersDetails?.inverter?.inverter_type}</p>
+                </div>
+                <div>
+                    <p>Manufacturer: {ordersDetails?.inverter?.manufacturer}</p>
+                    <p>Rated Output Power: {ordersDetails?.inverter?.rated_output_power}</p>
+                </div>
+                <div>
+                    <p>Product Warranty: {ordersDetails?.inverter?.product_warranty}</p>
+                </div>
+
+            </div>
+        </div>
+        <div className="completejobs__box">
+            <div className="header">
+                <p>Panels</p>
+            </div>
+            <div className='content'>
+                <div>
+                    <p>Title: {ordersDetails?.panels?.title}</p>
+                    <p>Code: {ordersDetails?.panels?.code}</p>
+                </div>
+                <div>
+                    <p>Price: {ordersDetails?.panels?.panel_price}</p>
+                    <p>Manufacturer: {ordersDetails?.panels?.manufacturer}</p>
+                </div>
+                <div>
+                    <p>Product Warranty: {ordersDetails?.panels?.product_warranty}</p>
+                    <p>Performance Warranty: {ordersDetails?.panels?.performance_warranty}</p>
+                </div>
+                <div>
+                    <p>Technology: {ordersDetails?.panels?.technology}</p>
+                </div>
+
+            </div>
+        </div>
+        <div className="completejobs__box">
+            <div className="header">
+                <p>Battery</p>
+            </div>
+            <div className='content'>
+                <div>
+                    <p>Title: {ordersDetails?.batteries?.title}</p>
+                    <p>Code: {ordersDetails?.batteries?.code}</p>
+                </div>
+                <div>
+                    <p>Price: {ordersDetails?.batteries?.battery_price}</p>
+                    <p>Manufacturer: {ordersDetails?.batteries?.manufacturer}</p>
+                </div>
+                <div>
+                    <p>Product Warranty: {ordersDetails?.batteries?.product_warranty}</p>
+                    <p>Quantity: {ordersDetails?.batteries?.total_quantity}</p>
+                </div>
+                <div>
+                    <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
+                </div>
+            </div>
+        </div>
+      
+      
+    </div>
+
       </div>
       {
         displayForm && <FormsContainer flexDirection="column">
