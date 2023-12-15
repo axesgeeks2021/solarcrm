@@ -181,8 +181,15 @@ function OtherComponentOrders() {
                         <Line title="Title" value={otherComponentData?.title} />
                         <Line title="Manufacturer" value={otherComponentData?.manufacturer} />
                     </div>
-                   
-                   
+                    <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
+                        {
+                            otherComponentData?.stocks?.map((ele, idx) => {
+                                return(
+                                    <Line title="Current Quantity" value={ele?.stock_quantity} key={idx}/>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
             {

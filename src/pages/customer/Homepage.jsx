@@ -38,7 +38,7 @@ function Homepage({ showSlotModal, setShowSlotModal,setBookingStatus  }) {
     const data = await res.data;
     console.log('status', data)
     setStatus(data);
-    return fetchBookingSlotsDetails(data[0]?.id)
+    return fetchBookingSlotsDetails(data[0]?.id) 
   };
 
   const fetchSlots = () => {
@@ -115,6 +115,7 @@ function Homepage({ showSlotModal, setShowSlotModal,setBookingStatus  }) {
       fetch(`https://solar365.co.in/take-appointment/${id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
+          console.log('booking status', result)
             return setBookingStatus(result)
         })
         .catch(error => console.log('error', error));

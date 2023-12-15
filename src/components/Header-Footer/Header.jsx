@@ -13,12 +13,9 @@ function Header({ showmenu, logout, setShowSlotModal, bookingStatus }) {
   return (
     <>
       <header className="w-full overflow-hidden mb-2">
-      {
-        !bookingStatus?.update_appointment_appove &&
-        <div className="w-full bg-yellow-400 flex justify-between items-center" style={{background: "#0C70D4"}}>
-        <p className="text-white pl-10">Your appointment has been booked!</p>
+        <div className="w-full bg-yellow-400 flex justify-between items-center" style={{ background: "#0C70D4" }}>
+          <p className="text-white pl-10">{bookingStatus?.reason}</p>
         </div>
-      }
         <nav className="w-full flex justify-between items-center overflow-hidden mt-2">
           <div className="website__logo w-2/5 overflow-hidden flex justify-start items-center px-12 py-2">
             <GiHamburgerMenu className="hamburgermenu" onClick={showmenu} />

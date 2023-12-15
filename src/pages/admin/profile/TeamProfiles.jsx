@@ -13,10 +13,10 @@ function TeamProfiles() {
     const location = useLocation()
     const navigate = useNavigate()
     const [cookies, removeCookies] = useCookies()
-    const [file, setFile] = useState(null)
     const [deletePopup, setDeletePopup] = useState(false)
     const [showForm, setShowForm] = useState(false)
     const [profile, setProfile] = useState({})
+    const [file, setFile] = useState(null)
     const [text, setText] = useState({
         firstName: "",
         lastName: "",
@@ -80,8 +80,8 @@ function TeamProfiles() {
             const formdata = new FormData();
             formdata.append("first_name", firstName !== "" ? firstName : profile?.admin?.user?.first_name);
             formdata.append("last_name", lastName !== "" ? lastName : profile?.admin?.user?.last_name);
-            formdata.append("phone", phone !== "" ? phone : profile?.admin?.user?.phone);
-            formdata.append("email", email !== "" ? email : profile?.admin?.user?.email);
+            // formdata.append("phone", phone !== "" ? phone : profile?.admin?.user?.phone);
+            // formdata.append("email", email !== "" ? email : profile?.admin?.user?.email);
             // formdata.append("profile_pic", fileInput.files[0], "/home/admin1/Pictures/Screenshots/Screenshot from 2022-11-10 10-54-38.png" !== "" ?  : profile?.admin?.user?.);
             formdata.append("alternate_phone", alternatePhone !== "" ? alternatePhone : profile?.alternate_phone);
             formdata.append("description", description !== "" ? description : profile?.admin?.description);
@@ -229,10 +229,10 @@ function TeamProfiles() {
                             <Input placeholder="First name" onChange={handleChange} value={firstName} name="firstName" />
                             <Input placeholder="Last name" onChange={handleChange} value={lastName} name="lastName" />
                         </div>
-                        <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                        {/*<div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
                             <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
-                        </div>
+            </div>*/}
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Input type="file" onChange={handlefile} placeholder="Profile Photo" />
                         </div>

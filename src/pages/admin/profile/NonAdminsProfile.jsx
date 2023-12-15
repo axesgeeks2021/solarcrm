@@ -78,8 +78,8 @@ function NonAdminProfile() {
       const formdata = new FormData();
       formdata.append("first_name", firstname !== "" ? firstname : profile?.admin?.user?.first_name);
       formdata.append("last_name", lastname !== "" ? lastname : profile?.admin?.user?.last_name);
-      formdata.append("phone", phone !== "" ? phone : profile?.admin?.user?.phone);
-      formdata.append("email", email !== "" ? email : profile?.admin?.user?.email);
+      // formdata.append("phone", phone !== "" ? phone : profile?.admin?.user?.phone);
+      // formdata.append("email", email !== "" ? email : profile?.admin?.user?.email);
       // formdata.append("profile_pic", file === null ? profile?.admin?.user?.profile_pic : file);
       formdata.append("address_line", addressline !== "" ? addressline : profile?.admin?.address_line);
       formdata.append("city", city !== "" ? city : profile?.admin?.city);
@@ -223,10 +223,10 @@ function NonAdminProfile() {
               <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" />
               <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" />
             </div>
-            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+            {/*<div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
               <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
               <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
-            </div>
+      </div>*/}
             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
               <Input type="file" onChange={handlefile} placeholder="Profile Photo" />
               <Input onChange={handleChange} placeholder="Company Name" value={companyname} name="companyname" />

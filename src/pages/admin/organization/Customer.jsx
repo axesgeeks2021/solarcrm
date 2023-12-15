@@ -12,10 +12,11 @@ import Dropdown from 'react-multilevel-dropdown'
 import Input from '../../../components/inputsfield/Input';
 import { Multiselect } from "multiselect-react-dropdown"
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 function Customer() {
 
-    const [cookies] = useCookies(); 
+    const [cookies] = useCookies();
     const [showForm, setShowForm] = useState(false)
     const [customerList, setCustomerList] = useState([])
     const [installerList, setInstallerList] = useState({})
@@ -117,30 +118,7 @@ function Customer() {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    setValue({
-                        firstname: "",
-                        lastname: "",
-                        phone: "",
-                        email: "",
-                        alternatephone: "",
-                        lookingfor: "",
-                        projectcapacity: "",
-                        utilitybill: "",
-                        assignto: "",
-                        supply: "",
-                        rooftype: "",
-                        floor: "",
-                        remarks: "",
-                        buyingoptions: "",
-                        followsup1: "",
-                        followsup2: "",
-                        street: "",
-                        state: "",
-                        addressline: "",
-                        city: "",
-                        postcode: "",
-                        country: ""
-                    })
+                    setValue(prev => prev !== "" ? "" : "")
                     toast.update(loadingId, { render: "Customer Registered successfully...", autoClose: true, type: 'success', isLoading: false })
                     setShowForm(false)
                     return fetchData()
@@ -156,7 +134,6 @@ function Customer() {
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
             myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
-
 
             const requestOptions = {
                 method: 'GET',
@@ -279,14 +256,16 @@ function Customer() {
                         {
                             customerList?.map((ele, idx) => {
                                 return (
-                                    <li className="table-row" key={idx}>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.city} / {ele?.to_address?.state}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.user_type}</div>
-                                        <div className={`col col-2 text-center`}>{ele?.to_address?.user?.has_approve === false ? 'Not Approved' : 'Approved'}</div>
-                                    </li>
+                                    <Link to="/admin/customer-profile" state={{ele}}>
+                                        <li className="table-row" key={idx}>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.city} / {ele?.to_address?.state}</div>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.user?.user_type}</div>
+                                            <div className={`col col-2 text-center`}>{ele?.to_address?.user?.has_approve === false ? 'Not Approved' : 'Approved'}</div>
+                                        </li>
+                                    </Link>
                                 )
                             })
                         }
@@ -359,14 +338,20 @@ function Customer() {
                                 </Dropdown>
                                         </div>*/}
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
+                                {/*<select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
                                     <option>Select Supply</option>
                                     <option value="Single Phase">Single Phase</option>
                                     <option value="Double Phase">Double Phase</option>
                                     <option value="Three Phase">Three Phase</option>
-                                </select>
+                                    </select>*/}
                                 <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
-                                
+                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  >
+                                    <option>Choose Buying Option</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Card">Card</option>
+                                    <option value="Paypal">Paypal</option>
+                                    <option value="Online Transfer">Online Transfer</option>
+                                </select>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 {/*<select name='floor' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={floor} onChange={handleChange}  >
@@ -386,16 +371,10 @@ function Customer() {
                                         Others
                                     </option>
                                     </select>*/}
-                               
+
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  >
-                                    <option>Choose Buying Option</option>
-                                    <option value="Cash">Cash</option>
-                                    <option value="Card">Card</option>
-                                    <option value="Paypal">Paypal</option>
-                                    <option value="Online Transfer">Online Transfer</option>
-                                </select>
+
                                 <select name='followsup1' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={followsup1} onChange={handleChange}  >
                                     <option>Select Lead Type</option>
                                     <option value="Facebook">Facebook</option>
@@ -403,26 +382,24 @@ function Customer() {
                                     <option value="Direct Call">Direct Call</option>
                                     <option value="Refrence">Refrence</option>
                                 </select>
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
+                            </div>
+                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                            </div>
-                            <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
-                                <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
                                 <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange}  >
                                     <option selected>Select State</option>
                                     <option value="Queensland">Queensland</option>
                                     <option value="New South Wales">New South Wales</option>
-                                   <option value="Victoria">Victoria</option>
+                                    <option value="Victoria">Victoria</option>
                                     <option value="Western Australia">Western Australia</option>
                                 </select>
-                                <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
+                                <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
                                 <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>

@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import Loading from "../../components/loading/Loading"
+import { toast } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
@@ -59,21 +60,28 @@ function Login() {
         .then(response => response.json())
         .then(result => {
           setLoading(false)
-          setCookie("Authorization", result.token);
-
-          localStorage.setItem('auth', JSON.stringify(result))
+          
           if (result?.user?.user_type === 'CUSTOMER') {
+            setCookie("Authorization", result.token);
+            localStorage.setItem('auth', JSON.stringify(result))
             return navigate("/");
           }
           if (result?.user?.user_type === 'ADMIN') {
+            setCookie("Authorization", result.token);
+            localStorage.setItem('auth', JSON.stringify(result))
             return navigate("/admin");
           }
           if (result?.user?.admin?.user?.user_type === 'NON_ADMIN') {
+            setCookie("Authorization", result.token);
+            localStorage.setItem('auth', JSON.stringify(result))
             return navigate("/non-admin");
           }
           if (result?.user?.admin?.user?.user_type === 'TEAM') {
+            setCookie("Authorization", result.token);
+            localStorage.setItem('auth', JSON.stringify(result))
             return navigate("/team-dashboard");
           }
+          return toast.error(result?.message)
         })
         .catch(error => console.log('error', error));
     } catch (error) {

@@ -8,7 +8,7 @@ function DocumentWarrantyListing({ document }) {
           <span>Compliance</span>
           <span>{document.data?.install_docs?.compliance_status}</span>
           <a
-            href={'https://solar365.co.in'+document.data?.install_docs?.compliance_docs}
+            href={document.data?.install_docs?.compliance_docs}
             download
             style={{background: document.data?.install_docs?.compliance_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.compliance_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -21,7 +21,7 @@ function DocumentWarrantyListing({ document }) {
           <span>Contract</span>
           <span>{document.data?.install_docs?.contract_status}</span>
           <a
-            href={'https://solar365.co.in' + document.data?.install_docs?.contract_docs}
+            href={document.data?.install_docs?.contract_docs}
             download
             style={{background: document.data?.install_docs?.contract_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.contract_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -33,7 +33,7 @@ function DocumentWarrantyListing({ document }) {
           <span>Energy Yield Report</span>
           <span>{document.data?.install_docs?.energy_yield_report_status}</span>
           <a
-            href={'https://solar365.co.in' + document.data?.install_docs?.energy_yield_report_docs}
+            href={document.data?.install_docs?.energy_yield_report_docs}
             download
             style={{background: document.data?.install_docs?.energy_yield_report_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.energy_yield_report_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -45,7 +45,7 @@ function DocumentWarrantyListing({ document }) {
           <span>Grid Approval</span>
           <span>{document.data?.install_docs?.grid_approval_status}</span>
           <a
-            href={'https://solar365.co.in'+document.data?.install_docs?.grid_approval_docs}
+            href={document.data?.install_docs?.grid_approval_docs}
             download
             style={{background: document.data?.install_docs?.grid_approval_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.grid_approval_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -57,7 +57,7 @@ function DocumentWarrantyListing({ document }) {
           <span>NOC</span>
           <span>{document.data?.install_docs?.noc_status}</span>
           <a
-            href={'https://solar365.co.in'+document.data?.install_docs?.noc_docs}
+            href={document.data?.install_docs?.noc_docs}
             download
             style={{background: document.data?.install_docs?.noc_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.noc_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -69,7 +69,7 @@ function DocumentWarrantyListing({ document }) {
           <span>PV Site Info</span>
           <span>{document.data?.install_docs?.pv_site_info_status}</span>
           <a
-            href={'https://solar365.co.in'+document.data?.install_docs?.pv_site_info_docs}
+            href={document.data?.install_docs?.pv_site_info_docs}
             download
             style={{background: document.data?.install_docs?.pv_site_info_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.pv_site_info_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"
@@ -81,7 +81,7 @@ function DocumentWarrantyListing({ document }) {
           <span>Safety Certificate</span>
           <span>{document.data?.install_docs?.safety_certificate_status}</span>
           <a
-            href={'https://solar365.co.in'+document.data?.install_docs?.safety_certificate_docs}
+            href={document.data?.install_docs?.safety_certificate_docs}
             download
             style={{background: document?.data?.install_docs?.safety_certificate_status === "Uploaded" ? 'green' : '#eee',pointerEvents: document.data?.install_docs?.safety_certificate_status === "Uploaded" ? 'auto' : 'none' }}
             target="_blank"

@@ -348,7 +348,7 @@ function UpdateAssignedOrders() {
                                             ele?.electricity_status === "Completed" ?
                                                 <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                                     <p style={{ margin: 'auto 0', }}>{ele?.electricity_bill}</p>
-                                                    <a href={'https://solar365.co.in' + ele?.electricity_bill} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    <a href={ele?.electricity_bill} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
                                                 </div>
                                                 :
                                                 <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -364,7 +364,7 @@ function UpdateAssignedOrders() {
                                             ele?.meter_status === "Completed" ?
                                                 <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                                     <p style={{ margin: 'auto 0', }}>{ele?.meter_box}</p>
-                                                    <a href={'https://solar365.co.in' + ele?.meter_box} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    <a href={ele?.meter_box} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
                                                 </div>
                                                 :
                                                 <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -380,7 +380,7 @@ function UpdateAssignedOrders() {
                                             ele?.miscellaneous_status === "Completed" ?
                                                 <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%" }}>
                                                     <p style={{ margin: 'auto 0', }}>{ele?.miscellaneous_file}</p>
-                                                    <a href={'https://solar365.co.in' + ele?.miscellaneous_file} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    <a href={ele?.miscellaneous_file} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
                                                 </div>
                                                 :
                                                 <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -408,21 +408,21 @@ function UpdateAssignedOrders() {
                                     installDocmentStatus?.contract_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.contract_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.contract_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.contract_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Contract Documents" onChange={e => setContractDocs(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.grid_approval_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.grid_approval_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.grid_approval_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.grid_approval_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Grid Approval Documents" onChange={e => setGridApprovalDocs(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.compliance_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.compliance_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.compliance_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.compliance_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Compliance Documents" onChange={e => setComplianceDocs(e.target.files[0])} />
                                 }
 
@@ -430,35 +430,35 @@ function UpdateAssignedOrders() {
                                     installDocmentStatus?.pv_site_info_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.pv_site_info_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.pv_site_info_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.pv_site_info_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Pv Site Info Documents" onChange={e => setPvSiteInfoDocs(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.user_manual_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.user_manual}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.user_manual} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.user_manual} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="User Mannual" onChange={e => setUserMannual(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.energy_yield_report_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.energy_yield_report_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.energy_yield_report_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.energy_yield_report_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Energy Yield Report Documents" onChange={e => setEnergyYieldReportDocs(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.safety_certificate_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.safety_certificate_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.safety_certificate_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.safety_certificate_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Safety Certificate Documents" onChange={e => setSafetyCertificateDocs(e.target.files[0])} />
                                 }
                                 {
                                     installDocmentStatus?.noc_status === "Uploaded" ?
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
                                             <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.noc_docs}</p>
-                                            <a href={'https://solar365.co.in' + installDocmentStatus?.noc_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            <a href={installDocmentStatus?.noc_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
                                         </div> : <Input type="file" placeholder="Noc Documents" onChange={e => setNocDocs(e.target.files[0])} />
                                 }
                                 {

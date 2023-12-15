@@ -171,7 +171,7 @@ function App() {
           <Route path="/inverters" element={<Inverter />} />
           <Route path="/battery" element={<Battery />} />
           <Route path="/other-component" element={<OtherComponent />} />
-          <Route path="/other-component-orders" element={<OtherComponentOrders />} />
+          <Route path="/other-component-details" element={<OtherComponentOrders />} />
           <Route path="/register-customer" element={<Customer />} />
           <Route path="/register-team" element={<RegisterTeam />} />
           <Route path="/register-installer" element={<RegisterInstaller />} />
@@ -188,6 +188,7 @@ function App() {
           <Route path="/admin/customers-profile" element={<CustomerProfiles />} />
           <Route path="/admin/teams-profile" element={<TeamProfiles />} />
           <Route path="/admin/installers-profile" element={<InstallersProfiles />} />
+          <Route path="/admin/customer-profile" element={<CustomerProfiles />} />
           <Route path="/admin-update-other-component-price" element={<UpdateOtherComponentPrice />} />
           <Route path="/other-component-price-details" element={<OtherComponentPriceDetails />} />
           <Route path="/update-team" element={<UpdateTeam />} />

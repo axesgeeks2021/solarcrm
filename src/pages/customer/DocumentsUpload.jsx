@@ -175,7 +175,7 @@ function DocumentsUpload() {
                         style={{ background: allStatus?.meter?.map(ele => ele?.meter_status === "Completed" ? "#99A3BA" : "#f8690e") }}
                       >
                         <UploadFile id="meter_box" onchange={fileUpload} name="meter_box" disabled={meterBool} key={idx} />
-                      </div> : <a href={'https://solar365.co.in' + ele?.meter_box} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
+                      </div> : <a href={ele?.meter_box} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
                     })
                   }
                 </div>
@@ -218,7 +218,7 @@ function DocumentsUpload() {
                             className="file-upload-field"
                             onChange={fileUpload}
                           />
-                        </div> : <a href={'https://solar365.co.in' + ele?.electricity_bill} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
+                        </div> : <a href={ele?.electricity_bill} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
                     })
                   }
                 </div>
@@ -244,7 +244,7 @@ function DocumentsUpload() {
               </div>
 {
   allStatus?.miscellaneous?.length > 0 ? allStatus?.miscellaneous?.map((ele, idx) => {
-    return ele?.miscellaneous_status === "Completed" ?  <p key={idx} className={`files__left__indicator-${idx}`} >{4 - (1 + idx)} Files Lefts e</p> : <p style={{color: "red"}} key={idx}>4 Files Lefts d</p>
+    return ele?.miscellaneous_status === "Completed" ?  <p key={idx} className={`files__left__indicator-${idx}`} >{4 - (1 + idx)} Files Lefts</p> : <p style={{color: "red"}} key={idx}>4 Files Lefts</p>
   }) : null
 }
 
@@ -258,7 +258,7 @@ function DocumentsUpload() {
                       allStatus?.miscellaneous?.map((ele, idx) => {
                         return (
                           <div className="flex flex-col mt-1" key={idx} >
-                            <a href={'https://solar365.co.in' + ele?.miscellaneous_file} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
+                            <a href={ele?.miscellaneous_file} style={{ background: '#34a446', color: '#fff', width: '100%', textAlign: 'center', padding: '6px 10px', fontWeight: '600' }} key={idx} download target="_blank">Download</a>
                           </div>
                         )
                       }) : <div
