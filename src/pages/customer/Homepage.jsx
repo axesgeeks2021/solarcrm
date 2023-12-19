@@ -16,7 +16,7 @@ function Homepage({ showSlotModal, setShowSlotModal,setBookingStatus  }) {
 
   const [cookies] = useCookies();
   const dispatch = useDispatch()
-
+ 
   const orders = useSelector(state => state.order)
   const { data, error, loading } = orders;
 

@@ -79,7 +79,8 @@ import CustomerProfiles from "./pages/admin/profile/CustomerProfiles";
 import TeamProfiles from "./pages/admin/profile/TeamProfiles";
 import InstallersProfiles from "./pages/admin/profile/InstallersProfiles";
 import TeamOrderDetails from "./pages/Team/TeamOrderDetails/TeamOrderDetails"
-
+import NonAdminCompleteJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompleteJobs"
+import NonAdminCompletedJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompletedJobsDetails"
 
 function App() {
 
@@ -211,6 +212,8 @@ function App() {
         <Route path="/non-admin-registration" element={<NonAdminRegisterForm />} />
         <Route path="/non-admin-profile" element={<NonAdminProfile />} />
         <Route path="/non-admin" element={<NonAdminDashboard />} />
+        <Route path="/non-admin/complete-jobs" element={<NonAdminCompleteJobs />} />
+        <Route path="/non-admin/completed-jobs-details" element={<NonAdminCompletedJobs />} />
         <Route path="/register-non-admin" element={<RegisterNonAdmin />} />
         <Route path="/non-admin/register-customer" element={<NonAdminCustomer />} />
         <Route path="/non-admin/orders" element={<NonAdminOrders />} />

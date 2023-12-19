@@ -12,8 +12,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function NonAdminSideNavigation() {
 
   const navigate = useNavigate()
-
   const location = useLocation()
+
   return (
     <Navigation
     
@@ -51,6 +51,11 @@ function NonAdminSideNavigation() {
       //     },
       //   ],
       // },
+      {
+        title: 'Complete Jobs',
+        itemId: '/non-admin/complete-jobs',
+        elemBefore: () => <CgProfile />,
+      },
       {
         title: 'Update Profile',
         itemId: '/non-admin/update-profile',

@@ -88,6 +88,7 @@ function AdminOrders() {
 
   const updateSlots = () => {
     try {
+      const loadingId = toast.loading('Please wait....')
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
@@ -105,13 +106,15 @@ function AdminOrders() {
       fetch("https://solar365.co.in/take-appointment/", requestOptions)
         .then(response => response.json())
         .then(result => {
+
           if (result?.message === 'success') {
-            toast.success('Your appointment has been booked')
+            toast.update(loadingId, {render: 'Appointment booked! Please wait for confirmation', isLoading: false, autoClose: true, type: 'success'})
             setBookModal({
               status: false,
               date: null
             })
             setListOfSlotsModal(false)
+            toast.update(loadingId, {render: 'Please try again!', isLoading: false, autoClose: true, type: 'error'})
             return [fetchSlots(), fetchBookingSlotsDetails()]
           }
           console.log(result)
@@ -421,8 +424,8 @@ function AdminOrders() {
             backdropFilter: 'blur(10px)'
           }}>
             <AiOutlineClose onClick={() => setListOfSlotsModal(false)} size={25} style={{ alignSelf: 'flex-end', cursor: 'pointer', background: 'gray', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.2), -2px -2px 10px 2px rgba(0,0,0,0.2)', borderRadius: '2px' }} />
-            <table style={{ background: 'gray', border: '2px solid white', margin: '20px 10px' }}>
-              <thead >
+            <table style={{ background: '#ccc', margin: '20px 10px', border: '1px solid #000' }}>
+              <thead>
                 <tr>
                   <th style={{ padding: '10px 0' }}>S.No</th>
                   <th style={{ padding: '10px 0' }}>Dates</th>
@@ -434,15 +437,15 @@ function AdminOrders() {
                 {
                   listOfSlots?.data?.slice(0, 7).map((ele, idx) => {
                     return (
-                      <tr key={idx} style={{ background: idx % 2 === 0 ? 'black' : 'white', border: idx % 2 === 0 ? '2px solid white' : '2px solid black' }}>
-                        <td style={{ padding: '5px 0', color: idx % 2 === 0 ? 'white' : 'black', fontWeight: '600' }}>{idx + 1}</td>
-                        <td style={{ padding: '5px 0', color: idx % 2 === 0 ? 'white' : 'black', fontWeight: '600' }}>{ele?.date}</td>
-                        <td style={{ padding: '5px 0', color: idx % 2 === 0 ? 'white' : 'black', fontWeight: '600' }}>{ele?.remaininig_slots}</td>
-                        <td style={{ padding: '5px 0', color: idx % 2 === 0 ? 'white' : 'black', fontWeight: '600' }}>
+                      <tr key={idx} style={{border: '1px solid #000'}}>
+                        <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{idx + 1}</td>
+                        <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{ele?.date}</td>
+                        <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{ele?.remaininig_slots}</td>
+                        <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>
                           <button onClick={() => setBookModal({
                             status: true,
                             date: ele?.date
-                          })} style={{ background: idx % 2 === 0 ? 'white' : 'black', color: idx % 2 !== 0 ? 'white' : 'black', padding: '4px 15px', borderRadius: '3px' }}>Book</button>
+                          })} style={{ background: 'black', color: 'white', padding: '4px 15px', borderRadius: '3px' }} disabled={ele?.remaininig_slots < 1 ? true : false}>Book</button>
                         </td>
                       </tr>
                     )

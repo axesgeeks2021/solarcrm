@@ -775,10 +775,8 @@ ol.gradient-list > li::before {
   }
   table thead{
     margin-bottom: 10px;
-    border: 1px solid var(--black);
   }
   table thead th{
-    border: 1px solid var(--black);
     font-size: 1.1rem;
     font-weight: 600;
   }
@@ -786,19 +784,10 @@ ol.gradient-list > li::before {
     margin-top: 4px;
   }
   table tbody td{
-    border: 1px solid var(--black);
     text-align: center;
     color: var(--white);
   }
-  table  tbody tr:nth-child(odd){
-    background-color: var(--orange);
-  }
-  table  tbody tr:nth-child(even){
-    background-color:var(--green);
-  }
-  table tbody tr td{
-    font-size: 0.9rem;
-  }
+  
   /* Table style ends here */
 
   .go__back__button{

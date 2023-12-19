@@ -157,7 +157,7 @@ function AdminOrders() {
 
       const formdata = new FormData();
       formdata.append("appointment_date", bookModal.date);
-      formdata.append("project", data?.ele?.project);
+      formdata.append("project", data?.state?.ele?.project);
       console.log("appointment_date", bookModal.date);
       console.log("project", data?.state?.ele?.project);
 
@@ -226,12 +226,12 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/assign_get_profile/?date=${orderDetails?.appointment?.appointment_date}`, requestOptions)
+      fetch(`https://solar365.co.in/assign_get_profile/?date=${ordersDetails?.appointment?.appointment_date}`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log('list', result)
-
           setInstallerList(result)
+          return
         })
         .catch(error => console.log('error', error));
 
@@ -243,6 +243,7 @@ function AdminOrders() {
   const fetchUpdateAssignOrder = () => {
     try {
 
+      console.log('hello', data?.state?.ele?.id)
       if(electricianId.length < 1){
         return toast.warn('Please select 1 electician!')
       }
@@ -266,7 +267,7 @@ function AdminOrders() {
         body: formdata,
         redirect: 'follow'
       };
-      fetch(`https://solar365.co.in/order/${location?.state?.data?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/order/${ data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
