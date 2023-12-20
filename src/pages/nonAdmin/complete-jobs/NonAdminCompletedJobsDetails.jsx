@@ -10,7 +10,7 @@ function NonAdminCompletedJobsDetails() {
     const location = useLocation()
 
     const [ordersDetails, setOrdersDetails] = useState({})
-   
+
     const fetchOrder = () => {
         try {
             const myHeaders = new Headers();
@@ -26,7 +26,7 @@ function NonAdminCompletedJobsDetails() {
             fetch(`https://solar365.co.in/order/${location?.state?.orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log('completed',result)
+                    console.log('completed', result)
                     setOrdersDetails(result)
                     return
                 })
@@ -204,6 +204,32 @@ function NonAdminCompletedJobsDetails() {
                 </div>
                 <div className="completejobs__box">
                     <div className="header">
+                        <p>Other Component</p>
+                    </div>
+                    {
+                        ordersDetails?.other_component?.length < 1 ?
+                            <div className='content' style={{ borderBottom: '2px solid #fff' }}>
+                                <div>
+                                    <p>No other component selected</p>
+                                </div>
+                            </div> :
+                            ordersDetails?.other_component?.map((ele, idx) => {
+                                return (
+                                    <div className='content' style={{ borderBottom: '2px solid #fff' }} key={idx}>
+                                        <div>
+                                            <p>Code: {ele?.code}</p>
+                                            <p>Title: {ele?.title}</p>
+                                        </div>
+                                        <div>
+                                            <p>Manufacturer: {ele?.manufacturer}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                    }
+                </div>
+                <div className="completejobs__box">
+                    <div className="header">
                         <p>Working Details</p>
                     </div>
                     <div className='content'>
@@ -223,7 +249,8 @@ function NonAdminCompletedJobsDetails() {
                     <div className='content'>
                         <div>
                             <p>Invoice Number: {ordersDetails?.invoice?.invoice_number}</p>
-                            <p>Due Date: {ordersDetails?.invoice?.due_date}</p>
+                            <p>Invoice Date: {ordersDetails?.invoice?.payment_date}</p>
+
                         </div>
                         <div>
                             <p>Amount Due: {ordersDetails?.invoice?.amount_due}</p>
@@ -235,10 +262,10 @@ function NonAdminCompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Amount Paid: {ordersDetails?.invoice?.amount_paid}</p>
-                            <p>Payment Date: {ordersDetails?.invoice?.payment_date}</p>
+                            <p>Due Date: {ordersDetails?.invoice?.due_date}</p>
                         </div>
                         <div>
-                            <p>Specail Discount: {ordersDetails?.invoice?.special_discount}</p>
+                            <p>Special Discount: {ordersDetails?.invoice?.special_discount}</p>
                             <p>Status: {ordersDetails?.invoice?.status}</p>
                         </div>
                         <div>

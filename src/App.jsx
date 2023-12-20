@@ -81,6 +81,7 @@ import InstallersProfiles from "./pages/admin/profile/InstallersProfiles";
 import TeamOrderDetails from "./pages/Team/TeamOrderDetails/TeamOrderDetails"
 import NonAdminCompleteJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompleteJobs"
 import NonAdminCompletedJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompletedJobsDetails"
+import TeamCompleteJobDetails from "./pages/Team/TeamCompleteJobDetails"
 
 function App() {
 
@@ -196,7 +197,7 @@ function App() {
           <Route path="/register-admin-profile" element={<RegisterProfile />} />
           <Route path="/admin/complete-jobs" element={<CompleteJobs />} />
           <Route path="/admin/completed-jobs-details" element={<CompletedJobsDetails />} />
-          <Route path="admin-assigned-jobs" element={<AdminAssignedJobs />} />
+          <Route path="/admin/admin-assigned-jobs" element={<AdminAssignedJobs />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>
@@ -238,6 +239,8 @@ function App() {
         <Route path="/team/assigned-jobs/update-orders" element={<UpdateAssignedOrders />} />
         <Route path="/team/practice" element={<Practice />} />
         <Route path="/team/completed-jobs" element={<CompletedJobs />} />
+        <Route path="/team/completed-jobs" element={<CompletedJobs />} />
+        <Route path="/team/completed-jobs-details" element={<TeamCompleteJobDetails />} />
         <Route path="/team/order-details" element={<TeamOrderDetails />} />
         <Route path="/login" element={<Login />} />
       </Routes>

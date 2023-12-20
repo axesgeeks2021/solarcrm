@@ -15,6 +15,7 @@ function InstallersProfiles() {
     const [deletePopup, setDeletePopup] = useState(false)
     const [profile, setProfile] = useState({})
     const [showForm, setShowForm] = useState(false)
+    const [listOfAvailableDates, setListOfAvailableDates] = useState([])
     const [file, setFile] = useState()
     const [text, setText] = useState({
         firstname: "",
@@ -40,7 +41,6 @@ function InstallersProfiles() {
 
     const { firstname, lastname, phone, email, alternatephone, department, description, isonline, abmNumber, acnNumber, ecNumber, elNumber, tfnNumber, addressline, city, state, street, postcode, country } = text
 
-    console.log(abmNumber)
     const handleChange = e => {
         setText({ ...text, [e.target.name]: e.target.value })
     }
@@ -111,7 +111,7 @@ function InstallersProfiles() {
             fetch(`https://solar365.co.in/update_profile/${location?.state?.ele?.admin?.user?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result)
+                    // console.log(result)
                     if (result?.error === true) {
                         return toast.update(loadingId, { render: 'Please try again...', isLoading: false, autoClose: true, type: 'error' })
                     }
@@ -155,6 +155,31 @@ function InstallersProfiles() {
         }
     }
 
+    const fetchLatestAvailability = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch(`https://solar365.co.in/inst-avail/${location?.state?.ele?.admin?.user?.id}/`, requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log('avail', result)
+                    setListOfAvailableDates(result)
+                    return
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const logout = () => {
         removeCookies('Authorization', { path: '/' })
         return navigate('/login')
@@ -162,8 +187,9 @@ function InstallersProfiles() {
 
     useEffect(() => {
         const subscribe = fetchData()
+        const subscribe2 = fetchLatestAvailability()
 
-        return () => [subscribe]
+        return () => [subscribe, subscribe2]
     }, [])
 
     return (
@@ -231,6 +257,21 @@ function InstallersProfiles() {
                         <div>
                             <p>User Type: {profile?.admin?.user?.user_type}</p>
                         </div>
+                    </div>
+                </div>
+                <div className="completejobs__box">
+                    <div className="header">
+                        <p>List of working days</p>
+                    </div>
+                    <div className='content'>
+                    {
+                        listOfAvailableDates?.available_days?.map((ele, idx) => {
+                            return(
+                                <p>{ele?.date}</p>
+                            )
+                        })
+                    }
+                       <h1>Hello world</h1>
                     </div>
                 </div>
             </div>

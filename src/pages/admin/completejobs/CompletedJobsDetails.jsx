@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 
 function CompletedJobsDetails() {
 
-    const [cookies] = useCookies()
+    const [cookies, removeCookies] = useCookies()
     const location = useLocation()
 
     const [ordersDetails, setOrdersDetails] = useState({})
@@ -29,7 +29,7 @@ function CompletedJobsDetails() {
             fetch(`https://solar365.co.in/order/${location?.state?.orderId}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log('completed',result)
+                    console.log('completed', result)
                     setOrdersDetails(result)
                 })
                 .catch(error => console.log('error', error));
@@ -39,7 +39,7 @@ function CompletedJobsDetails() {
     }
 
     const logout = () => {
-        removeCookies('Authorization')
+        removeCookies('Authorization', {path: '/'})
         return navigate('/login')
     }
 
@@ -61,8 +61,8 @@ function CompletedJobsDetails() {
             <div className="container__table completeContainer">
                 <div style={{ width: '95%', display: 'flex', justifyContent: 'flex-end', }}>
                     <a href={ordersDetails?.invoice?.invoice} download target='_blank'>
-                    <Button title="Download Invoice" background="green" color="white" />
-            </a>
+                        <Button title="Download Invoice" background="green" color="white" />
+                    </a>
                 </div>
                 <div className="completejobs__box">
                     <div className="header">
@@ -119,7 +119,7 @@ function CompletedJobsDetails() {
                         return (
                             <div className="completejobs__box" key={idx}>
                                 <div className="header">
-                                    <p>Assign To {ele?.department.charAt(0).toUpperCase()+ele?.department?.substring(1, ele?.department.length)}</p>
+                                    <p>Assign To {ele?.department.charAt(0).toUpperCase() + ele?.department?.substring(1, ele?.department.length)}</p>
                                 </div>
                                 <div className='content'>
                                     <div>
@@ -204,6 +204,32 @@ function CompletedJobsDetails() {
                             <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
                         </div>
                     </div>
+                </div>
+                <div className="completejobs__box">
+                    <div className="header"> 
+                        <p>Other Component</p>
+                    </div>
+                    {
+                        ordersDetails?.other_component?.length < 1 ? 
+              <div className='content' style={{borderBottom: '2px solid #fff'}}>
+              <div>
+                  <p>No other component selected</p>
+              </div>
+          </div> :
+                        ordersDetails?.other_component?.map((ele, idx) => {
+                            return (
+                                <div className='content' style={{borderBottom: '2px solid #fff'}} key={idx}>
+                                    <div>
+                                        <p>Code: {ele?.code}</p>
+                                        <p>Title: {ele?.title}</p>
+                                    </div>
+                                    <div>
+                                        <p>Manufacturer: {ele?.manufacturer}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
                 <div className="completejobs__box">
                     <div className="header">

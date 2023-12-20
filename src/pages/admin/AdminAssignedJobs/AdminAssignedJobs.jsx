@@ -54,9 +54,7 @@ function AdminAssignedJobs() {
                     <AdminSideNavigation />
                 </div>
                 <div class="container__table">
-                    <div className='py-2 flex justify-end'>
-                        <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
-                    </div>
+                   
                     <table class="responsive-table">
                         <thead>
                             <tr>

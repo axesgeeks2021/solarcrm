@@ -107,17 +107,18 @@ function AdminOrders() {
         .then(response => response.json())
         .then(result => {
 
+          console.log('slotsssss', result)
           if (result?.message === 'success') {
-            toast.update(loadingId, {render: 'Appointment booked! Please wait for confirmation', isLoading: false, autoClose: true, type: 'success'})
+            toast.update(loadingId, { render: 'Appointment booked! Please wait for confirmation', isLoading: false, autoClose: true, type: 'success' })
             setBookModal({
               status: false,
               date: null
             })
             setListOfSlotsModal(false)
-            toast.update(loadingId, {render: 'Please try again!', isLoading: false, autoClose: true, type: 'error'})
             return [fetchSlots(), fetchBookingSlotsDetails()]
           }
-          console.log(result)
+          toast.update(loadingId, { render: result?.errors?.customer[0], isLoading: false, autoClose: true, type: 'error' })
+          return
         }
         )
         .catch(error => console.log('error', error));
@@ -249,7 +250,7 @@ function AdminOrders() {
 
           </div>
           <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
-            <Button title="Book Your Slot" color="#fff" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setListOfSlotsModal(!listofSlotsModal)} disabled={!bookingStatus?.update_appointment_appove}/>
+            <Button title="Book Your Slot" color="#fff" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setListOfSlotsModal(!listofSlotsModal)} disabled={!bookingStatus?.update_appointment_appove} />
             <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
             <Button title="Delete" color="white" background="red" />
           </div>
@@ -306,7 +307,7 @@ function AdminOrders() {
 
               </div>
             </div>
-          
+
             <div className="completejobs__box">
               <div className="header">
                 <p>Inverter</p>
@@ -375,7 +376,7 @@ function AdminOrders() {
                 </div>
               </div>
             </div>
-          
+
           </div>
         </div>
         {
@@ -437,7 +438,7 @@ function AdminOrders() {
                 {
                   listOfSlots?.data?.slice(0, 7).map((ele, idx) => {
                     return (
-                      <tr key={idx} style={{border: '1px solid #000'}}>
+                      <tr key={idx} style={{ border: '1px solid #000' }}>
                         <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{idx + 1}</td>
                         <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{ele?.date}</td>
                         <td style={{ padding: '5px 0', color: '#000', fontWeight: '600' }}>{ele?.remaininig_slots}</td>

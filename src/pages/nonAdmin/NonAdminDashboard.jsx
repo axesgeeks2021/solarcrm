@@ -324,7 +324,7 @@ function NonAdminDashboard() {
                         {
                             orderLists && orderLists.map((ele, idx) => {
                                 return (
-                                    <tr onClick={() => goToOrders('/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
+                                    <tr onClick={() => goToOrders(ele?.order_status === "Completed" ? null : '/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
                                         <th >{ele.project}</th>
                                         <td >{ele?.customer_name}</td>
                                         <td >{ele?.panels}</td>
@@ -333,7 +333,6 @@ function NonAdminDashboard() {
                                         <td >
                                             <Button title={ele?.order_status === "Completed" ? "Completed" : "In Process"} background={ele?.order_status === "Completed" ? "orange" : "green"} color="white" cursor="none" />
                                         </td>
-                                        {/* <td data-title="Budget" data-type="currency">$260,000,000</td> */}
                                     </tr>
                                 )
                             })

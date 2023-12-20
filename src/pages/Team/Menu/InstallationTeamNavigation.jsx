@@ -9,11 +9,11 @@ import {BiUserCheck} from "react-icons/bi"
 import {HiBuildingOffice2} from "react-icons/hi2"
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function NonAdminSideNavigation() {
+function TeamSideNavigation() {
 
   const navigate = useNavigate()
-
   const location = useLocation()
+
   return (
     <Navigation
     
@@ -27,10 +27,6 @@ function NonAdminSideNavigation() {
         title: 'Dashboard',
         itemId: '/team-dashboard',
         elemBefore: () => <AiOutlineHome />,
-      },
-      {
-        title: "Book Jobs",
-        elemBefore: () => <MdHardware />
       },
       {
         title: "Assigned Jobs",
@@ -67,7 +63,7 @@ function NonAdminSideNavigation() {
 
       {
         title: 'Profiles',
-        itemId: "/non-admin-profile",
+        itemId: "/team-profile",
         elemBefore: () => <HiBuildingOffice2 />,
         // subNav: [
         //   {
@@ -82,14 +78,10 @@ function NonAdminSideNavigation() {
         //   }
         // ]
       },
-      {
-        title: 'Calendar',
-        itemId: '/non-admin/calendar',
-        elemBefore: () => <AiOutlineHome />
-      }
+     
     ]}
   />
   )
 }
 
-export default NonAdminSideNavigation
+export default TeamSideNavigation

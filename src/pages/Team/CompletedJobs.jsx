@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { BiLogOut } from 'react-icons/bi'
 import Button from '../../components/Button/Button'
-import Navigation from "./Menu/InstallationTeamNavigation"
+import TeamSideNavigation from "./Menu/InstallationTeamNavigation"
+import { useNavigate } from 'react-router-dom'
 
 function CompletedJobs() {
 
-    const [cookies] = useCookies()
+    const navigate = useNavigate()
+    const [cookies, removeCookies] = useCookies()
     const [completedJobsList, setCompletedJobsList] = useState([])
 
     const fetchCompletedJobsList = () => {
@@ -27,6 +29,7 @@ function CompletedJobs() {
                 .then(result => {
                     console.log(result)
                     setCompletedJobsList(result)
+                    return
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -34,9 +37,13 @@ function CompletedJobs() {
         }
     }
 
+    const gotNextPage = (data) => {
+        return navigate('/team/completed-jobs-details', {state: {data}})
+    }
+
 
     const logout = () => {
-        removeCookies('Authorization')
+        removeCookies('Authorization', {path: '/'})
         return navigate('/login')
     }
 
@@ -50,7 +57,7 @@ function CompletedJobs() {
         <>
         <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
         <div>
-            <Navigation />
+            <TeamSideNavigation />
             <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
                 <BiLogOut />
                 <Button title="Logout" onclick={logout} />
@@ -72,7 +79,7 @@ function CompletedJobs() {
                     {
                         completedJobsList?.length < 1 ? <h2>There is no order available right now...</h2> : completedJobsList?.map((ele, idx) => {
                             return (
-                                <tr key={idx}>
+                                <tr key={idx} onClick={() => gotNextPage(ele)} style={{cursor: 'pointer'}}>
                                     <th scope="row">{ele?.project}</th>
                                     <td >{ele?.to_address?.user?.first_name}</td>
                                     <td >{ele?.building_Type}</td>

@@ -282,7 +282,7 @@ function AdminDashboard() {
                     <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
                 </div>
                 <ul className="responsive-table">
-                    <li className="table-header">
+                    <li className="table-header py-3">
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Id</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Project</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Customer Name</div>

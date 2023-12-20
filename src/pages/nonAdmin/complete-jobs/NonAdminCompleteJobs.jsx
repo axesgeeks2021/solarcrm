@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import NonAdminSideNavigation from '../menu/NonAdminSideNavigation';
 import { BiLogOut } from 'react-icons/bi';
 import Button from '../../../components/Button/Button';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CompleteJobs() {
 
-  const [cookies] = useCookies() 
+  const [cookies] = useCookies()
   const navigate = useNavigate()
   const [orderDetails, setOrderDetails] = useState([])
 
@@ -27,7 +27,7 @@ function CompleteJobs() {
         .then(response => response.json())
         .then(result => {
           setOrderDetails(result)
-          console.log('hello',result)
+          console.log('hello', result)
           return
         })
         .catch(error => console.log('error', error));
@@ -69,7 +69,7 @@ function CompleteJobs() {
               <th scope="col">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody> 
             {
               orderDetails && orderDetails.map((ele, idx) => {
                 return (
@@ -82,7 +82,9 @@ function CompleteJobs() {
                           <td >{ele?.company_Name === null ? 'Solar 365' : ele?.company_Name}</td>
                           <td>{ele?.building_Type}</td>
                           <td >{ele?.meter_Phase}</td>
-                          <td >{ele?.order_status}</td>
+                          <td >
+                            <p style={{ background: 'green', color: '#fff', padding: '4px 10px', borderRadius: '5px', letterSpacing: 1 }}>{ele?.order_status}</p>
+                          </td>
                         </> : null
                     }
                   </tr>

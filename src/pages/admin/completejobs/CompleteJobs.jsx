@@ -75,16 +75,18 @@ function CompleteJobs() {
                         {
                             orderDetails && orderDetails.map((ele, idx) => {
                                 return (
-                                    <tr key={idx} onClick={() => navigate('/admin/completed-jobs-details', {state: {orderId: ele?.id}})}>
+                                    <tr key={idx} onClick={() => navigate('/admin/completed-jobs-details', { state: { orderId: ele?.id } })}>
                                         {
                                             ele?.order_status === "Completed" ?
                                                 <>
-                                                        <td >{ele?.project}</td>
-                                                        <td >{ele?.to_address?.user?.first_name} {ele?.to_address?.user?.last_name}</td>
-                                                        <td >{ele?.company_Name === null ? 'Solar 365' : ele?.company_Name}</td>
-                                                        <td>{ele?.building_Type}</td>
-                                                        <td >{ele?.meter_Phase}</td>
-                                                        <td >{ele?.order_status}</td>
+                                                    <td >{ele?.project}</td>
+                                                    <td >{ele?.to_address?.user?.first_name} {ele?.to_address?.user?.last_name}</td>
+                                                    <td >{ele?.company_Name === null ? 'Solar 365' : ele?.company_Name}</td>
+                                                    <td>{ele?.building_Type}</td>
+                                                    <td >{ele?.meter_Phase}</td>
+                                                    <td >
+                                                        <p style={{ background: 'green', color: '#fff', padding: '4px 10px', borderRadius: '5px', letterSpacing: 1 }}>{ele?.order_status}</p>
+                                                    </td>
                                                 </> : null
                                         }
                                     </tr>

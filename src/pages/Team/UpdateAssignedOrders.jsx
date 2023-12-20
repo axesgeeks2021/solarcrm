@@ -8,6 +8,7 @@ import Button from '../../components/Button/Button';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
 import Input from '../../components/inputsfield/Input';
+import TeamSideNavigation from "./Menu/InstallationTeamNavigation"
 
 function UpdateAssignedOrders() {
 
@@ -228,7 +229,7 @@ function UpdateAssignedOrders() {
                         toast.update(id, { render: 'Document updated...', type: 'success', isLoading: false, autoClose: true })
                         return fetchInstallDocsStatus()
                     }
-                    if(result?.status === false){
+                    if (result?.status === false) {
                         toast.update(id, { render: 'Please try again...', type: 'error', isLoading: false, autoClose: true })
                         return
                     }
@@ -299,6 +300,9 @@ function UpdateAssignedOrders() {
     return (
         <>
             <div style={{ width: "100%", padding: '20px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <div>
+                    <TeamSideNavigation />
+                </div>
                 <div style={{ width: '90%', display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
                     <div className='accordian__box'>
                         <div className='accordian__question' onClick={() => setShowState(!showState)}>Update Grid

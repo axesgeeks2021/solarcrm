@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navigation from "./Menu/InstallationTeamNavigation"
+import TeamSideNavigation from "./Menu/InstallationTeamNavigation"
 import Button from '../../components/Button/Button'
 import { useCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
@@ -79,22 +79,20 @@ function AssignedJobs() {
         <>
             <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
                 <div>
-                    <Navigation />
+                    <TeamSideNavigation />
                 </div>
 
                 <div class="container__table">
-                    <div className='py-2 flex justify-end'>
-                        <Button title="Create New Order" background="green" color="white" onclick={() => setShowForm(!showForm)} />
-                    </div>
+                    
                     <table class="responsive-table">
                         <thead>
                             <tr>
-                                <th scope="col">Project</th>
-                                <th scope="col">Customer Name</th>
-                                <th scope="col">Building Type</th>
-                                <th scope="col">Panels Qty</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Assign To</th>
+                                <th>Project</th>
+                                <th>Customer Name</th>
+                                <th>Building Type</th>
+                                <th>Panels Qty</th>
+                                <th>Status</th>
+                                <th>Assign To</th>
                             </tr>
                         </thead>
                         <tbody>

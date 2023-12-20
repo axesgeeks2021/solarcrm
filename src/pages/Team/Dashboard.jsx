@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navigation from "./Menu/InstallationTeamNavigation"
+import TeamSideNavigation from "./Menu/InstallationTeamNavigation"
 import Button from '../../components/Button/Button'
 import { useCookies } from 'react-cookie'
 import { toast } from 'react-toastify'
@@ -204,7 +204,7 @@ function Dashboard() {
         <>
             <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
                 <div>
-                    <Navigation />
+                    <TeamSideNavigation />
                     <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', padding: '0 23px' }}>
                         <BiLogOut />
                         <Button title="Logout" onclick={logout} />
