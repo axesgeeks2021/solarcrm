@@ -88,6 +88,11 @@ function AdminSideNavigation() {
         elemBefore: () => <AiFillMinusSquare />
       },
       {
+        title: 'Installer Availability',
+        itemId: "/admin/installer-availability",
+        elemBefore: () => <AiFillMinusSquare />
+      },
+      {
         title: 'Complete Orders',
         itemId: '/admin/complete-jobs',
         elemBefore: () => <MdHardware />

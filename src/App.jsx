@@ -82,6 +82,9 @@ import TeamOrderDetails from "./pages/Team/TeamOrderDetails/TeamOrderDetails"
 import NonAdminCompleteJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompleteJobs"
 import NonAdminCompletedJobs from "./pages/nonAdmin/complete-jobs/NonAdminCompletedJobsDetails"
 import TeamCompleteJobDetails from "./pages/Team/TeamCompleteJobDetails"
+import InstallerAvailability from "./pages/admin/Installer/InstallerAvailability";
+import ListofInstaller from "./pages/admin/Installer/ListofInstaller";
+import AdminUpdateAssignedOrders from "./pages/admin/AdminAssignedJobs/AdminUpdateAssignedOrders";
 
 function App() {
 
@@ -198,6 +201,9 @@ function App() {
           <Route path="/admin/complete-jobs" element={<CompleteJobs />} />
           <Route path="/admin/completed-jobs-details" element={<CompletedJobsDetails />} />
           <Route path="/admin/admin-assigned-jobs" element={<AdminAssignedJobs />} />
+          <Route path="/admin/admin-assigned-jobs/update-orders" element={<AdminUpdateAssignedOrders />} />
+          <Route path="/admin/installer-availability" element={<InstallerAvailability />} />
+          <Route path="/admin/list-of-installer-electrician" element={<ListofInstaller />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>

@@ -2,9 +2,9 @@ import React from 'react'
 
 function BarLoader() {
     return (
-        <div style={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <div class="bar__loader__container">
-                <div class="loading"></div>
+        <div style={{ height: '20vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div className="bar__loader__container">
+                <div className="loading"></div>
             </div>
         </div>
     )

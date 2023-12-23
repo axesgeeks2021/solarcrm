@@ -19,7 +19,8 @@ function OtherComponentOrders() {
     const [cookies] = useCookies();
     const navigate = useNavigate()
     const data = useLocation()
-    const [file, setFile] = useState()
+    const [file, setFile] = useState(null)
+
     const handlefile = e => {
         setFile(e.target.files[0])
     }
@@ -28,7 +29,7 @@ function OtherComponentOrders() {
     const [deleteForm, setDeleteForm] = useState(false)
     const [loading, setLoading] = useState(false)
     const [otherComponentData, setotherComponentData] = useState({})
-    console.log('other', otherComponentData)
+
     const [value, setValue] = useState({
         code: "",
         manufacturer: "",
@@ -43,7 +44,7 @@ function OtherComponentOrders() {
         quantity: "",
     })
 
-    const { code,quantity, componenttype, manufacturer, mylist, optimisor, optimisorheading, productwarranty, smartmeter, smartmeterheading, title } = value
+    const { code, quantity, componenttype, manufacturer, mylist, optimisor, optimisorheading, productwarranty, smartmeter, smartmeterheading, title } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -107,7 +108,7 @@ function OtherComponentOrders() {
             fetch(`https://solar365.co.in/other_component/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    toast.update(loadingId, {render: 'Deleted successfully...', isLoading: false, type: 'success', autoClose: true})
+                    toast.update(loadingId, { render: 'Deleted successfully...', isLoading: false, type: 'success', autoClose: true })
                     console.log(result)
                     return navigate(-1)
                 })
@@ -153,18 +154,18 @@ function OtherComponentOrders() {
                 </div>
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
                     <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-                    <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)}/>
-                 
+                    <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)} />
+
                     {
-                        deleteForm && 
-                        <div style={{ padding: '0px 20px',paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
-                        <p style={{margin: '20px 0'}}>Are you sure want to delete?</p>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                          <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord}/>
-                          <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)}/>
+                        deleteForm &&
+                        <div style={{ padding: '0px 20px', paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
+                            <p style={{ margin: '20px 0' }}>Are you sure want to delete?</p>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord} />
+                                <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)} />
+                            </div>
                         </div>
-                      </div>
-                      }
+                    }
                 </div>
             </div>
             <div className='admin__card'>
@@ -182,13 +183,8 @@ function OtherComponentOrders() {
                         <Line title="Manufacturer" value={otherComponentData?.manufacturer} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        {
-                            otherComponentData?.stocks?.map((ele, idx) => {
-                                return(
-                                    <Line title="Current Quantity" value={ele?.stock_quantity} key={idx}/>
-                                )
-                            })
-                        }
+                        <Line title="Previous Quantity" value={otherComponentData?.previous_quantity}  />
+                        <Line title="Current Quantity" value={otherComponentData?.total_quantity} />
                     </div>
                 </div>
             </div>
@@ -204,7 +200,7 @@ function OtherComponentOrders() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
-                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
+                            <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             {/*<Input placeholder="Component Logo" type="file" onChange={handlefile} />*/}

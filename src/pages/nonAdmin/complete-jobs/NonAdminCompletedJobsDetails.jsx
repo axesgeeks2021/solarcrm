@@ -222,6 +222,7 @@ function NonAdminCompletedJobsDetails() {
                                         </div>
                                         <div>
                                             <p>Manufacturer: {ele?.manufacturer}</p>
+                                            <p>Quantity: {ele?.quantity}</p>
                                         </div>
                                     </div>
                                 )

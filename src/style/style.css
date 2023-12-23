@@ -2589,7 +2589,7 @@ input[type=file] {
 .bar__loader__container{
   width: 90%;
   height: 10px;
-  background-color: var(--input-color);
+  background-color: #ccc;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -2599,7 +2599,7 @@ input[type=file] {
 .bar__loader__container .loading{
   width: 50%;
   height: 100%;
-  background-color: var(--orange);
+  background-color: #003f91;
   animation: progress 1s linear infinite;
 }
 @keyframes progress {

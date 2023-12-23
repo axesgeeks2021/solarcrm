@@ -231,7 +231,7 @@ function AdminOrders() {
   return (
     <>
       <div style={{ width: '100%', background: 'yellow', padding: '5px 20px', display: 'flex', justifyContent: 'flex-start', }}>
-        <p>{bookingStatus?.meassge}</p>
+        <p>{bookingStatus?.message}</p>
       </div>
       <div className='admin__order__container' style={{ position: 'relative', filter: listOfSlots ? 'blur(0px)' : 'blur(10px)' }}>
         <div style={{ zIndex: 1000, width: '40%', background: '#fff', position: 'fixed', top: '40%', left: '50%', transform: 'translate(-50%, -50%)', height: '30%', display: bookModal.status ? 'flex' : 'none', justifyContent: 'space-between', boxShadow: '2px 2px 20px 2px rgba(0,0,0,0.3), -2px -2px 20px 2px rgba(0,0,0,0.3)', borderRadius: '5px', backfaceVisibility: 'hidden', alignItems: 'center', flexDirection: 'column' }}>
