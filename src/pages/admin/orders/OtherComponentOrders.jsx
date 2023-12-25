@@ -183,7 +183,7 @@ function OtherComponentOrders() {
                         <Line title="Manufacturer" value={otherComponentData?.manufacturer} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Previous Quantity" value={otherComponentData?.previous_quantity}  />
+                        {/*<Line title="Previous Quantity" value={otherComponentData?.previous_quantity}  />*/}     
                         <Line title="Current Quantity" value={otherComponentData?.total_quantity} />
                     </div>
                 </div>

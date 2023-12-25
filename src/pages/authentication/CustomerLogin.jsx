@@ -68,7 +68,6 @@ function Login() {
             return navigate("/admin");
           }
           if (result?.user?.admin?.user?.user_type === 'NON_ADMIN') {
-            console.log('result', result)
             setCookie("Authorization", result?.token, {path: '/'});
             localStorage.setItem('auth', JSON.stringify(result))
             return navigate("/non-admin");
@@ -111,7 +110,7 @@ function Login() {
             refer friends.
           </p>
           <div className="flex justify-start items-center gap-6 flex-wrap" >
-            <span className="solar-related">Solar 365</span>
+            <span className="solar-related">Solar</span>
             <span className="solar-related">Inverter</span>
             <span className="solar-related">Battery</span>
             <span className="solar-related">Commercial</span>
