@@ -300,6 +300,7 @@ function AdminUpdateAssignedOrders() {
             <AdminSideNavigation />
         </div>
         <div style={{ width: '90%', display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
+        <p style={{fontSize: '34px',fontWeight: '600', backgroundColor: '#003f91', color: '#fff', marginBottom: '50px', padding: '10px 0' }}>Update and download documents of Customer</p>
             <div className='accordian__box'>
                 <div className='accordian__question' onClick={() => setShowState(!showState)}>Update Grid
                     {
