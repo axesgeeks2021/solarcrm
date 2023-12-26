@@ -27,10 +27,11 @@ function Battery() {
         totalEnergy: "",
         productWarranty: "",
         myList: "",
-        quantity: ""
+        quantity: "",
+        batteryPrice: ""
     })
 
-    const { code, manufacturer, myList, productWarranty, title, totalEnergy, quantity } = text
+    const { code,batteryPrice, manufacturer, myList, productWarranty, title, totalEnergy, quantity } = text
 
     const handleText = e => {
         setText({ ...text, [e.target.name]: e.target.value })
@@ -77,6 +78,7 @@ function Battery() {
             formdata.append("product_warranty", productWarranty);
             formdata.append("my_list", "true");
             formdata.append("add_new_quantity", quantity);
+            formdata.append("battery_price", batteryPrice);
 
             const requestOptions = {
                 method: 'POST',
@@ -162,7 +164,8 @@ function Battery() {
                             <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}  />
                             <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}  />
                             <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}  />
-                            <Input width="100%" placeholder="Rated Output Power..." value={totalEnergy} name="totalEnergy" onChange={handleText}  />
+                            <Input width="100%" placeholder="Battery Price" value={batteryPrice} name="batteryPrice" onChange={handleText}  />
+                            <Input width="100%" placeholder="Rated Output Power" value={totalEnergy} name="totalEnergy" onChange={handleText}  />
                             <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}  />
                             <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}  />
                             <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />

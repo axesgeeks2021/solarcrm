@@ -31,10 +31,11 @@ function Panels() {
         technology: "",
         productWarranty: "",
         performanceWarranty: "",
-        quantity: ""
+        quantity: "",
+        panelPrice: ""
     })
 
-    const {code, manufacturer,performanceWarranty, productWarranty,technology, title, quantity  } = text
+    const {code, manufacturer,performanceWarranty, productWarranty,technology, title, quantity, panelPrice  } = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -81,6 +82,7 @@ function Panels() {
             formdata.append("performance_warranty", performanceWarranty);
             formdata.append("add_new_quantity", quantity);
             formdata.append("my_list", "false");
+            formdata.append("panel_price", panelPrice);
 
             const requestOptions = {
                 method: 'POST',
@@ -166,6 +168,7 @@ function Panels() {
                     <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
                     <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
                     <Input width="100%" placeholder="Technology" value={technology} name="technology" onChange={handleText}/>
+                    <Input width="100%" placeholder="Panel Price" value={panelPrice} name="panelPrice" onChange={handleText}/>
                     <Input width="100%" placeholder="Product warranty" value={productWarranty} name="productWarranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Performance Warranty" value={performanceWarranty} name="performanceWarranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>

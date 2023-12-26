@@ -31,10 +31,11 @@ function Inverter() {
         additionalPartWarranty: "",
         inverterType : "",
         manufacturer: "",
-        quantity: ''
+        quantity: '',
+        inverterPrice: ""
     })
 
-    const {additionalPartWarranty, code,title, inverterType, manufacturer, productWaranty, ratedOutputPower, quantity} = text
+    const {additionalPartWarranty,inverterPrice, code,title, inverterType, manufacturer, productWaranty, ratedOutputPower, quantity} = text
 
     const handleText = e => {
         setText({...text, [e.target.name]: e.target.value})
@@ -84,6 +85,7 @@ function Inverter() {
             formdata.append("default_inverter_range", "false");
             formdata.append("manufacturer", manufacturer);
             formdata.append("add_new_quantity", quantity);
+            formdata.append("inverter_price", inverterPrice);
 
             const requestOptions = {
                 method: 'POST',
@@ -166,7 +168,8 @@ function Inverter() {
                     <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
                     <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
                     <Input width="100%" placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleText}/>
-                    <Input width="100%" placeholder="Rated Output Power..." value={ratedOutputPower} name="ratedOutputPower" onChange={handleText}/>
+                    <Input width="100%" placeholder="Inverter Price" value={inverterPrice} name="inverterPrice" onChange={handleText}/>
+                    <Input width="100%" placeholder="Rated Output Power" value={ratedOutputPower} name="ratedOutputPower" onChange={handleText}/>
                     <Input width="100%" placeholder="Product warranty" value={productWaranty} name="productWaranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Additional part warranty" value={additionalPartWarranty} name="additionalPartWarranty" onChange={handleText}/>
                     <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
