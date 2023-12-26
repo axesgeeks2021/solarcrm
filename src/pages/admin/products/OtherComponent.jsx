@@ -87,6 +87,7 @@ function OtherComponent() {
             fetch("https://solar365.co.in/other_component/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log(result)
                     if (result?.message === "success") {
                         toast.update(loadingId, { render: 'Other component created successfully', isLoading: false, autoClose: true, type: 'success' })
                         setDisplayForm(false)
@@ -97,9 +98,9 @@ function OtherComponent() {
                             title: "",
                             mylist: ""
                         })
-                        console.log(result)
                         return fetchRecord()
                     }
+                    return toast.update(loadingId, { render: result?.errors?.code[0], isLoading: false, autoClose: true, type: 'warning' })
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {

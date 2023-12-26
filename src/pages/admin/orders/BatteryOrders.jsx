@@ -92,7 +92,9 @@ function BatterOrders() {
                 headers: headers
             })
             const result = await res.json()
+            console.log(result)
             setBatteryData(result)
+            return
         } catch (error) {
             console.log(error)
         }
@@ -173,8 +175,28 @@ function BatterOrders() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Total Energy" value={batteryData?.total_energy} />
+                        <Line title="Price" value={batteryData?.battery_price} />
                     </div>
                 </div>
+                <div className="container__table completeContainer" >
+                <div className="completejobs__box">
+                    <div className="header">
+                        <p style={{ alignSelf: 'flex-start' }}>Stock History</p>
+                    </div>
+                    <div className='content' style={{ overflowY: 'scroll', padding: '10px 10px', height: '40vh', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        {
+                            batteryData?.stocks?.map((ele, idx) => {
+                                return (
+                                    <p key={idx}>{ele?.updated_at.split(' ')[0]} : {ele?.stock_quantity} </p>
+                                )
+                            })
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
             </div>
             {
                 displayForm && <FormsContainer flexDirection="column">

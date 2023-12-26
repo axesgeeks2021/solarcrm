@@ -115,7 +115,9 @@ function AdminOrders() {
               date: null
             })
             setListOfSlotsModal(false)
-            return [fetchSlots(), fetchBookingSlotsDetails()]
+            fetchSlots(),
+            fetchBookingSlotsDetails()
+            return navigate(-1)
           }
           toast.update(loadingId, { render: result?.errors?.customer[0], isLoading: false, autoClose: true, type: 'error' })
           return
@@ -251,8 +253,7 @@ function AdminOrders() {
           </div>
           <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
             <Button title="Book Your Slot" color="#fff" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setListOfSlotsModal(!listofSlotsModal)} disabled={!bookingStatus?.update_appointment_appove} />
-            <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-            <Button title="Delete" color="white" background="red" />
+            {/*<Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />*/}
           </div>
         </div>
         <div className='admin__card'>
@@ -327,6 +328,7 @@ function AdminOrders() {
                 </div>
                 <div>
                   <p>Product Warranty: {orderDetails?.order?.inverter?.product_warranty}</p>
+                  <p>Quantity: {orderDetails?.order?.inverter_quantity}</p>
                 </div>
 
               </div>
@@ -350,6 +352,7 @@ function AdminOrders() {
                 </div>
                 <div>
                   <p>Technology: {orderDetails?.order?.panels?.technology}</p>
+                  <p>Quantity: {orderDetails?.order?.panels_quantity}</p>
                 </div>
 
               </div>
@@ -369,10 +372,7 @@ function AdminOrders() {
                 </div>
                 <div>
                   <p>Product Warranty: {orderDetails?.order?.batteries?.product_warranty}</p>
-                  <p>Quantity: {orderDetails?.order?.batteries?.total_quantity}</p>
-                </div>
-                <div>
-                  <p>Previous Qty: {orderDetails?.order?.batteries?.previous_quantity}</p>
+                  <p>Quantity: {orderDetails?.order?.battery_quantity}</p>
                 </div>
               </div>
             </div>

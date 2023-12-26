@@ -240,6 +240,7 @@ function OrderDetails() {
             </div>
             <div>
               <p>Technology: {orderDetails?.order?.panels?.technology}</p>
+              <p>Quantity: {orderDetails?.order?.panels_quantity}</p>
             </div>
 
           </div>
@@ -259,10 +260,7 @@ function OrderDetails() {
             </div>
             <div>
               <p>Product Warranty: {orderDetails?.order?.batteries?.product_warranty}</p>
-              <p>Quantity: {orderDetails?.order?.batteries?.total_quantity}</p>
-            </div>
-            <div>
-              <p>Previous Qty: {orderDetails?.order?.batteries?.previous_quantity}</p>
+              <p>Quantity: {orderDetails?.order?.battery_quantity}</p>
             </div>
           </div>
         </div>
@@ -285,6 +283,7 @@ function OrderDetails() {
             </div>
             <div>
                 <p>Product Warranty: {orderDetails?.order?.inverter?.product_warranty}</p>
+                <p>Quantity: {orderDetails?.order?.inverter_quantity}</p>
             </div>
 
         </div>

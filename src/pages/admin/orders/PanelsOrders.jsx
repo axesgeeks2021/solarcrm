@@ -177,10 +177,29 @@ function PanlesOrders() {
                         <Line title="Performance Warranty" value={panelsData?.performance_warranty} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Technology" value={panelsData?.technology} />
+                        <Line title="Price" value={panelsData?.panel_price} />
                         <Line title="Manufacturer" value={panelsData?.manufacturer} />
                     </div>
                 </div>
+                <div className="container__table completeContainer" >
+                <div className="completejobs__box">
+                    <div className="header">
+                        <p style={{alignSelf: 'flex-start'}}>Stock History</p>
+                    </div>
+                    <div className='content' style={{overflowY: 'scroll',padding: '10px 10px', height: '40vh', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+                        {
+                            panelsData?.stocks?.map((ele, idx) => {
+                                return(
+                                    <p key={idx}>{ele?.updated_at.split(' ')[0]} : {ele?.stock_quantity} </p>
+                                )
+                            })                         
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+
             </div>
             {
                 displayForm && <FormsContainer flexDirection="column">

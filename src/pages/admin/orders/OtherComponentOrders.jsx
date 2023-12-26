@@ -183,10 +183,29 @@ function OtherComponentOrders() {
                         <Line title="Manufacturer" value={otherComponentData?.manufacturer} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        {/*<Line title="Previous Quantity" value={otherComponentData?.previous_quantity}  />*/}     
+                        {/*<Line title="Previous Quantity" value={otherComponentData?.previous_quantity}  />*/}
                         <Line title="Current Quantity" value={otherComponentData?.total_quantity} />
                     </div>
                 </div>
+                <div className="container__table completeContainer" >
+                    <div className="completejobs__box">
+                        <div className="header">
+                            <p style={{alignSelf: 'flex-start'}}>Stock History</p>
+                        </div>
+                        <div className='content' style={{overflowY: 'scroll',padding: '10px 10px', height: '40vh', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
+                            {
+                                otherComponentData?.stocks?.map((ele, idx) => {
+                                    return(
+                                        <p key={idx}>{ele?.updated_at.split(' ')[0]} : {ele?.stock_quantity} </p>
+                                    )
+                                })                         
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
             {
                 displayForm && <FormsContainer flexDirection="column">

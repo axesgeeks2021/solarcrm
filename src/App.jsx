@@ -85,6 +85,7 @@ import TeamCompleteJobDetails from "./pages/Team/TeamCompleteJobDetails"
 import InstallerAvailability from "./pages/admin/Installer/InstallerAvailability";
 import ListofInstaller from "./pages/admin/Installer/ListofInstaller";
 import AdminUpdateAssignedOrders from "./pages/admin/AdminAssignedJobs/AdminUpdateAssignedOrders";
+import TeamProfile from "./pages/Team/TeamProfile";
 
 function App() {
 
@@ -243,11 +244,11 @@ function App() {
         <Route path="/team-dashboard" element={<Dashboard />} />
         <Route path="/team/assigned-jobs" element={<AssignedJobs />} />
         <Route path="/team/assigned-jobs/update-orders" element={<UpdateAssignedOrders />} />
-        <Route path="/team/practice" element={<Practice />} />
         <Route path="/team/completed-jobs" element={<CompletedJobs />} />
         <Route path="/team/completed-jobs" element={<CompletedJobs />} />
         <Route path="/team/completed-jobs-details" element={<TeamCompleteJobDetails />} />
         <Route path="/team/order-details" element={<TeamOrderDetails />} />
+        <Route path="/team/profile" element={<TeamProfile />} />
         <Route path="/login" element={<Login />} />
       </Routes>
     )

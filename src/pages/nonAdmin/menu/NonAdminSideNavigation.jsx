@@ -57,11 +57,6 @@ function NonAdminSideNavigation() {
         elemBefore: () => <CgProfile />,
       },
       {
-        title: 'Update Profile',
-        itemId: '/non-admin/update-profile',
-        elemBefore: () => <CgProfile />,
-      },
-      {
         title: 'Profiles',
         itemId: "/non-admin-profile",
         elemBefore: () => <HiBuildingOffice2 />,

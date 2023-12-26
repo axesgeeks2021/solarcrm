@@ -14,6 +14,7 @@ function AdminsProfile() {
     const location = useLocation()
     const navigate = useNavigate()
     const [cookies] = useCookies()
+
     const [loading, setLoading] = useState(false)
     const [profile, setProfile] = useState({})
     const [showForm, setShowForm] = useState(false)

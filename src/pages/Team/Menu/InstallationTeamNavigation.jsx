@@ -38,45 +38,10 @@ function TeamSideNavigation() {
         itemId: '/team/completed-jobs',
         elemBefore: () => <BiUserCheck />
       },
-      // {
-      //   title: 'Hardwares',
-      //   elemBefore: () => <MdHardware />,
-      //   subNav: [
-      //     {
-      //       title: 'Panels',
-      //       itemId: '/panels',
-      //     },
-      //     {
-      //       title: 'Inverteres',
-      //       itemId: '/inverters',
-      //     },
-      //     {
-      //       title: 'Batteries',
-      //       itemId: '/battery',
-      //     },
-      //     {
-      //       title: 'Other',
-      //       itemId: '/other-component',
-      //     },
-      //   ],
-      // },
-
       {
-        title: 'Profiles',
-        itemId: "/team-profile",
-        elemBefore: () => <HiBuildingOffice2 />,
-        // subNav: [
-        //   {
-        //     title: 'Forget Password',
-        //     itemId: 'forget-password',
-        //     elemBefore: () => <CgProfile />
-        //   },
-        //   {
-        //     title: 'Change Password',
-        //     itemId: 'change-password',
-        //     elemBefore: () => <CgProfile />
-        //   }
-        // ]
+        title: 'Profile',
+        itemId: '/team/profile',
+        elemBefore: () => <BiUserCheck />
       },
      
     ]}

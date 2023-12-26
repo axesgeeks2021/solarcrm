@@ -3,12 +3,11 @@ import Button from '../../../components/Button/Button'
 import { useState } from 'react'
 
 import FormsContainer from '../Forms/FormsContainer'
-import FormInput from '../../../components/inputsfield/FormInput'
 import Loading from '../../../components/loading/Loading'
-import AdminSideNavigation from '../menu/NonAdminSideNavigation'
 
 import { useCookies } from "react-cookie";
 import Input from '../../../components/inputsfield/Input'
+import NonAdminSideNavigation from '../menu/NonAdminSideNavigation'
 
 
 function UpdateProfile() {
@@ -164,7 +163,7 @@ function UpdateProfile() {
         <>
         <div className='flex'>
             <div>
-                <AdminSideNavigation />
+                <NonAdminSideNavigation />
             </div>
             <div style={{ width: "100%", display: "flex", height: "100vh", justifyContent: 'space-between', alignItems: "center", flexDirection: 'column' }}>
                 <div style={{ width: "100%", height: "20%", display: "flex", justifyContent: 'center', alignItems: "center", flexDirection: 'column' }}>

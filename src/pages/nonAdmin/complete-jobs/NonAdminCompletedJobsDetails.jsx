@@ -154,6 +154,7 @@ function NonAdminCompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Product Warranty: {ordersDetails?.inverter?.product_warranty}</p>
+                            <p>Quantity: {ordersDetails?.inverter_quantity}</p>
                         </div>
 
                     </div>
@@ -177,6 +178,7 @@ function NonAdminCompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Technology: {ordersDetails?.panels?.technology}</p>
+                            <p>Quantity: {ordersDetails?.panels_quantity}</p>
                         </div>
                     </div>
                 </div>
@@ -195,10 +197,7 @@ function NonAdminCompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Product Warranty: {ordersDetails?.batteries?.product_warranty}</p>
-                            <p>Quantity: {ordersDetails?.batteries?.total_quantity}</p>
-                        </div>
-                        <div>
-                            <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
+                            <p>Quantity: {ordersDetails?.battery_quantity}</p>
                         </div>
                     </div>
                 </div>

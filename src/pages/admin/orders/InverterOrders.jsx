@@ -39,7 +39,7 @@ function InverterOrders() {
         quantity: ""
     })
 
-    const {quantity, additionalpartwarranty, code, defaultinverterrange, inverterType, manufacturer, productwarranty, ratedOutputPower, title } = value
+    const { quantity, additionalpartwarranty, code, defaultinverterrange, inverterType, manufacturer, productwarranty, ratedOutputPower, title } = value
 
     const handleChange = e => {
         setValue({ ...value, [e.target.name]: e.target.value })
@@ -103,7 +103,7 @@ function InverterOrders() {
             fetch(`https://solar365.co.in/inverter_module/${data?.state?.ele?.id}/`, requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    toast.update(loadingId, {render: 'Deleted Successfully...', isLoading: false, autoClose: true, type: 'success'})
+                    toast.update(loadingId, { render: 'Deleted Successfully...', isLoading: false, autoClose: true, type: 'success' })
                     console.log(result)
                     return navigate(-1)
                 })
@@ -147,17 +147,17 @@ function InverterOrders() {
                 </div>
                 <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
                     <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-                    <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)}/>
+                    <Button title="Delete" color="white" background="red" onclick={() => setDeleteForm(true)} />
                     {
-                        deleteForm && 
-                        <div style={{ padding: '0px 20px',paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
-                        <p style={{margin: '20px 0'}}>Are you sure want to delete?</p>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                          <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord}/>
-                          <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)}/>
+                        deleteForm &&
+                        <div style={{ padding: '0px 20px', paddingBottom: '20px', background: 'beige', position: 'fixed', top: "50%", left: "50%", transform: 'translate(-50%, -50%)', boxShadow: '2px 2px 10px 2px rgba(0,0,0,0.1), -2px -2px 10px 2px rgba(0,0,0,0.1)', borderRadius: '4px' }}>
+                            <p style={{ margin: '20px 0' }}>Are you sure want to delete?</p>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <Button title="Ok" background="#4bb543" margin="0px 10px" color="#fff" onclick={deleteRecord} />
+                                <Button title="Cancel" background="orange" color="#fff" onclick={() => setDeleteForm(false)} />
+                            </div>
                         </div>
-                      </div>
-                      }
+                    }
                 </div>
             </div>
             <div className='admin__card'>
@@ -180,9 +180,28 @@ function InverterOrders() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Additional part warranty" value={inverterData?.additional_part_warranty} />
-                        <Line title="Default Inverter Range" value={inverterData?.default_inverter_range} />
+                        <Line title="Price" value={inverterData?.inverter_price} />
                     </div>
                 </div>
+                <div className="container__table completeContainer" >
+                    <div className="completejobs__box">
+                        <div className="header">
+                            <p style={{ alignSelf: 'flex-start' }}>Stock History</p>
+                        </div>
+                        <div className='content' style={{ overflowY: 'scroll', padding: '10px 10px', height: '40vh', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                            {
+                                inverterData?.stocks?.map((ele, idx) => {
+                                    return (
+                                        <p key={idx}>{ele?.updated_at.split(' ')[0]} : {ele?.stock_quantity} </p>
+                                    )
+                                })
+                            }
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
             {
                 displayForm && <FormsContainer flexDirection="column">
@@ -209,7 +228,7 @@ function InverterOrders() {
                             <Input placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                        <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
+                            <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleChange} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
                             <Button title="Submit" background="orange" color="white" onclick={updateOrder} />

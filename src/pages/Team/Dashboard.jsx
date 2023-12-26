@@ -26,8 +26,6 @@ function Dashboard() {
     const [electricianId, setElecticianId] = useState([])
 
     const handleChange = (userId, orderId) => {
-        console.log('user id -->', installerId)
-        console.log('electrician id -->', electricianId)
         setInstallerId([...installerId, userId])
         // console.log('order id -->', orderId)
 

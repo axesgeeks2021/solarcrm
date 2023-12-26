@@ -40,7 +40,7 @@ function OtherComponentPriceDetails() {
   const fetchCompanyList = () => {
     try {
       setLoading(true)
-      var myHeaders = new Headers();
+      const myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
       myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
 
@@ -75,11 +75,12 @@ function OtherComponentPriceDetails() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/other_component/", requestOptions)
+      fetch(`https://solar365.co.in/other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           setLoading(false)
-          setOtherComponentList(result)
+          setOtherComponentList('other component', result)
+          return
         })
         .catch(error => console.log('error', error));
     } catch (error) {
@@ -88,9 +89,7 @@ function OtherComponentPriceDetails() {
   }
 
   const updateOrder = () => {
-    if (price === "") {
-      return alert('Please fill price...')
-    }
+
     try {
       const loadingId = toast.loading('Please wait...')
       const myHeaders = new Headers();
@@ -98,8 +97,8 @@ function OtherComponentPriceDetails() {
       myHeaders.append("Cookie", "csrftoken=3K58yeKlyHJY3mVYwRFaBimKxWRKWrvZ");
 
       const formdata = new FormData();
-      formdata.append("price", price);
-      formdata.append("price", price);
+      formdata.append("price", price === "" ? otherComponentDetails?.price : price);
+      formdata.append("free_quantity", freeQuantity === "" ? otherComponentDetails?.free_quantity : freeQuantity);
 
       const requestOptions = {
         method: 'PUT',
@@ -111,12 +110,17 @@ function OtherComponentPriceDetails() {
       fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          setDisplayForm(false)
-          setValue({
-            price: ''
-          })
-          toast.update(loadingId, { render: 'updated successfully...', isLoading: false, autoClose: true, type: 'success' })
-          return fetchRecord()
+          console.log('result', result)
+          if (result?.message === 'success') {
+            setDisplayForm(false)
+            setValue({
+              price: '',
+              freeQuantity: ""
+            })
+            toast.update(loadingId, { render: 'updated successfully...', isLoading: false, autoClose: true, type: 'success' })
+            return fetchRecord()
+          }
+          return toast.update(loadingId, { render: 'Please try again!', isLoading: false, autoClose: true, type: 'warning' })
         })
         .catch(error => console.log('error', error));
     } catch (error) {
@@ -139,7 +143,9 @@ function OtherComponentPriceDetails() {
       fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
+          console.log('other ', result)
           setOtherComponentDetails(result)
+          return
         })
         .catch(error => console.log('error', error));
     } catch (error) {
@@ -149,7 +155,31 @@ function OtherComponentPriceDetails() {
 
   const deleteRecord = () => {
     try {
-      console.log('weo')
+      const loadingId = toast.loading('Please wait...')
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=2PklrXNiKgPPd0MAT9LAzUQyvHEcqxK3");
+
+      const formdata = new FormData();
+
+      const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: formdata,
+        redirect: 'follow'
+      };
+
+      fetch(`https://solar365.co.in/pricing-other_component/${data?.state?.ele?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          if (result?.message === "success") {
+            toast.update(loadingId, { render: "Component delete successfully", isLoading: false, autoClose: true, type: 'success' })
+            return navigate(-1)
+          }
+        })
+        .catch(error => console.log('error', error));
+
     } catch (error) {
       console.log(error)
     }
@@ -166,6 +196,7 @@ function OtherComponentPriceDetails() {
 
   return (
     <div className='admin__order__container' style={{ justifyContent: 'flex-start' }}>
+
       <div className='flex justify-end items-center gap-5 py-2 px-4' style={{ width: "100%", borderBottom: '2px solid lightgray' }}>
         <div style={{ width: '50%' }}>
           <Button title="Go Back" color="white" background="lightgray" onclick={() => navigate(-1)} alignSelf="flex-start" />
@@ -189,7 +220,7 @@ function OtherComponentPriceDetails() {
       <div className='admin__card'>
         <div className='admin__order__details'>
           <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-            <Heading heading="Battery Details" size="32px" weight="600" color="#F95738" classname="heading__background" />
+            <Heading heading="Other Component Details" size="32px" weight="600" color="#F95738" classname="heading__background" />
           </div>
           <hr></hr>
           <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
@@ -198,8 +229,10 @@ function OtherComponentPriceDetails() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
             <Line title="Price" value={otherComponentDetails?.price} />
+            <Line title="Free Quantity" value={otherComponentDetails?.free_quantity} />
           </div>
         </div>
+       
       </div>
       {
         displayForm && <FormsContainer flexDirection="column">
@@ -218,6 +251,7 @@ function OtherComponentPriceDetails() {
             </div>
             <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
               <Input placeholder="Price" onChange={handleChange} name="price" value={price} />
+              <Input placeholder="Free Quantity" onChange={handleChange} name="freeQuantity" value={freeQuantity} />
             </div>
 
             <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>

@@ -22,7 +22,7 @@ function AdminOrders() {
   const [showState1, setShowState1] = useState(false)
   const [showState2, setShowState2] = useState(false)
   const [showState3, setShowState3] = useState(false)
-
+  const [deletePopup, setDeletePopup] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [displayForm, setDisplayForm] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -90,7 +90,7 @@ function AdminOrders() {
         .then(result => {
           setLoading(false)
           console.log(result)
-          setOrderDetails(result)
+          return
         })
         .catch(error => console.log('error', error));
 
@@ -101,7 +101,7 @@ function AdminOrders() {
 
   const fetchOrderDetails = () => {
     try {
-      // setLoading(true)
+      setLoading(true)
       var myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
       myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
@@ -115,10 +115,15 @@ function AdminOrders() {
       fetch(`https://solar365.co.in/order/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          // setLoading(false)
+          setLoading(false)
           console.log('order detials', result)
-          setOrderDetails(result)
-          return fetchBookingSlotsDetails(data?.state?.ele?.id)
+          if (result?.message === 'success') {
+            setOrderDetails(result)
+            fetchBookingSlotsDetails(data?.state?.ele?.id)
+            if(typeof result?.appointment !== 'string'){
+              return fetchInstallerList(result?.appointment?.appointment_date)
+            }
+          }
         })
         .catch(error => console.log('error', error));
 
@@ -158,8 +163,6 @@ function AdminOrders() {
       const formdata = new FormData();
       formdata.append("appointment_date", bookModal.date);
       formdata.append("project", data?.state?.ele?.project);
-      console.log("appointment_date", bookModal.date);
-      console.log("project", data?.state?.ele?.project);
 
       const requestOptions = {
         method: 'POST',
@@ -180,8 +183,11 @@ function AdminOrders() {
               date: null
             })
             setShowSlotModal(false)
-            return fetchSlots()
+            fetchSlots()
+            return navigate(-1)
           }
+          toast.update(loadingId, { render: result?.errors?.customer[0], isLoading: false, autoClose: true, type: 'error' })
+          return
         }
         )
         .catch(error => console.log('error', error));
@@ -214,7 +220,7 @@ function AdminOrders() {
     }
   }
 
-  const fetchInstallerList = () => {
+  const fetchInstallerList = (date) => {
     try {
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
@@ -226,7 +232,7 @@ function AdminOrders() {
         redirect: 'follow'
       };
 
-      fetch(`https://solar365.co.in/assign_get_profile/?date=${ordersDetails?.appointment?.appointment_date}`, requestOptions)
+      fetch(`https://solar365.co.in/assign_get_profile/?date=${date}`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log('list', result)
@@ -243,17 +249,16 @@ function AdminOrders() {
   const fetchUpdateAssignOrder = () => {
     try {
 
-      console.log('hello', data?.state?.ele?.id)
-      if(electricianId.length < 1){
+      if (electricianId.length < 1) {
         return toast.warn('Please select 1 electician!')
       }
 
-      if(installerId.length < 2){
+      if (installerId.length < 2) {
         return toast.warn('Please select atleaset 2 installer!')
       }
       const loadingId = toast.loading('Please wait....')
       const assignValue = installerId.concat(electricianId).toString().split(',').join(', ')
-      console.log('assign', assignValue)
+
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
 
@@ -267,7 +272,7 @@ function AdminOrders() {
         body: formdata,
         redirect: 'follow'
       };
-      fetch(`https://solar365.co.in/order/${ data?.state?.ele?.id}/`, requestOptions)
+      fetch(`https://solar365.co.in/order/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -288,8 +293,34 @@ function AdminOrders() {
     }
   }
 
+  const deleteOrder = () => {
+    try {
+      const loadingId = toast.loading("Please wait...")
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+
+      const requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch(`https://solar365.co.in/order/${data?.state?.ele?.id}/`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+              toast.update(loadingId, {render: 'Deleted Successfully...', autoClose: true, isLoading: false, type: 'success'})
+              return navigate(-1)            
+        })
+        .catch(error => console.log('error', error));
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleShowAssignPopup = (title) => {
-    if(typeof title === 'string'){
+    if (typeof title === 'string') {
       return toast.warn(title)
     }
     return setShowForm(true)
@@ -298,9 +329,8 @@ function AdminOrders() {
   useEffect(() => {
     const subscribe = fetchOrderDetails()
     const subscribe2 = fetchSlots()
-    const subscribe3 = fetchInstallerList()
 
-    return () => [subscribe, subscribe2,subscribe3]
+    return () => [subscribe, subscribe2]
   }, [])
 
   if (loading) {
@@ -351,6 +381,16 @@ function AdminOrders() {
           </tbody>
         </table>
       </div>
+      {
+        deletePopup &&
+        <div className='popup__form'>
+            <p style={{ fontSize: '1.2rem' }}>Are you sure want to delete ?</p>
+            <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+                <Button title="Confirm" background="green" color="#fff" onclick={deleteOrder} />
+                <Button title="Cancel" background="gray" color="#fff" onclick={() => setDeletePopup(false)} />
+            </div>
+        </div>
+    }
 
       <div className='admin__order__container'>
         <div className="w-full bg-yellow-400 flex justify-between items-center" style={{ background: "#0C70D4" }}>
@@ -361,29 +401,29 @@ function AdminOrders() {
             <Button title="Go Back" color="white" background="lightgray" onclick={() => navigate(-1)} alignSelf="flex-start" />
           </div>
           <div style={{ width: '50%', display: 'flex', justifyContent: 'flex-end', gap: '20px', padding: '0 10px' }}>
-            <Button title="Book Slot" color="white" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setShowSlotModal(true)} disabled={!bookingStatus?.update_appointment_appove}/>
+            <Button title="Book Slot" color="white" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setShowSlotModal(true)} disabled={!bookingStatus?.update_appointment_appove} />
             <Button title="Assign Order" background="green" color="#fff" onclick={() => handleShowAssignPopup(ordersDetails?.appointment)} />
             <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-            <Button title="Delete" color="white" background="red" />
+            <Button title="Delete" color="white" background="red" onclick={() => setDeletePopup(true)}/>
           </div>
         </div>
         <div className='admin__card'>
-        {
-          showForm &&
-          <div className='popup__form'>
-            <p style={{ fontSize: '1.2rem' }}>Please assign one Electrician and 2 Installer</p>
-            <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-              <Multiselect
-                hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
-              <Multiselect
-                hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
+          {
+            showForm &&
+            <div className='popup__form'>
+              <p style={{ fontSize: '1.2rem' }}>Please assign one Electrician and 2 Installer</p>
+              <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+                <Multiselect
+                  hidePlaceholder={true} options={installerList?.Electrician} displayValue='full_name' onSelect={e => setElecticianId(e.map(item => item?.id))} />
+                <Multiselect
+                  hidePlaceholder={true} options={installerList?.Installer} displayValue='full_name' onSelect={e => setInstallerId(e.map(item => item?.id))} />
+              </div>
+              <div style={{ display: 'flex', gap: '20px', marginTop: '20px', justifyContent: 'flex-end', width: '100%' }}>
+                <Button title="Confirm" background="green" color="#fff" onclick={fetchUpdateAssignOrder} />
+                <Button title="Cancel" background="gray" color="#fff" onclick={() => setShowForm(false)} />
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: '20px', marginTop: '20px', justifyContent: 'flex-end', width: '100%' }}>
-              <Button title="Confirm" background="green" color="#fff" onclick={fetchUpdateAssignOrder} />
-              <Button title="Cancel" background="gray" color="#fff" onclick={() => setShowForm(false)} />
-            </div>
-          </div>
-        }
+          }
           {/* <div className='admin__order__image'>
           <img src={airplane} alt={airplane} className='img-fluid' />
         </div> */}
@@ -504,6 +544,7 @@ function AdminOrders() {
                 </div>
                 <div>
                   <p>Technology: {ordersDetails?.panels?.technology}</p>
+                  <p>Quantity: {ordersDetails?.panels_quantity}</p>
                 </div>
 
               </div>
@@ -523,10 +564,7 @@ function AdminOrders() {
                 </div>
                 <div>
                   <p>Product Warranty: {ordersDetails?.batteries?.product_warranty}</p>
-                  <p>Quantity: {ordersDetails?.batteries?.total_quantity}</p>
-                </div>
-                <div>
-                  <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
+                  <p>Quantity: {ordersDetails?.battery_quantity}</p>
                 </div>
               </div>
             </div>

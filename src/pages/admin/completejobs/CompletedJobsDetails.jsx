@@ -39,7 +39,7 @@ function CompletedJobsDetails() {
     }
 
     const logout = () => {
-        removeCookies('Authorization', {path: '/'})
+        removeCookies('Authorization', { path: '/' })
         return navigate('/login')
     }
 
@@ -156,6 +156,7 @@ function CompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Product Warranty: {ordersDetails?.inverter?.product_warranty}</p>
+                            <p>Quantity: {ordersDetails?.inverter_quantity}</p>
                         </div>
 
                     </div>
@@ -179,6 +180,7 @@ function CompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Technology: {ordersDetails?.panels?.technology}</p>
+                            <p>Quantity: {ordersDetails?.panels_quantity}</p>
                         </div>
 
                     </div>
@@ -198,38 +200,35 @@ function CompletedJobsDetails() {
                         </div>
                         <div>
                             <p>Product Warranty: {ordersDetails?.batteries?.product_warranty}</p>
-                            <p>Quantity: {ordersDetails?.batteries?.total_quantity}</p>
-                        </div>
-                        <div>
-                            <p>Previous Qty: {ordersDetails?.batteries?.previous_quantity}</p>
+                            <p>Quantity: {ordersDetails?.battery_quantity}</p>
                         </div>
                     </div>
                 </div>
                 <div className="completejobs__box">
-                    <div className="header"> 
+                    <div className="header">
                         <p>Other Component</p>
                     </div>
                     {
-                        ordersDetails?.other_component?.length < 1 ? 
-              <div className='content' style={{borderBottom: '2px solid #fff'}}>
-              <div>
-                  <p>No other component selected</p>
-              </div>
-          </div> :
-                        ordersDetails?.other_component?.map((ele, idx) => {
-                            return (
-                                <div className='content' style={{borderBottom: '2px solid #fff'}} key={idx}>
-                                    <div>
-                                        <p>Code: {ele?.code}</p>
-                                        <p>Title: {ele?.title}</p>
-                                    </div>
-                                    <div>
-                                        <p>Manufacturer: {ele?.manufacturer}</p>
-                                        <p>Quantity: {ele?.quantity}</p>    
-                                    </div>
+                        ordersDetails?.other_component?.length < 1 ?
+                            <div className='content' style={{ borderBottom: '2px solid #fff' }}>
+                                <div>
+                                    <p>No other component selected</p>
                                 </div>
-                            )
-                        })
+                            </div> :
+                            ordersDetails?.other_component?.map((ele, idx) => {
+                                return (
+                                    <div className='content' style={{ borderBottom: '2px solid #fff' }} key={idx}>
+                                        <div>
+                                            <p>Code: {ele?.code}</p>
+                                            <p>Title: {ele?.title}</p>
+                                        </div>
+                                        <div>
+                                            <p>Manufacturer: {ele?.manufacturer}</p>
+                                            <p>Quantity: {ele?.quantity}</p>
+                                        </div>
+                                    </div>
+                                )
+                            })
                     }
                 </div>
                 <div className="completejobs__box">

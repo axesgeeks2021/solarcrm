@@ -334,7 +334,7 @@ function NonAdminDashboard() {
                                     <tr onClick={() => goToOrders(ele?.order_status === "Completed" ? null : '/non-admin/orders', { state: ele })} style={{ cursor: 'pointer' }} key={idx}>
                                         <th >{ele.project}</th>
                                         <td >{ele?.customer_name}</td>
-                                        <td >{ele?.panels}</td>
+                                        <td >{ele?.panels_quantity}</td>
                                         <td >{ele.building_Type}</td>
                                         <td >{ele.nmi_no}</td>
                                         <td >
@@ -401,7 +401,7 @@ function NonAdminDashboard() {
                             <Input placeholder="Address" value={addressline} name="addressline" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Street" value={addressline} name="addressline" onChange={handleChange} required={true} />
+                            <Input placeholder="Street" value={street} name="street" onChange={handleChange} required={true} />
                             <Input placeholder="City" value={city} name="city" onChange={handleChange} required={true} />
                         </div>
 

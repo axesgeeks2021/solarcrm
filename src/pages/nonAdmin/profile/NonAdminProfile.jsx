@@ -8,8 +8,7 @@ import Input from '../../../components/inputsfield/Input';
 
 function NonAdminProfile() {
 
-  const [cookies] = useCookies()
-
+  const [cookies, removeCookies] = useCookies()
   const [changeText, setChangeText] = useState('')
 
   const [value, setValue] = useState({
@@ -24,39 +23,16 @@ function NonAdminProfile() {
     setValue({ ...value, [e.target.name]: e.target.value })
   }
 
+  const [adminProfile, setAdminProfile] = useState(JSON.parse(localStorage.getItem('auth')))
 
-  const [adminProfile, setAdminProfile] = useState({})
-
+  console.log('admin profile', adminProfile)
   const [display, setDisplay] = useState({
     forget: false,
     change: false
   })
 
-  const fetchAdminData = () => {
-    try {
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
-
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-      };
-
-      fetch("https://solar365.co.in/get_admin_profile/4/", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-          console.log('none admin profile',result)
-          setAdminProfile(result)
-        })
-        .catch(error => console.log('error', error));
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const changePassword = () => {
-
     if (changeText === "") {
       alert('Enter your valid email id!')
       return
@@ -77,8 +53,8 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/forgot-password/", requestOptions)
-        .then(response => response.text())
+      fetch("https://solar365.co.in/change-password/", requestOptions)
+        .then(response => response.json())
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
     } catch (error) {
@@ -108,7 +84,7 @@ function NonAdminProfile() {
         redirect: 'follow'
       };
 
-      fetch("https://solar365.co.in/change-password/", requestOptions)
+      fetch("https://solar365.co.in/forgot-password/", requestOptions)
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -119,13 +95,6 @@ function NonAdminProfile() {
     }
   }
 
-  useEffect(() => {
-    const subscribe = fetchAdminData()
-
-    return () => subscribe
-  }, [])
-
-
   return (
     <>
       <div style={{ width: "100%", display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
@@ -135,31 +104,30 @@ function NonAdminProfile() {
         <div style={{ width: "80%", display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '2rem 0', flexDirection: 'column' }}>
           <div style={{ width: "100%", display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '2%', padding: '0% 4%' }}>
             <Button title="Change Password" background="yellow" color="black" onclick={() => setDisplay({ change: !display.change, forget: false })} />
-            <Button title="Forget Password" background="red" color="white" onclick={() => setDisplay({ forget: !display.forget, change: false })} />
+            {/*<Button title="Forget Password" background="red" color="white" onclick={() => setDisplay({ forget: !display.forget, change: false })} />*/}
           </div>
-          <div style={{ margin: '15px 0' }}>
-            <article className="card">
-              <div className="image">
-                <img src="https://assets.codepen.io/652/photo-1468777675496-5782faaea55b.jpeg" alt="mixed vegetable salad in a mason jar. " />
-                <p className="note">Profile</p>
+          <div className="completejobs__box">
+            <div className="header">
+              <p>Personal Details</p>
+            </div>
+            <div className='content'>
+              <div>
+                <p>Username: {adminProfile?.user?.admin?.user?.username}</p>
+                <p>Name: {adminProfile?.user?.admin?.user?.first_name} {adminProfile?.user?.admin?.user?.last_name}</p>
               </div>
-              <div className="card__content">
-                <h2 className="card_title">{adminProfile?.user?.first_name} {adminProfile?.user?.last_name}</h2>
-                {/* <p>Dig into the freshest veggies of the season! This salad-in-a-jar features a mixture of leafy greens and seasonal vegetables, fresh from the farmer's market.</p> */}
-                {/* <p className="list-label">Served with your choice of dressing:</p> */}
-                <ul>
-                  <li>{adminProfile?.user?.email}</li>
-                  <li>{adminProfile?.address_line}</li>
-                  <li>{adminProfile?.city}</li>
-                  <li>{adminProfile?.state}</li>
-                  <li>{adminProfile?.country}</li>
-                  {/* <li>Avocado green goddess</li>
-          <li>Honey mustard</li> */}
-                </ul>
-                {/* <h3 className="label">Add to your meal:</h3>
-        <p className="add-ons">Your choice of protein for an $2 more.</p> */}
+              <div>
+                <p>Email: {adminProfile?.user?.admin?.user?.email}</p>
+                <p>Phone: {adminProfile?.user?.admin?.user?.phone}</p>
               </div>
-            </article>
+              <div>
+                <p>Address: {adminProfile?.user?.admin?.address_line}</p>
+                <p>City: {adminProfile?.user?.admin?.city}</p>
+              </div>
+              <div>
+                <p>State: {adminProfile?.user?.admin?.state}</p>
+                <p>Country: {adminProfile?.user?.admin?.country}</p>
+              </div>
+            </div>
           </div>
           {
             display.change && <div style={{ width: "50%", background: 'white', position: 'absolute', overflow: 'hidden', padding: "10% 5%", boxShadow: "2px 2px 10px 1px rgba(0,0,0,0.4), -2px -2px 10px 1px rgba(0,0,0,0.4)", borderRadius: 4 }}>

@@ -35,6 +35,7 @@ function AdminDashboard() {
     const [batteryList, setBatteryList] = useState([])
     const [panelList, setPanelList] = useState([])
     const [otherComponentList, setOtherComponentLists] = useState([])
+    const [companyList, setCompanyList] = useState([])
 
 
     const [text, setText] = useState({
@@ -53,10 +54,11 @@ function AdminDashboard() {
         otherComponent: "",
         batteries: "",
         batteriesQuantity: "",
-        otherComponentQuantities: ""
+        otherComponentQuantities: "",
+        companyName: null,
     })
 
-    const { batteries, buildingType, otherComponentQuantities, batteriesQuantity, installationType, inverter, inverterQuantity, meterPhase, nmiNo, otherComponent, panels, panelsQuantity, roofAngle, roofType, systemSize, username } = text
+    const { batteries, buildingType, otherComponentQuantities, batteriesQuantity, installationType, inverter, inverterQuantity, meterPhase, nmiNo, otherComponent, panels, panelsQuantity, roofAngle, roofType, systemSize, username, companyName } = text
 
     const handleChange = e => {
         setText({ ...text, [e.target.name]: e.target.value })
@@ -76,7 +78,7 @@ function AdminDashboard() {
             setLoading(false)
             setOrderLists(data)
             console.log('customer', data)
-
+            return
         } catch (error) {
             console.log(error)
         }
@@ -94,6 +96,7 @@ function AdminDashboard() {
             formdata.append("username", username);
             formdata.append("system_Size", systemSize);
             formdata.append("building_Type", buildingType);
+            formdata.append("company_Name", companyName);
             formdata.append("nmi_no", nmiNo);
             formdata.append("panels", panels);
             formdata.append("inverter", inverter);
@@ -150,6 +153,30 @@ function AdminDashboard() {
                 .then(response => response.json())
                 .then(result => {
                     setUserList(result)
+                })
+                .catch(error => console.log('error', error));
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const getCompanyList = () => {
+        try {
+            const myHeaders = new Headers();
+            myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+            myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+            myHeaders.append('Content-Type', 'application/json')
+
+            const requestOptions = {
+                method: 'GET',
+                headers: myHeaders,
+                redirect: 'follow'
+            };
+
+            fetch("https://solar365.co.in/company_name_list/", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    console.log('compnay,', result)
+                    return setCompanyList(result)
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -258,8 +285,9 @@ function AdminDashboard() {
         const subscribe4 = getBatteryDetails()
         const subscribe5 = getPanelDetails()
         const subscribe6 = fetchOtherComponent()
+        const subscribe7 = getCompanyList()
 
-        return () => [subscribe, userSubscribe, subscribe1, subscribe4, subscribe5, subscribe6]
+        return () => [subscribe, userSubscribe, subscribe1, subscribe4, subscribe5, subscribe6, subscribe7]
 
     }, [])
 
@@ -289,6 +317,7 @@ function AdminDashboard() {
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">System Size</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Building Type</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Nmi No.</div>
+                        <div className="col col-2 text-center text-slate-50 text-base font-bold">Status</div>
                     </li>
                     {
                         orderLists?.length < 1 ? <h2>There is no order available right now...</h2> : orderLists?.map((ele, idx) => {
@@ -328,14 +357,24 @@ function AdminDashboard() {
                                 </select>
                             </div>
                             <div style={{ width: '50%' }}>
+                            <select name='companyName' value={companyName} onChange={handleChange} style={{ border: '2px solid gray', width: '100%', padding: '5px 0', margin: '0 4px' }}>
+                                    <option style={{ textAlign: 'center' }} >Select Company</option>
+                                    {
+                                        companyList?.data?.map((ele, idx) => {
+                                            return (
+                                                <option value={ele?.company_name} key={idx}>{ele?.company_name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                                </div>
+                                </div>
+                                <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                                 <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
-                            </div>
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={buildingType} name="buildingType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
                                 <option>Select Floor Type</option>
                                 <option value="Ground Floor">Ground Floor</option>
@@ -343,6 +382,8 @@ function AdminDashboard() {
                                 <option value="Second Floor">Second Floor</option>
                                 <option value="More">More</option>
                             </select>
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}  >
                                 <option>Select Roof Type</option>
                                 <option value="Tin">Tin</option>
@@ -353,21 +394,23 @@ function AdminDashboard() {
                                     Others
                                 </option>
                             </select>
-                        </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={meterPhase} name='meterPhase' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
                                 <option>Select Meter Phase</option>
                                 <option>Single Phase</option>
                                 <option>2 Phase</option>
                                 <option>3 Phase</option>
                             </select>
+                            </div>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={installationType} name="installationType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}  >
                                 <option>Select Installation Type</option>
                                 <option value="new">New</option>
                                 <option value="old">Old</option>
                             </select>
+                            
                         </div>
-                        <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                            <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                            
                             <select value={panels} name="panels" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
                                 <option defaultChecked>Select Panel</option>
                                 {
