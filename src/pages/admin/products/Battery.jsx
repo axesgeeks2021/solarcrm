@@ -131,7 +131,7 @@ function Battery() {
                         <Button title="Create New Battries" background="green" color="#fff" onclick={() => setDisplayForm(true)} />
                     </div>
                     <ul className="responsive-table">
-                        <li className="table-header">
+                        <li className="table-header py-2">
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Id</div>
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Title</div>
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Code</div>
@@ -141,7 +141,7 @@ function Battery() {
                             batteryData.length < 1 ? <h2>There is no order available right now...</h2> : batteryData.map((ele, idx) => {
                                 return (
                                     <Link to="/battery-orders" state={{ ele }} key={idx}>
-                                        <li className="table-row">
+                                        <li className="table-row py-2">
                                             <div className={`col col-2 text-center`}>{ele.id}</div>
                                             <div className={`col col-2 text-center`}>{ele.title}</div>
                                             <div className={`col col-2 text-center`}>{ele.code}</div>

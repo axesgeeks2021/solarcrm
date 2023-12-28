@@ -23,7 +23,7 @@ function PanlesOrders() {
     const [file, setFile] = useState()
 
     const handlefile = e => {
-        setFile(e.target.files[0])
+        return setFile(e.target.files[0])
     }
     const [deleteForm, setDeleteForm] = useState(false)
     const [displayForm, setDisplayForm] = useState(false)
@@ -179,6 +179,7 @@ function PanlesOrders() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Price" value={panelsData?.panel_price} />
                         <Line title="Manufacturer" value={panelsData?.manufacturer} />
+                        <Line title="Quantity" value={panelsData?.total_quantity} />
                     </div>
                 </div>
                 <div className="container__table completeContainer" >

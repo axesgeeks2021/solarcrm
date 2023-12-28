@@ -22,64 +22,127 @@ function AdminOrders() {
   const [showState1, setShowState1] = useState(false)
   const [showState2, setShowState2] = useState(false)
   const [showState3, setShowState3] = useState(false)
+  const [inverterList, setInverterList] = useState([])
+  const [batteryList, setBatteryList] = useState([])
+  const [panelList, setPanelList] = useState([])
   const [deletePopup, setDeletePopup] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [displayForm, setDisplayForm] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showSlotModal, setShowSlotModal] = useState(false)
-  const [ordersDetails, setOrderDetails] = useState([])
+  const [ordersDetails, setOrderDetails] = useState({})
+  const [companyList, setCompanyList] = useState([])
+
+  console.log('order details', ordersDetails)
   const [installerList, setInstallerList] = useState({})
-  const [file, setFile] = useState(null)
   const [listOfSlots, setListOfSlots] = useState({})
   const [bookingStatus, setBookingStatus] = useState({})
   const [installerId, setInstallerId] = useState([])
   const [electricianId, setElecticianId] = useState([])
+  const [packingSlipFile, setPackingSlipFile] = useState(null)
+  const [westernPowerFile, setwesternPowerFile] = useState(null)
+  const [switchBoardFile, setswitchBoardFile] = useState(null)
+  const [panelLayoutFile, setpanelLayoutFile] = useState(null)
+  const [extrasFile, setextrasFile] = useState(null)
   const [bookModal, setBookModal] = useState({
     status: false,
     date: null
   })
 
-  const handleFile = e => {
-    setFile(e.target.files[0])
-  }
 
-  const [value, setValue] = useState({
-    quotation: "",
-    quantity: "",
-    rate: "",
-    dueDate: "",
-    fullpayduedate: "",
-    pay: "",
+  const [text, setText] = useState({
+    firstname: '',
+    lastname: "",
+    phone: "",
+    email: '',
+    username: "",
+    systemSize: "",
+    buildingType: "",
+    nmiNo: "",
+    panels: "",
+    inverter: "",
+    roofType: "",
+    roofAngle: "",
+    meterPhase: "",
     installationType: "",
-    isDelivered: "",
-    isSend: "",
-    description: "",
-    otherComponenet: "",
+    panelsQuantity: "",
+    inverterQuantity: "",
+    otherComponent: "",
+    batteries: "",
+    batteriesQuantity: "",
+    otherComponentQuantities: "",
+    companyName: null,
+    meterNumber: "",
+    packingSlipReason: '',
+    westernPowerReason: "",
+    switchBoardReason: "",
+    panelLayoutReason: "",
+    street: "",
+    state: "",
+    addressline: "",
+    city: "",
+    postcode: "",
+    country: "Australia",
+    descritpion: '',
+    batteryPurchase: "",
+    inverterPurchase: "",
+    panelPurchase: ""
   })
 
-  const { dueDate, fullpayduedate, pay, quantity, quotation, rate, description, installationType, isDelivered, isSend, otherComponenet } = value
+  const { batteries, buildingType, otherComponentQuantities, batteriesQuantity, installationType, inverterQuantity, meterPhase, nmiNo, otherComponent, panels, panelsQuantity, roofAngle, roofType, systemSize, username, companyName, addressline, batteryPurchase, street, inverterPurchase, panelPurchase, city, country, descritpion, email, firstname, inverter, lastname, meterNumber, packingSlipReason,
+    panelLayoutReason, phone, postcode, state, switchBoardReason, westernPowerReason } = text
 
   const handleChange = e => {
-    setValue({ ...value, [e.target.name]: e.target.value })
+    setText({ ...text, [e.target.name]: e.target.value })
   }
 
   const updateOrder = async (e) => {
     e.preventDefault()
     try {
-      setLoading(true)
+      const loadingId = toast.loading('Please wait...')
       let myHeaders = new Headers();
       myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
 
-      let formdata = new FormData();
-      formdata.append("quotation", quotation);
-      formdata.append("quantity", quantity);
-      formdata.append("rate", rate);
-      formdata.append("due_date", dueDate);
-      formdata.append("full_pay_due_date", fullpayduedate);
-      formdata.append("pay", pay);
+      const formdata = new FormData();
+      formdata.append("first_name", firstname !== "" ? firstname : ordersDetails?.to_address?.user?.first_name);
+      formdata.append("system_Size", systemSize !== "" ? systemSize : ordersDetails?.system_Size);
+      formdata.append("building_Type", buildingType !== "" ? buildingType : ordersDetails?.building_Type);
+      formdata.append("nmi_no", nmiNo !== "" ? nmiNo : ordersDetails?.nmi_no);
+      formdata.append("roof_Type", roofType !== "" ? roofType : ordersDetails?.roof_type);
+      formdata.append("roof_Angle", roofAngle !== "" ? roofAngle : ordersDetails?.roof_Angle);
+      formdata.append("meter_Phase", meterPhase !== "" ? meterPhase : ordersDetails?.meter_Phase);
+      formdata.append("installation_Type", installationType !== "" ? installationType : ordersDetails?.installation_Type);
+      formdata.append("panels", panels !== "" ? panels : ordersDetails?.panels?.id);
+      formdata.append("panels_quantity", panelsQuantity !== "" ? panelsQuantity : ordersDetails?.panels_quantity);
+      formdata.append("inverter", inverter !== "" ? inverter : ordersDetails?.inverter?.id);
+      formdata.append("inverter_quantity", inverterQuantity !== "" ? inverterQuantity : ordersDetails?.inverter_quantity);
+      formdata.append("batteries", batteries !== "" ? batteries : ordersDetails?.batteries?.id);
+      formdata.append("battery_quantity", batteriesQuantity !== "" ? batteriesQuantity : ordersDetails?.battery_quantity);
 
-      let requestOptions = {
-        method: 'PATCH',
+
+      formdata.append("company_Name", companyName !== "" ? companyName : ordersDetails?.company_Name);
+      formdata.append("meter_Number", meterNumber !== "" ? meterNumber : ordersDetails?.meter_Number);
+      packingSlipFile !== null ? formdata.append("packing_slip", packingSlipFile !== null ? packingSlipFile : ordersDetails?.packing_slip.map(ele => ele?.file)) : null;
+      westernPowerFile !== null ? formdata.append("western_power", westernPowerFile !== null ? westernPowerFile : ordersDetails?.western_power.map(ele => ele?.file)) : null;
+      switchBoardFile !== null ? formdata.append("switch_board", switchBoardFile !== null ? switchBoardFile : ordersDetails?.switch_board.map(ele => ele?.file)) : null;
+      panelLayoutFile !== null ? formdata.append("panel_layout", panelLayoutFile !== null ? panelLayoutFile : ordersDetails?.panel_layout.map(ele => ele?.file)) : null;
+      extrasFile !== null ? formdata.append("extras", extrasFile) : null;
+      formdata.append("packing_slip_reason", packingSlipReason !== "" ? packingSlipReason : ordersDetails?.packing_slip_reason);
+      formdata.append("western_power_reason", westernPowerReason !== "" ? westernPowerReason : ordersDetails?.western_power_reason);
+      formdata.append("switch_board_reason", switchBoardReason !== "" ? switchBoardReason : ordersDetails?.switch_board_reason);
+      formdata.append("panel_layout_reason", panelLayoutReason !== "" ? panelLayoutReason : ordersDetails?.panel_layout_reason);
+      formdata.append("street", street !== "" ? street : ordersDetails?.to_address?.street);
+      formdata.append("state", state !== "" ? state : ordersDetails?.to_address?.state);
+      formdata.append("address_line", addressline !== "" ? addressline : ordersDetails?.to_address?.address_line);
+      formdata.append("city", city !== "" ? city : ordersDetails?.to_address?.city);
+      formdata.append("postcode", postcode !== "" ? postcode : ordersDetails?.to_address?.postcode);
+      formdata.append("country", country !== "" ? country : ordersDetails?.to_address?.country);
+      formdata.append("is_inverter_buy", inverterPurchase !== "" ? inverterPurchase : ordersDetails?.is_inverter_buy);
+      formdata.append("is_battery_buy", batteryPurchase !== "" ? batteryPurchase : ordersDetails?.is_battery_buy);
+      formdata.append("is_panel_buy", panelPurchase !== "" ? panelPurchase : ordersDetails?.is_panel_buy);
+
+      const requestOptions = {
+        method: 'PUT',
         headers: myHeaders,
         body: formdata,
         redirect: 'follow'
@@ -88,9 +151,14 @@ function AdminOrders() {
       fetch(`https://solar365.co.in/order/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-          setLoading(false)
-          console.log(result)
-          return
+          console.log('update ', result)
+          if (result?.message === 'success') {
+            toast.update(loadingId, { render: "Updated successfully", isLoading: false, type: 'success', autoClose: true })
+            setText(prev => prev !== "" ? "" : "")
+            setDisplayForm(false)
+            return fetchOrderDetails()
+          }
+          return toast.update(loadingId, { render: "Please Try again!", isLoading: false, type: 'warning', autoClose: true })
         })
         .catch(error => console.log('error', error));
 
@@ -120,7 +188,7 @@ function AdminOrders() {
           if (result?.message === 'success') {
             setOrderDetails(result)
             fetchBookingSlotsDetails(data?.state?.ele?.id)
-            if(typeof result?.appointment !== 'string'){
+            if (typeof result?.appointment !== 'string') {
               return fetchInstallerList(result?.appointment?.appointment_date)
             }
           }
@@ -293,6 +361,104 @@ function AdminOrders() {
     }
   }
 
+  const getBatteryDetails = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("https://solar365.co.in/battery_module/", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setBatteryList(result)
+          return
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getPanelDetails = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("https://solar365.co.in/module/", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setPanelList(result)
+          return
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getInverterDetails = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=ceOYmNljg42J2Qs4nM3VcfaOK0kx6OSo; sessionid=rdm7ivcxs95syinfglztgj87716n0u05");
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("https://solar365.co.in/inverter_module/", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          setInverterList(result)
+          return
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getCompanyList = () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${cookies.Authorization}`);
+      myHeaders.append("Cookie", "csrftoken=svQq77wcRBEpbzWkYfqDJcnsopUicTNd; sessionid=1rloxayuhazv0kteh8za8nnulqar1bf1");
+      myHeaders.append('Content-Type', 'application/json')
+
+      const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      fetch("https://solar365.co.in/company_name_list/", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          console.log('compnay,', result)
+          return setCompanyList(result)
+        })
+        .catch(error => console.log('error', error));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   const deleteOrder = () => {
     try {
       const loadingId = toast.loading("Please wait...")
@@ -309,8 +475,8 @@ function AdminOrders() {
       fetch(`https://solar365.co.in/order/${data?.state?.ele?.id}/`, requestOptions)
         .then(response => response.json())
         .then(result => {
-              toast.update(loadingId, {render: 'Deleted Successfully...', autoClose: true, isLoading: false, type: 'success'})
-              return navigate(-1)            
+          toast.update(loadingId, { render: 'Deleted Successfully...', autoClose: true, isLoading: false, type: 'success' })
+          return navigate(-1)
         })
         .catch(error => console.log('error', error));
 
@@ -326,11 +492,21 @@ function AdminOrders() {
     return setShowForm(true)
   }
 
+  const handleCloseAdminForm = () => {
+    setDisplayForm(false)
+    return setText(prev => prev !== "" ? "" : "")
+  }
+
+
   useEffect(() => {
     const subscribe = fetchOrderDetails()
     const subscribe2 = fetchSlots()
+    const subscribe3 = getBatteryDetails()
+    const subscribe4 = getPanelDetails()
+    const subscribe5 = getInverterDetails()
+    const subscribe6 = getCompanyList()
 
-    return () => [subscribe, subscribe2]
+    return () => [subscribe, subscribe2, subscribe3, subscribe4, subscribe5, subscribe6]
   }, [])
 
   if (loading) {
@@ -384,13 +560,13 @@ function AdminOrders() {
       {
         deletePopup &&
         <div className='popup__form'>
-            <p style={{ fontSize: '1.2rem' }}>Are you sure want to delete ?</p>
-            <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-                <Button title="Confirm" background="green" color="#fff" onclick={deleteOrder} />
-                <Button title="Cancel" background="gray" color="#fff" onclick={() => setDeletePopup(false)} />
-            </div>
+          <p style={{ fontSize: '1.2rem' }}>Are you sure want to delete ?</p>
+          <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+            <Button title="Confirm" background="green" color="#fff" onclick={deleteOrder} />
+            <Button title="Cancel" background="gray" color="#fff" onclick={() => setDeletePopup(false)} />
+          </div>
         </div>
-    }
+      }
 
       <div className='admin__order__container'>
         <div className="w-full bg-yellow-400 flex justify-between items-center" style={{ background: "#0C70D4" }}>
@@ -404,7 +580,7 @@ function AdminOrders() {
             <Button title="Book Slot" color="white" background={bookingStatus?.update_appointment_appove ? "green" : "#eee"} onclick={() => setShowSlotModal(true)} disabled={!bookingStatus?.update_appointment_appove} />
             <Button title="Assign Order" background="green" color="#fff" onclick={() => handleShowAssignPopup(ordersDetails?.appointment)} />
             <Button title="Update" color="white" background="orange" onclick={() => setDisplayForm(!displayForm)} />
-            <Button title="Delete" color="white" background="red" onclick={() => setDeletePopup(true)}/>
+            <Button title="Delete" color="white" background="red" onclick={() => setDeletePopup(true)} />
           </div>
         </div>
         <div className='admin__card'>
@@ -428,7 +604,6 @@ function AdminOrders() {
           <img src={airplane} alt={airplane} className='img-fluid' />
         </div> */}
           <div className="container__table completeContainer">
-
             <div className="completejobs__box">
               <div className="header">
                 <p>Personal Details</p>
@@ -522,7 +697,6 @@ function AdminOrders() {
                 <div>
                   <p>Product Warranty: {ordersDetails?.inverter?.product_warranty}</p>
                 </div>
-
               </div>
             </div>
             <div className="completejobs__box">
@@ -566,46 +740,323 @@ function AdminOrders() {
                   <p>Product Warranty: {ordersDetails?.batteries?.product_warranty}</p>
                   <p>Quantity: {ordersDetails?.battery_quantity}</p>
                 </div>
+                <div>
+                  <p>Total Energy: {ordersDetails?.batteries?.total_energy}</p>
+                </div>
               </div>
             </div>
+            <div className="completejobs__box">
+              <div className="header">
+                <p>Photos - View & Download</p>
+              </div>
+              <div className='content pb-2' style={{ flexDirection: 'row' }}>
+                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Packing Slip Photo</p>
+                  </div>
+                  <div style={{ height: '75%', width: '100%' }}>
+                    {
+                      ordersDetails?.packing_slip?.map(ele => {
+                        return (
+                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )
+                      })
+                    }
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                    {
+                      ordersDetails?.packing_slip?.map(ele => {
+                        return (
+                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Western Power Photo</p>
+                  </div>
+                  <div style={{ height: '75%', width: '100%' }}>
+                    {
+                      ordersDetails?.western_power?.map(ele => {
+                        return (
+                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )
+                      })
+                    }
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                    {
+                      ordersDetails?.western_power?.map(ele => {
+                        return (
+                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
 
 
+              </div>
+              <div className='content pb-2' style={{ flexDirection: 'row' }}>
+                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Panel Layout Photo</p>
+                  </div>
+                  <div style={{ height: '75%', width: '100%' }}>
+                    {
+                      ordersDetails?.panel_layout?.map(ele => {
+                        return (
+                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )
+                      })
+                    }
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                    {
+                      ordersDetails?.panel_layout?.map(ele => {
+                        return (
+                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Switch Board Photo</p>
+                  </div>
+                  <div style={{ height: '75%', width: '100%' }}>
+                    {
+                      ordersDetails?.switch_board?.map(ele => {
+                        return (
+                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        )
+                      })
+                    }
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                    {
+                      ordersDetails?.switch_board?.map(ele => {
+                        return (
+                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
           </div>
-
         </div>
         {
-          displayForm && <FormsContainer flexDirection="column">
+          displayForm &&
+          <FormsContainer flexDirection="column">
             <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-              <Heading heading="Update your order..." size="200%" />
+              <Heading heading="Order" size="200%" />
             </div>
             <form style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={updateOrder}>
-              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Quotation" value={quotation} name="quotation" onChange={handleChange} />
-                <Input placeholder="Quantity" value={quantity} name="quantity" onChange={handleChange} />
+
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0', overflow: 'hidden' }}>
+                <select name='companyName' value={companyName} onChange={handleChange} style={{ border: '2px solid gray', width: '100%', padding: '5px 0', margin: '0 4px' }}>
+                  <option style={{ textAlign: 'center' }} >Select Company</option>
+                  {
+                    companyList?.data?.map((ele, idx) => {
+                      return (
+                        <option value={ele?.company_name} key={idx}>{ele?.company_name}</option>
+                      )
+                    })
+                  }
+                </select>
+                <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Rate" value={rate} name="rate" onChange={handleChange} />
-                <Input placeholder="Due Date" type="date" value={dueDate} name="dueDate" onChange={handleChange} />
+                <Input placeholder="First Name" value={firstname} name="firstname" onChange={handleChange} />
+                <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Installation Type" value={installationType} name="installationType" onChange={handleChange} />
-                <Input placeholder="Is Delivered" value={isDelivered} name="isDelivered" onChange={handleChange} />
+                <Input placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} />
+                <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} />
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Is Send" value={isSend} name="isSend" onChange={handleChange} />
-                <Input placeholder="Description" value={description} name="description" onChange={handleChange} />
+                <select value={buildingType} name="buildingType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
+                  <option value="">Select Floor Type</option>
+                  <option value="Single Storey">Single Storey</option>
+                  <option value="Double Storey">Double Storey</option>
+                  <option value="Multi Storey">Multi Storey</option>
+                </select>
+                <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}  >
+                  <option>Select Roof Type</option>
+                  <option value="Tin">Tin</option>
+                  <option value="Tilt">Tilt</option>
+                  <option value="Tile">Tile</option>
+                  <option value="Tile">Colorbond</option>
+                  <option value="Others">
+                    Others
+                  </option>
+                </select>
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Other Component" value={otherComponenet} name="otherComponenet" onChange={handleChange} />
-                <Input placeholder="Document File" type="file" onChange={handleFile} />
+                <select value={meterPhase} name='meterPhase' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
+                  <option>Select Meter Phase</option>
+                  <option>Single Phase</option>
+                  <option>2 Phase</option>
+                  <option>3 Phase</option>
+                </select>
+                <select value={installationType} name="installationType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}  >
+                  <option>Select Installation Type</option>
+                  <option value="new">New</option>
+                  <option value="old">Old</option>
+                </select>
               </div>
               <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                <Input placeholder="Full pay due date" type="date" value={fullpayduedate} name="fullpayduedate" onChange={handleChange} />
-                <Input placeholder="Pay" value={pay} name="pay" onChange={handleChange} />
+                <Input type="file" placeholder="Packing Slip" onChange={e => setPackingSlipFile(e.target.files[0])} width="100%" />
+                <Input type="file" placeholder="Western Power Approval" onChange={e => setwesternPowerFile(e.target.files[0])} width="100%" />
               </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input type="file" placeholder="Switch Board" onChange={e => setswitchBoardFile(e.target.files[0])} width="100%" />
+                <Input type="file" placeholder="Panels Layout" onChange={e => setpanelLayoutFile(e.target.files[0])} width="100%" />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input type="file" placeholder="Extras" onChange={e => setextrasFile(e.target.files[0])} width="100%" />
+                <Input placeholder="Packing Slip Reason" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input placeholder="Western Power Reason" value={westernPowerReason} name="westernPowerReason" onChange={handleChange} />
+                <Input placeholder="Switch Board Reason" value={switchBoardReason} name="switchBoardReason" onChange={handleChange} />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input placeholder="Address" value={addressline} name="addressline" onChange={handleChange} />
+                <Input placeholder="Street" value={street} name="street" onChange={handleChange} />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input placeholder="City" value={city} name="city" onChange={handleChange} />
+                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange} >
+                  <option value="" selected>Select State</option>
+                  <option value="Queensland">Queensland</option>
+                  <option value="New South Wales">New South Wales</option>
+                  <option value="Victoria">Victoria</option>
+                  <option value="Western Australia">Western Australia</option>
+                </select>
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} />
+                <Input placeholder="Country" value={country} name="country" onChange={handleChange} />
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+
+                <select value={panels} name="panels" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
+                  <option defaultChecked>Select Panel</option>
+                  {
+                    panelList && panelList.map((ele, idx) => {
+                      return (
+                        <option key={idx} value={ele?.id}>{ele?.code}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={panelsQuantity} name='panelsQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                  <option>Panels Quantity</option>
+                  {
+                    [...Array(100)].map((_, idx) => {
+                      return (
+                        <option key={idx}>{idx + 1}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={panelPurchase} name='panelPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                  <option value="">Purchase From</option>
+                  <option value="false">Himself</option>
+                  <option value="true">From Company</option>
+                </select>
+              </div>
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <select value={inverter} name="inverter" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
+                  <option value="Select Inverter" selected>Select Inverter</option>
+                  {
+                    inverterList && inverterList.map((ele, idx) => {
+                      return (
+                        <option value={ele?.id} key={idx}>{ele?.code}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={inverterQuantity} name='inverterQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                  <option>Panels Quantity</option>
+                  {
+                    [...Array(100)].map((_, idx) => {
+                      return (
+                        <option key={idx} value={idx + 1}>{idx + 1}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={inverterPurchase} name='inverterPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                  <option value="">Purchase From</option>
+                  <option value="false">Himself</option>
+                  <option value="true">From Company</option>
+                </select>
+              </div>
+
+              <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
+                  <option defaultChecked>Select Battery</option>
+                  {
+                    batteryList.map((ele, idx) => {
+                      return (
+                        <option key={idx} value={ele?.id}>{ele?.code}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={batteriesQuantity} name='batteriesQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                  <option>Battery Quantity</option>
+                  {
+                    [...Array(100)].map((_, idx) => {
+                      return (
+                        <option key={idx} value={idx + 1}>{idx + 1}</option>
+                      )
+                    })
+                  }
+                </select>
+                <select value={batteryPurchase} name='batteryPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
+                  <option value="">Purchase From</option>
+                  <option value="false">Himself</option>
+                  <option value="true">From Company</option>
+                </select>
+              </div>
+              {/*<div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
+                  <select value={otherComponent} name="otherComponent" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0', margin: '0 4px' }}>
+                      <option defaultChecked>Select Other Component List</option>
+                      {
+                          otherComponentList && otherComponentList.map((ele, idx) => {
+                              return (
+                                  <option key={idx} value={ele?.id}>{ele?.code}</option>
+                              )
+                          })
+                      }
+                  </select>
+                  <select value={otherComponentQuantities} name='otherComponentQuantities' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
+                      <option>Other Component Quantity</option>
+                      {
+                          [...Array(100)].map((_, idx) => {
+                              return (
+                                  <option key={idx} value={idx + 1}>{idx + 1}</option>
+                              )
+                          })
+                      }
+                  </select>
+                  </div>*/}
               <div style={{ width: '90%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', margin: '10px 0', gap: '10px' }}>
-                <Button title="Submit" background="orange" color="white" />
-                <Button title="Close" background="gray" color="white" onclick={() => setDisplayForm(false)} />
+                <Button title="Submit" background="orange" color="white" type="submit" />
+                <Button title="Close" background="gray" color="white" onclick={handleCloseAdminForm} />
               </div>
             </form>
           </FormsContainer>

@@ -16,7 +16,6 @@ import { toast } from 'react-toastify';
 function Inverter() {
 
     const [cookies] = useCookies();
-
     const navigate = useNavigate()
  
     const [inverterData, setInverterData] = useState([])
@@ -136,7 +135,7 @@ function Inverter() {
                         <Button title="Create New Inverters" background="green" color="white" onclick={() => setDisplayForm(true)} />
                     </div>
                     <ul className="responsive-table">
-                        <li className="table-header">
+                        <li className="table-header py-2">
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Id</div>
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Title</div>
                             <div className="col col-3 text-center text-slate-50 text-base font-bold">Code</div>
@@ -146,7 +145,7 @@ function Inverter() {
                             inverterData.length < 1 ? <h2>There is no order available right now...</h2> : inverterData.map((ele, idx) => {
                                 return (
                                     <Link to="/inverters-orders" state={{ ele }} key={idx}>
-                                        <li className="table-row">
+                                        <li className="table-row py-2">
                                             <div className={`col col-2 text-center`}>{ele.id}</div>
                                             <div className={`col col-2 text-center`}>{ele.title}</div>
                                             <div className={`col col-2 text-center`}>{ele.code}</div>

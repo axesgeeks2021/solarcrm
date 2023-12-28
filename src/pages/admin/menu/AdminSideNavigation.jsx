@@ -97,11 +97,11 @@ function AdminSideNavigation() {
         itemId: '/admin/complete-jobs',
         elemBefore: () => <MdHardware />
       },
-      {
-        title: 'Update Profile',
-        itemId: '/update-profile',
-        elemBefore: () => <CgProfile />,
-      },
+      // {
+      //   title: 'Update Profile',
+      //   itemId: '/update-profile',
+      //   elemBefore: () => <CgProfile />,
+      // },
       {
         title: 'Un-Approved Company',
         itemId: '/unapproved-company',

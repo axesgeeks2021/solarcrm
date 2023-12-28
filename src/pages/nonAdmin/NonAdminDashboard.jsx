@@ -427,10 +427,9 @@ function NonAdminDashboard() {
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={buildingType} name="buildingType" onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required={true}>
                                 <option value="">Select Floor Type</option>
-                                <option value="Ground Floor">Ground Floor</option>
-                                <option value="First Floor">First Floor</option>
-                                <option value="Second Floor">Second Floor</option>
-                                <option value="More">More</option>
+                                <option value="Single Storey">Single Storey</option>
+                                <option value="Double Storey">Double Storey</option>
+                                <option value="Multi Storey">Multi Storey</option>
                             </select>
                             <select value={roofType} name="roofType" onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required={true}>
                                 <option value="">Select Roof Type</option>

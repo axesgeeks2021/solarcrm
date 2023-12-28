@@ -181,6 +181,7 @@ function InverterOrders() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Additional part warranty" value={inverterData?.additional_part_warranty} />
                         <Line title="Price" value={inverterData?.inverter_price} />
+                        <Line title="Quantity" value={inverterData?.total_quantity} />
                     </div>
                 </div>
                 <div className="container__table completeContainer" >

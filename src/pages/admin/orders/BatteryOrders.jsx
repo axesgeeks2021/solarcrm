@@ -176,6 +176,7 @@ function BatterOrders() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Total Energy" value={batteryData?.total_energy} />
                         <Line title="Price" value={batteryData?.battery_price} />
+                        <Line title="Quantity" value={batteryData?.total_quantity} />
                     </div>
                 </div>
                 <div className="container__table completeContainer" >
