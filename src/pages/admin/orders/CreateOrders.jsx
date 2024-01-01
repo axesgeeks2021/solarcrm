@@ -36,7 +36,7 @@ function CreateOrders() {
     const { username, systemSize, buildingType, nmiNumber, panels, inverter, roofType, roofAngle, meterPhase, inverterQuantity, installationType, panelsQuantity, otherComponent, battries, panles } = value
 
     const handleChange = e => {
-        setValue({ ...value, [e.target.name]: e.target.value })
+        setValue({ value, [e.target.name]: e.target.value })
     }
 
     const handleFile = e => {
@@ -96,33 +96,33 @@ function CreateOrders() {
                 </div>
                 <form onSubmit={createOrders} style={{width: "100%", overflow: 'hidden'}}>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your username..." value={username} name="username" onChange={handleChange} />
-                        <Input placeholder="Enter your system size..." value={systemSize} name="systemSize" onChange={handleChange} />
-                        <Input placeholder="Enter your building type..." value={buildingType} name="buildingType" onChange={handleChange} />
+                        <Input placeholder="Username" value={username} name="username" onChange={handleChange} required={true}/>
+                        <Input placeholder="System size" value={systemSize} name="systemSize" onChange={handleChange} required={true}/>
+                        <Input placeholder="building type" value={buildingType} name="buildingType" onChange={handleChange} required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your nmi number..." value={nmiNumber} name="nmiNumber" onChange={handleChange} />
+                        <Input placeholder="NMI number" value={nmiNumber} name="nmiNumber" onChange={handleChange} required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your panels..." value={panels} name="panels" onChange={handleChange} />
-                        <Input placeholder="Enter your inverter..." value={inverter} name="inverter" onChange={handleChange} />
-                        <Input placeholder="Enter your roof type..." value={roofType} name="roofType" onChange={handleChange} />
+                        <Input placeholder="Panels" value={panels} name="panels" onChange={handleChange} required={true}/>
+                        <Input placeholder="Inverter" value={inverter} name="inverter" onChange={handleChange} required={true}/>
+                        <Input placeholder="Roof type" value={roofType} name="roofType" onChange={handleChange} required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your roof angle..." value={roofAngle} name="roofAngle" onChange={handleChange} />
+                        <Input placeholder="Roof angle" value={roofAngle} name="roofAngle" onChange={handleChange} required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your meter phase..." value={meterPhase} name="meterPhase" onChange={handleChange} />
-                        <Input placeholder="Enter your installation type..." value={installationType} name="installationType" onChange={handleChange} />
-                        <Input placeholder="Enter your document file..." onChange={handleFile} type="file"/>
+                        <Input placeholder="Meter phase" value={meterPhase} name="meterPhase" onChange={handleChange} required={true}/>
+                        <Input placeholder="Installation type" value={installationType} name="installationType" onChange={handleChange} required={true}/>
+                        <Input placeholder="Document file" onChange={handleFile} type="file"required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your panels quantity..." value={panelsQuantity} name="panelsQuantity" onChange={handleChange} />
+                        <Input placeholder="Panels quantity" value={panelsQuantity} name="panelsQuantity" onChange={handleChange} required={true}/>
                     </div>
                     <div className='admin__order__input__container flex p-4 '>
-                        <Input placeholder="Enter your inverter quantity..." value={inverterQuantity} name="inverterQuantity" onChange={handleChange} />
-                        <Input placeholder="Enter your other component..." value={otherComponent} name="otherComponent" onChange={handleChange} />
-                        <Input placeholder="Enter your battries..." value={battries} name="battries" onChange={handleChange} />
+                        <Input placeholder="Inverter quantity" value={inverterQuantity} name="inverterQuantity" onChange={handleChange} required={true}/>
+                        <Input placeholder="Other component" value={otherComponent} name="otherComponent" onChange={handleChange} required={true}/>
+                        <Input placeholder="Battries" value={battries} name="battries" onChange={handleChange}/>
                     </div>
                     <div className='admin__order__input__container flex p-4  justify-end mx-2'>
                         <Button title="Submit" background="orange" color="white" />

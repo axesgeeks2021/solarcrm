@@ -4,7 +4,7 @@ function Input(props) {
   return (
     <>
       <div className="form-group">
-        <span>{props.placeholder}</span>
+        <span style={{padding: "0 12px"}}>{props.placeholder}</span>
         <input
           className="form-field"
           type={props.type || 'text'}
@@ -16,6 +16,8 @@ function Input(props) {
           required={props.required}                                                                                                                                                                                                                                                                                              
           min={props.min}
         />
+        <span style={{paddingInline: props.years !== undefined ? "12px" : '0'}}>{props.years}</span>
+        
       </div>
     </>
   );

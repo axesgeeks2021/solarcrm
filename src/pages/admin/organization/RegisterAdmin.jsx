@@ -174,36 +174,36 @@ function RegisterAdmin() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={register}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" />
-                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" required={true}/>
+                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
-                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" required={true}/>
+                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input type="file" onChange={handlefile} placeholder="Profile Photo" />
+                            <Input type="file" onChange={handlefile} placeholder="Profile Photo" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <select value={isStaff} name="isStaff" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
-                                <option>Is Staff</option>
+                            <select value={isStaff} name="isStaff" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} required>
+                                <option value="">Is Staff</option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
                             </select>
-                            <select value={isSuper} name="isSuper" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} >
-                                <option>Is Superuser</option>
+                            <select value={isSuper} name="isSuper" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} required>
+                                <option value="">Is Superuser</option>
                                 <option value="true">True</option>
                                 <option value="false">False</option>
                             </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
-                            <Input placeholder="City" onChange={handleChange} value={city} name="city" />
+                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" required={true}/>
+                            <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" />
-                            <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  >
-                                <option selected>Select State</option>
+                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" required={true}/>
+                            <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange}  required>
+                                <option value="" selected>Select State</option>
                                 <option value="Queensland">Queensland</option>
                                 <option value="New South Wales">New South Wales</option>
                                 <option value="Victoria">Victoria</option>
@@ -211,8 +211,8 @@ function RegisterAdmin() {
                             </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" />
-                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true}/>
+                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit" />

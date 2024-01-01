@@ -163,16 +163,16 @@ function Inverter() {
                 <div className='my-10 flex flex-col justify-center items-center gap-3' style={{ width: "80%" }}>
                     <Heading heading="Enter details for creating new Inverters" size="24px"/>
                     <form className='flex flex-col justify-center items-center gap-3' style={{ width: "100%" }} onSubmit={createInverter}>
-                    <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText}/>
-                    <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText}/>
-                    <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile}/>
-                    <Input width="100%" placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleText}/>
-                    <Input width="100%" placeholder="Inverter Price" value={inverterPrice} name="inverterPrice" onChange={handleText}/>
-                    <Input width="100%" placeholder="Rated Output Power" value={ratedOutputPower} name="ratedOutputPower" onChange={handleText}/>
-                    <Input width="100%" placeholder="Product warranty" value={productWaranty} name="productWaranty" onChange={handleText}/>
-                    <Input width="100%" placeholder="Additional part warranty" value={additionalPartWarranty} name="additionalPartWarranty" onChange={handleText}/>
-                    <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText}/>
-                    <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
+                    <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText} required={true}/>
+                    <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText} required={true}/>
+                    <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile} required={true}/>
+                    <Input width="100%" placeholder="Inverter Type" value={inverterType} name="inverterType" onChange={handleText} required={true}/>
+                    <Input width="100%" placeholder="Inverter Price" value={inverterPrice} name="inverterPrice" onChange={handleText} required={true} type="number"/>
+                    <Input width="100%" placeholder="Rated Output Power" value={ratedOutputPower} name="ratedOutputPower" onChange={handleText} required={true}/>
+                    <Input width="100%" placeholder="Product warranty" value={productWaranty} name="productWaranty" onChange={handleText} required={true} type="number" years="years"/>
+                    <Input width="100%" placeholder="Additional part warranty" value={additionalPartWarranty} name="additionalPartWarranty" onChange={handleText} required={true} type="number" years="years"/>
+                    <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText} required={true}/>
+                    <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText}  required={true} type="number"/>
                     <div className='flex gap-5 justify-end items-end' style={{ width: "100%" }}>
                         <Button title="Submit" background="orange" type="submit"/>
                         <Button title="Close" background="gray" type="button" onclick={() => setDisplayForm(false)} />

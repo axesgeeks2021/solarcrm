@@ -162,13 +162,13 @@ function OtherComponent() {
                     <div className='my-10 flex flex-col justify-center gap-3' style={{ width: "100%" }}>
                         <Heading heading="Enter details for creating new other components" color="black" />
                         <form className='flex flex-col justify-center items-center gap-2' style={{ width: "100%" }} onSubmit={createOtherComponent}>
-                            <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText} />
-                            <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText} />
-                            <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile} />
-                            <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText} />
-                            <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} />
-                            <select onChange={handleText} value={mylist} name='mylist' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}>
-                                <option>Is Available</option>
+                            <Input width="100%" placeholder="Title" value={title} name="title" onChange={handleText} required={true}/>
+                            <Input width="100%" placeholder="Product Code" value={code} name="code" onChange={handleText} required={true}/>
+                            <Input width="100%" placeholder="upload your logo" type="file" onChange={handleFile} required={true}/>
+                            <Input width="100%" placeholder="Manufacturer" value={manufacturer} name="manufacturer" onChange={handleText} required={true}/>
+                            <Input width="100%" placeholder="Add Quantity" value={quantity} name="quantity" onChange={handleText} required={true} type="number"/>
+                            <select onChange={handleText} value={mylist} name='mylist' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} required>
+                                <option value="">Is Available</option>
                                 <option value={true}>Yes</option>
                                 <option value={false}>No</option>
                             </select>

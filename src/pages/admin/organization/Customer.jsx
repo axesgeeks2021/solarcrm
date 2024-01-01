@@ -51,7 +51,7 @@ function Customer() {
     const { firstname, lastname, phone, email, city, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, country, postcode, state, street } = value
 
     const handleChange = e => {
-        setValue({ ...value, [e.target.name]: e.target.value })
+        setValue({ value, [e.target.name]: e.target.value })
         if (rooftype === 'Others') {
             return setOtherBoolean(true)
         }
@@ -63,7 +63,7 @@ function Customer() {
 
     const handleSelectInstaller = (userId) => {
 
-        let installerElectricianId = [...selectedValue, userId]
+        let installerElectricianId = [selectedValue, userId]
         setSelectedValue(installerElectricianId)
         if (installerElectricianId.length > 2) {
             let arrayToString = installerElectricianId.toString().split(',').join(', ')
@@ -119,7 +119,7 @@ function Customer() {
                 .then(result => {
                     console.log(result)
                     setValue(prev => prev !== "" ? "" : "")
-                    toast.update(loadingId, { render: "Customer Registered successfully...", autoClose: true, type: 'success', isLoading: false })
+                    toast.update(loadingId, { render: "Customer Registered successfully", autoClose: true, type: 'success', isLoading: false })
                     setShowForm(false)
                     return fetchData()
                 })
@@ -256,7 +256,7 @@ function Customer() {
                         {
                             customerList?.map((ele, idx) => {
                                 return (
-                                    <Link to="/admin/customer-profile" state={{ele}}>
+                                    <Link to="/admin/customer-profile" state={{ ele }}>
                                         <li className="table-row" key={idx}>
                                             <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
                                             <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
@@ -279,64 +279,24 @@ function Customer() {
                         </div>
                         <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                                <Input placeholder="First name..." onChange={handleChange} value={firstname} name="firstname" />
-                                <Input placeholder="Last name..." onChange={handleChange} value={lastname} name="lastname" />
+                                <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" required={true}/>
+                                <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Phone Number..." onChange={handleChange} value={phone} name="phone" />
-                                <Input placeholder="Email..." onChange={handleChange} value={email} name="email" />
+                                <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" required={true}/>
+                                <Input placeholder="Email" onChange={handleChange} value={email} name="email" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 {/*<UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
-                <Input type="file" placeholder="Profile" onChange={handleChange} value={alternatephone} name="alternatephone" />*/}
-                                <Input placeholder="Alternate Phone..." onChange={handleChange} value={alternatephone} name="alternatephone" />
-                                <Input placeholder="Looking For..." onChange={handleChange} value={lookingfor} name="lookingfor" />
+                <Input type="file" placeholder="Profile" onChange={handleChange} value={alternatephone} name="alternatephone" required={true}/>*/}
+                                <Input placeholder="Alternate Phone" onChange={handleChange} value={alternatephone} name="alternatephone" required={true}/>
+                                <Input placeholder="Looking For" onChange={handleChange} value={lookingfor} name="lookingfor" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Project Capacity..." onChange={handleChange} value={projectcapacity} name="projectcapacity" />
-                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" />
+                                <Input placeholder="Project Capacity" onChange={handleChange} value={projectcapacity} name="projectcapacity" required={true}/>
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" required={true}/>
                             </div>
-                            {/*<div style={{ width: "100%", display: 'flex', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Multiselect options={installerList?.Electrician?.admin} isObject={true} displayValue='city' placeholder='select electrician' />
-                                <Dropdown
-                                    title='Assign To'
-
-                                >
-                                    <Dropdown.Item
-                                    >
-                                        Electrician
-                                        <Dropdown.Submenu>
-                                            {
-                                                installerList?.Electrician?.map((eles, idx) => {
-                                                    return (
-                                                        <Dropdown.Item key={idx} onClick={() => handleSelectInstaller(eles?.admin?.user?.id)}>
-                                                            {
-                                                                eles?.admin?.user?.first_name
-                                                            }
-                                                        </Dropdown.Item>
-                                                    )
-                                                })
-                                            }
-                                        </Dropdown.Submenu>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item >
-                                        Installer
-                                        <Dropdown.Submenu>
-                                            {
-                                                installerList?.Installer?.map((eles, idx) => {
-                                                    return (
-                                                        <Dropdown.Item key={idx} onClick={() => handleChange(eles?.admin?.user?.id)}>
-                                                            {
-                                                                eles?.admin?.user?.first_name
-                                                            }
-                                                        </Dropdown.Item>
-                                                    )
-                                                })
-                                            }
-                                        </Dropdown.Submenu>
-                                    </Dropdown.Item>
-                                </Dropdown>
-                                        </div>*/}
+                            
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 {/*<select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
                                     <option>Select Supply</option>
@@ -344,9 +304,9 @@ function Customer() {
                                     <option value="Double Phase">Double Phase</option>
                                     <option value="Three Phase">Three Phase</option>
                                     </select>*/}
-                                <Input placeholder="Remarks..." onChange={handleChange} value={remarks} name="remarks" />
-                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  >
-                                    <option>Choose Buying Option</option>
+                                <Input placeholder="Remarks" onChange={handleChange} value={remarks} name="remarks" required={true}/>
+                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  required>
+                                    <option value="">Choose Buying Option</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Card">Card</option>
                                     <option value="Paypal">Paypal</option>
@@ -376,22 +336,22 @@ function Customer() {
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
 
                                 <select name='followsup1' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={followsup1} onChange={handleChange}  >
-                                    <option>Select Lead Type</option>
+                                    <option value="">Select Lead Type</option>
                                     <option value="Facebook">Facebook</option>
                                     <option value="Google">Google</option>
                                     <option value="Direct Call">Direct Call</option>
                                     <option value="Refrence">Refrence</option>
                                 </select>
-                                <Input placeholder="Follow up 2..." onChange={handleChange} value={followsup2} name="followsup2" />
+                                <Input placeholder="Follow up 2" onChange={handleChange} value={followsup2} name="followsup2" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Street..." onChange={handleChange} value={street} name="street" />
-                                <Input placeholder="City..." onChange={handleChange} value={city} name="city" />
+                                <Input placeholder="Street" onChange={handleChange} value={street} name="street" required={true}/>
+                                <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Address Line..." onChange={handleChange} value={addressline} name="addressline" />
-                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange}  >
-                                    <option selected>Select State</option>
+                                <Input placeholder="Address Line" onChange={handleChange} value={addressline} name="addressline" required={true}/>
+                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange}  required>
+                                    <option value="" selected>Select State</option>
                                     <option value="Queensland">Queensland</option>
                                     <option value="New South Wales">New South Wales</option>
                                     <option value="Victoria">Victoria</option>
@@ -399,8 +359,8 @@ function Customer() {
                                 </select>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Postcode..." onChange={handleChange} value={postcode} name="postcode" />
-                                <Input placeholder="Country..." onChange={handleChange} value={country} name="country" />
+                                <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true}/>
+                                <Input placeholder="Country" onChange={handleChange} value={country} name="country" required={true}/>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Button title="Submit" background="orange" type="submit" />

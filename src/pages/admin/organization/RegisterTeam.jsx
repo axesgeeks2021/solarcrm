@@ -160,7 +160,7 @@ function RegisterTeam() {
             <div style={{ width: '100%', padding: '20px 10px' }}>
                 <Button title="Create New Team" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
                 <ul className="responsive-table">
-                    <li className="table-header">
+                    <li className="table-header py-2">
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
@@ -172,7 +172,7 @@ function RegisterTeam() {
                         teamList?.map((ele, idx) => {
                             return (
                                 <Link to="/admin/teams-profile" key={idx} state={{ ele: ele }}>
-                                    <li className="table-row">
+                                    <li className="table-row py-2">
                                         <div className={`col col-2 text-center`}>{ele.admin.user.first_name}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.email}</div>
                                         <div className={`col col-2 text-center`}>{ele.admin.user.phone}</div>
@@ -194,34 +194,34 @@ function RegisterTeam() {
                     </div>
                     <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerTeam}>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" />
-                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" />
+                            <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" required={true}/>
+                            <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" />
-                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" />
+                            <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" required={true}/>
+                            <Input placeholder="Email" onChange={handleChange} value={email} name="email" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Profile Photo" type="file" onChange={handlefile} />
-                            <Input placeholder="Alternate Phone" onChange={handleChange} value={alternatephone} name="alternatephone" />
+                            <Input placeholder="Profile Photo" type="file" onChange={handlefile} required={true}/>
+                            <Input placeholder="Alternate Phone" onChange={handleChange} value={alternatephone} name="alternatephone" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <select value={department} name="department" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }}>
-                                <option>Select Type</option>
+                            <select value={department} name="department" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required>
+                                <option value="">Select Type</option>
                                 <option>Staff</option>
                                 <option>Manager</option>
                             </select>
-                            <Input placeholder="Description" onChange={handleChange} value={description} name="description" />
+                            <Input placeholder="Description" onChange={handleChange} value={description} name="description" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            {/*<Input placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" />*/}
-                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" />
-                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" />
+                            {/*<Input placeholder="Is_Online" onChange={handleChange} value={isonline} name="isonline" required={true}/>*/}
+                            <Input placeholder="Address_line" onChange={handleChange} value={addressline} name="addressline" required={true}/>
+                            <Input placeholder="Street" onChange={handleChange} value={street} name="street" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="City" onChange={handleChange} value={city} name="city" />
-                            <select name='state' value={state} onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  >
-                                <option selected>Select State</option>
+                            <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true}/>
+                            <select name='state' value={state} onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }}  required>
+                                <option value="" selected>Select State</option>
                                 <option value="Queensland">Queensland</option>
                                 <option value="New South Wales">New South Wales</option>
                                 <option value="Victoria">Victoria</option>
@@ -229,8 +229,8 @@ function RegisterTeam() {
                             </select>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" />
-                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" />
+                            <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true}/>
+                            <Input placeholder="Country" onChange={handleChange} value={country} name="country" required={true}/>
                         </div>
                         <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                             <Button title="Submit" background="orange" type="submit" />

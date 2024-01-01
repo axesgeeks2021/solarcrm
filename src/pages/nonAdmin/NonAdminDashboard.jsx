@@ -443,7 +443,7 @@ function NonAdminDashboard() {
                             </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <select value={panels} name='panels' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={panels} name='panels' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required>
                                 <option value="">Select Panel</option>
                                 {
                                     panelList.map((ele, idx) => {
@@ -453,7 +453,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={panelsQuantity} name='panelsQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={panelsQuantity} name='panelsQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required>
                                 <option value="">Panels Quantity</option>
                                 {
                                     [...Array(100)].map((_, idx) => {
@@ -463,14 +463,14 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={panelPurchase} name='panelPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required={true}>
+                            <select value={panelPurchase} name='panelPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required>
                                 <option value="">Purchase From</option>
                                 <option value="false">Himself</option>
                                 <option value="true">From Company</option>
                             </select>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <select value={inverter} name="inverter" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={inverter} name="inverter" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required>
                                 <option value="">Select Inverter</option>
                                 {
                                     inverterList && inverterList.map((ele, idx) => {
@@ -480,7 +480,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={inverterQuantity} name='inverterQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={inverterQuantity} name='inverterQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required>
                                 <option value="">Inverter Quantity</option>
                                 {
                                     [...Array(100)].map((_, idx) => {
@@ -490,7 +490,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={inverterPurchase} name='inverterPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required={true}>
+                            <select value={inverterPurchase} name='inverterPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required>
                                 <option value="">Purchase From</option>
                                 <option value="false">Himself</option>
                                 <option value="true">From Company</option>
@@ -498,7 +498,7 @@ function NonAdminDashboard() {
                         </div>
 
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={batteries} name="batteries" onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} >
                                 <option value="">Select Battery</option>
                                 {
                                     batteryList.map((ele, idx) => {
@@ -508,7 +508,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={batteriesQuantity} name='batteriesQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
+                            <select value={batteriesQuantity} name='batteriesQuantity' onChange={handleChange} style={{ margin: '0 4px', width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} >
                                 <option value="">Battery Quantity</option>
                                 {
                                     [...Array(100)].map((_, idx) => {
@@ -518,7 +518,7 @@ function NonAdminDashboard() {
                                     })
                                 }
                             </select>
-                            <select value={batteryPurchase} name='batteryPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} required={true}>
+                            <select value={batteryPurchase} name='batteryPurchase' onChange={handleChange} style={{ margin: '0 3px', width: '100%', padding: '5px 10px', border: '2px solid gray' }} >
                                 <option value="">Purchase From</option>
                                 <option value="false">Himself</option>
                                 <option value="true">From Company</option>

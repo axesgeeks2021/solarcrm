@@ -20,7 +20,7 @@ function OrderDetails() {
   const [installerList, setInstallerList] = useState({})
   const [installerId, setInstallerId] = useState([])
   const [electricianId, setElecticianId] = useState([])
-  
+
 
   const logout = () => {
     removeCookies('Authorization', { path: '/' })
@@ -45,7 +45,7 @@ function OrderDetails() {
           console.log('pending', result)
           setLoading(false)
           setOrderDetails(result)
-          if(typeof result?.appointment ===  "string"){
+          if (typeof result?.appointment === "string") {
             return
           }
           return fetchInstallerList(result?.appointment?.appointment_date)
@@ -56,9 +56,9 @@ function OrderDetails() {
     }
   }
 
-  
+
   const handleShowAssignPopup = (title) => {
-    if(typeof title === 'string'){
+    if (typeof title === 'string') {
       return toast.warn(title)
     }
     return setShowForm(true)
@@ -94,11 +94,11 @@ function OrderDetails() {
   const fetchUpdateAssignOrder = () => {
     try {
 
-      if(electricianId.length < 1){
+      if (electricianId.length < 1) {
         return toast.warn('Please select 1 electician!')
       }
 
-      if(installerId.length < 2){
+      if (installerId.length < 2) {
         return toast.warn('Please select atleaset 2 installer!')
       }
       const loadingId = toast.loading('Please wait....')
@@ -265,29 +265,132 @@ function OrderDetails() {
           </div>
         </div>
         <div className="completejobs__box">
-        <div className="header">
+          <div className="header">
             <p>Inverter</p>
-        </div>
-        <div className='content'>
+          </div>
+          <div className='content'>
             <div>
-                <p>Title: {orderDetails?.order?.inverter?.title}</p>
-                <p>Code: {orderDetails?.order?.inverter?.code}</p>
+              <p>Title: {orderDetails?.order?.inverter?.title}</p>
+              <p>Code: {orderDetails?.order?.inverter?.code}</p>
             </div>
             <div>
-                <p>Price: {orderDetails?.order?.inverter?.inverter_price}</p>
-                <p>Type: {orderDetails?.order?.inverter?.inverter_type}</p>
+              <p>Price: {orderDetails?.order?.inverter?.inverter_price}</p>
+              <p>Type: {orderDetails?.order?.inverter?.inverter_type}</p>
             </div>
             <div>
-                <p>Manufacturer: {orderDetails?.order?.inverter?.manufacturer}</p>
-                <p>Rated Output Power: {orderDetails?.order?.inverter?.rated_output_power}</p>
+              <p>Manufacturer: {orderDetails?.order?.inverter?.manufacturer}</p>
+              <p>Rated Output Power: {orderDetails?.order?.inverter?.rated_output_power}</p>
             </div>
             <div>
-                <p>Product Warranty: {orderDetails?.order?.inverter?.product_warranty}</p>
-                <p>Quantity: {orderDetails?.order?.inverter_quantity}</p>
+              <p>Product Warranty: {orderDetails?.order?.inverter?.product_warranty}</p>
+              <p>Quantity: {orderDetails?.order?.inverter_quantity}</p>
             </div>
 
+          </div>
         </div>
-    </div>
+        <div className="completejobs__box">
+          <div className="header">
+            <p>Photos - View & Download</p>
+          </div>
+          <div className='content pb-2' style={{ flexDirection: 'row' }}>
+            <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+              <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Packing Slip Photo</p>
+              </div>
+              <div style={{ height: '75%', width: '100%' }}>
+                {
+                  orderDetails?.order?.packing_slip?.map(ele => {
+                    return (
+                      <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    )
+                  })
+                }
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                {
+                  orderDetails?.order?.packing_slip?.map(ele => {
+                    return (
+                      <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+              <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Western Power Photo</p>
+              </div>
+              <div style={{ height: '75%', width: '100%' }}>
+                {
+                  orderDetails?.order?.western_power?.map(ele => {
+                    return (
+                      <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    )
+                  })
+                }
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                {
+                  orderDetails?.order?.western_power?.map(ele => {
+                    return (
+                      <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+
+
+          </div>
+          <div className='content pb-2' style={{ flexDirection: 'row' }}>
+            <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+              <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Panel Layout Photo</p>
+              </div>
+              <div style={{ height: '75%', width: '100%' }}>
+                {
+                  orderDetails?.order?.panel_layout?.map(ele => {
+                    return (
+                      <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    )
+                  })
+                }
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                {
+                  orderDetails?.order?.panel_layout?.map(ele => {
+                    return (
+                      <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+            <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+              <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Switch Board Photo</p>
+              </div>
+              <div style={{ height: '75%', width: '100%' }}>
+                {
+                  orderDetails?.order?.switch_board?.map(ele => {
+                    return (
+                      <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    )
+                  })
+                }
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                {
+                  orderDetails?.order?.switch_board?.map(ele => {
+                    return (
+                      <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                    )
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
 
