@@ -37,9 +37,11 @@ function AdminAssignedJobs() {
         }
     }
 
-    const gotNextPage = (data) => {
-        return navigate('update-orders', {state: {data}})
+    const gotNextPage = (companyname, url, data) => {
+        return navigate(companyname , url, {state: {data}})
+        // return navigate(companyname === null ? 'team/order-details' : 'update-orders', {state: {data}})
     }
+
 
     useEffect(() => {
         const subscribe = fetchOrder()
@@ -70,7 +72,7 @@ function AdminAssignedJobs() {
                             {
                                 orderList.length < 1 ? <h2>There is no order available right now...</h2> : orderList.map((ele, idx) => {
                                     return (
-                                        <tr onClick={() => gotNextPage(ele)} key={idx} style={{cursor: 'pointer'}}>
+                                        <tr onClick={() => gotNextPage(ele?.company_Name !== null ? '/admin-orders' : 'update-orders', ele)} key={idx} style={{cursor: 'pointer'}}>
                                                 <th scope="row">{ele?.project}</th>
                                                 <td>{ele?.to_address?.user?.first_name}</td>
                                                 <td>{ele?.building_Type}</td>

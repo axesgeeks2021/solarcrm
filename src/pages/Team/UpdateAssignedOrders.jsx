@@ -299,186 +299,187 @@ function UpdateAssignedOrders() {
 
     return (
         <>
-            <div style={{ width: "100%", padding: '20px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
                 <div>
                     <TeamSideNavigation />
                 </div>
-                <div style={{ width: '90%', display: 'flex', justifyContent: 'space-between', margin: "10px 0", flexDirection: 'column' }} >
-                    <div className='accordian__box'>
-                        <div className='accordian__question' onClick={() => setShowState(!showState)}>Update Grid
-                            {
-                                !showState ?
-                                    <AiOutlinePlus size={40} onClick={() => setShowState(true)} style={{ transition: '0.3s' }} /> :
-                                    <AiOutlineMinus size={40} onClick={() => setShowState(false)} style={{ transition: '0.3s' }} />
-                            }
-                        </div>
-                        <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                            <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date === null ? false : true} />
-                                <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date === null ? false : true} />
-                                <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                            </form>
-                        </div>
-                    </div>
-                    {/*<div className='accordian__box'>
-                        <div className='accordian__question' onClick={() => setShowPresite(!showPresite)}>Update Presite
-                            {
-                                !showPresite ?
-                                    <AiOutlinePlus size={40} onClick={() => setShowPresite(true)} style={{ transition: '0.3s' }} /> :
-                                    <AiOutlineMinus size={40} onClick={() => setShowPresite(false)} style={{ transition: '0.3s' }} />
-                            }
-                        </div>
-                        <div style={{ height: showPresite ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                            <form style={{ margin: '20px auto' }} onSubmit={fetchUpdatePresite}>
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterDate" value={meterDate} />
-                                <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterApproveDate" value={meterApproveDate} />
-                                <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                            </form>
-                        </div>
-                        </div>*/}
-                    <div className='accordian__box'>
-                        <div className='accordian__question' onClick={() => setShowMeter(!showMeter)}>Update Document Submission
-                            {
-                                !showMeter ?
-                                    <AiOutlinePlus size={40} onClick={() => setShowMeter(true)} style={{ transition: '0.3s' }} /> :
-                                    <AiOutlineMinus size={40} onClick={() => setShowMeter(false)} style={{ transition: '0.3s' }} />
-                            }
-                        </div>
-                        <div style={{ height: showMeter ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                            <form style={{ margin: '20px auto', gap: '10px' }} onSubmit={fetchUpdateMeter}>
-                                {
-                                    documentStatus?.electricity?.map((ele, idx) => {
-                                        return (
-                                            ele?.electricity_status === "Completed" ?
-                                                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                                    <p style={{ margin: 'auto 0', }}>{ele?.electricity_bill}</p>
-                                                    <a href={ele?.electricity_bill} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
-                                                </div>
-                                                :
-                                                <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Input type="file" placeholder="Electricity Bill" id="elect" width="100%" onChange={e => setElectricityBillFile(e.target.files[0])} />
-                                                    <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                                                </div>
-                                        )
-                                    })
-                                }
-                                {
-                                    documentStatus?.meter?.map((ele, idx) => {
-                                        return (
-                                            ele?.meter_status === "Completed" ?
-                                                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                                    <p style={{ margin: 'auto 0', }}>{ele?.meter_box}</p>
-                                                    <a href={ele?.meter_box} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
-                                                </div>
-                                                :
-                                                <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Input type="file" placeholder="Meterbox" onChange={e => setMeterBoxFile(e.target.files[0])} />
-                                                    <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                                                </div>
-                                        )
-                                    })
-                                }
-                                {
-                                    documentStatus?.miscellaneous?.map((ele, idx) => {
-                                        return (
-                                            ele?.miscellaneous_status === "Completed" ?
-                                                <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%" }}>
-                                                    <p style={{ margin: 'auto 0', }}>{ele?.miscellaneous_file}</p>
-                                                    <a href={ele?.miscellaneous_file} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
-                                                </div>
-                                                :
-                                                <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Input type="file" placeholder="Miscellaneous File" onChange={e => setMiscellaneousFile(e.target.files[0])} />
-                                                    <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                                                </div>
-                                        )
-                                    })
-                                }
 
-                            </form>
+                <div class="container__table">
+                        <div className='accordian__box'>
+                            <div className='accordian__question' onClick={() => setShowState(!showState)}>Update Grid
+                                {
+                                    !showState ?
+                                        <AiOutlinePlus size={40} onClick={() => setShowState(true)} style={{ transition: '0.3s' }} /> :
+                                        <AiOutlineMinus size={40} onClick={() => setShowState(false)} style={{ transition: '0.3s' }} />
+                                }
+                            </div>
+                            <div style={{ height: showState ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
+                                <form style={{ margin: '20px auto' }} onSubmit={fetchUpdateGrid}>
+                                    <Input type="date" placeholder="Meter Date" onChange={handleChange} name="meterDate" value={orderDetails?.grid_approval?.meter_date === null ? meterDate : orderDetails?.grid_approval?.meter_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_date === null ? false : true} />
+                                    <Input type="date" placeholder="Meter Approve Date" onChange={handleChange} name="meterApproveDate" value={orderDetails?.grid_approval?.meter_Approved_date === null ? meterApproveDate : orderDetails?.grid_approval?.meter_Approved_date} min={todayDate} disabled={orderDetails?.grid_approval?.meter_Approved_date === null ? false : true} />
+                                    <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                                </form>
+                            </div>
                         </div>
+                        {/*<div className='accordian__box'>
+                    <div className='accordian__question' onClick={() => setShowPresite(!showPresite)}>Update Presite
+                        {
+                            !showPresite ?
+                                <AiOutlinePlus size={40} onClick={() => setShowPresite(true)} style={{ transition: '0.3s' }} /> :
+                                <AiOutlineMinus size={40} onClick={() => setShowPresite(false)} style={{ transition: '0.3s' }} />
+                        }
                     </div>
-                    <div className='accordian__box'>
-                        <div className='accordian__question' onClick={() => setShowInstall(!showInstall)}>Update Installation Documents
-                            {
-                                !showInstall ?
-                                    <AiOutlinePlus size={40} onClick={() => setShowInstall(true)} style={{ transition: '0.3s' }} /> :
-                                    <AiOutlineMinus size={40} onClick={() => setShowInstall(false)} style={{ transition: '0.3s' }} />
-                            }
-                        </div>
-                        <div style={{ height: showInstall ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
-                            <form style={{ margin: '20px auto' }} onSubmit={fetchInstallDocs}>
-                                {
-                                    installDocmentStatus?.contract_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.contract_docs}</p>
-                                            <a href={installDocmentStatus?.contract_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Contract Documents" onChange={e => setContractDocs(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.grid_approval_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.grid_approval_docs}</p>
-                                            <a href={installDocmentStatus?.grid_approval_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Grid Approval Documents" onChange={e => setGridApprovalDocs(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.compliance_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.compliance_docs}</p>
-                                            <a href={installDocmentStatus?.compliance_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Compliance Documents" onChange={e => setComplianceDocs(e.target.files[0])} />
-                                }
-
-                                {
-                                    installDocmentStatus?.pv_site_info_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.pv_site_info_docs}</p>
-                                            <a href={installDocmentStatus?.pv_site_info_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Pv Site Info Documents" onChange={e => setPvSiteInfoDocs(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.user_manual_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.user_manual}</p>
-                                            <a href={installDocmentStatus?.user_manual} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="User Mannual" onChange={e => setUserMannual(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.energy_yield_report_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.energy_yield_report_docs}</p>
-                                            <a href={installDocmentStatus?.energy_yield_report_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Energy Yield Report Documents" onChange={e => setEnergyYieldReportDocs(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.safety_certificate_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.safety_certificate_docs}</p>
-                                            <a href={installDocmentStatus?.safety_certificate_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Safety Certificate Documents" onChange={e => setSafetyCertificateDocs(e.target.files[0])} />
-                                }
-                                {
-                                    installDocmentStatus?.noc_status === "Uploaded" ?
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
-                                            <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.noc_docs}</p>
-                                            <a href={installDocmentStatus?.noc_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
-                                        </div> : <Input type="file" placeholder="Noc Documents" onChange={e => setNocDocs(e.target.files[0])} />
-                                }
-                                {
-                                    (installDocmentStatus?.noc_status === "Uploaded" &&
-                                        installDocmentStatus?.safety_certificate_status === "Uploaded" &&
-                                        installDocmentStatus?.energy_yield_report_status === "Uploaded" &&
-                                        installDocmentStatus?.user_manual_status === "Uploaded" &&
-                                        installDocmentStatus?.pv_site_info_status === "Uploaded" &&
-                                        installDocmentStatus?.grid_approval_status === "Uploaded" &&
-                                        installDocmentStatus?.contract_status === "Uploaded" &&
-                                        installDocmentStatus?.compliance_status === "Uploaded") ? null : <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
-                                }
-
-                            </form>
-                        </div>
+                    <div style={{ height: showPresite ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
+                        <form style={{ margin: '20px auto' }} onSubmit={fetchUpdatePresite}>
+                            <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterDate" value={meterDate} />
+                            <Input type="date" placeholder="Meter Date" onChange={handleChange} min={todayDate} name="meterApproveDate" value={meterApproveDate} />
+                            <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                        </form>
                     </div>
+                    </div>*/}
+                        <div className='accordian__box'>
+                            <div className='accordian__question' onClick={() => setShowMeter(!showMeter)}>Update Document Submission
+                                {
+                                    !showMeter ?
+                                        <AiOutlinePlus size={40} onClick={() => setShowMeter(true)} style={{ transition: '0.3s' }} /> :
+                                        <AiOutlineMinus size={40} onClick={() => setShowMeter(false)} style={{ transition: '0.3s' }} />
+                                }
+                            </div>
+                            <div style={{ height: showMeter ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
+                                <form style={{ margin: '20px auto', gap: '10px' }} onSubmit={fetchUpdateMeter}>
+                                    {
+                                        documentStatus?.electricity?.map((ele, idx) => {
+                                            return (
+                                                ele?.electricity_status === "Completed" ?
+                                                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                        <p style={{ margin: 'auto 0', }}>{ele?.electricity_bill}</p>
+                                                        <a href={ele?.electricity_bill} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    </div>
+                                                    :
+                                                    <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Input type="file" placeholder="Electricity Bill" id="elect" width="100%" onChange={e => setElectricityBillFile(e.target.files[0])} />
+                                                        <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                                                    </div>
+                                            )
+                                        })
+                                    }
+                                    {
+                                        documentStatus?.meter?.map((ele, idx) => {
+                                            return (
+                                                ele?.meter_status === "Completed" ?
+                                                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                        <p style={{ margin: 'auto 0', }}>{ele?.meter_box}</p>
+                                                        <a href={ele?.meter_box} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    </div>
+                                                    :
+                                                    <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Input type="file" placeholder="Meterbox" onChange={e => setMeterBoxFile(e.target.files[0])} />
+                                                        <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                                                    </div>
+                                            )
+                                        })
+                                    }
+                                    {
+                                        documentStatus?.miscellaneous?.map((ele, idx) => {
+                                            return (
+                                                ele?.miscellaneous_status === "Completed" ?
+                                                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%" }}>
+                                                        <p style={{ margin: 'auto 0', }}>{ele?.miscellaneous_file}</p>
+                                                        <a href={ele?.miscellaneous_file} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blan'>Download</a>
+                                                    </div>
+                                                    :
+                                                    <div style={{ width: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                                                        <Input type="file" placeholder="Miscellaneous File" onChange={e => setMiscellaneousFile(e.target.files[0])} />
+                                                        <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                                                    </div>
+                                            )
+                                        })
+                                    }
+
+                                </form>
+                            </div>
+                        </div>
+                        <div className='accordian__box'>
+                            <div className='accordian__question' onClick={() => setShowInstall(!showInstall)}>Update Installation Documents
+                                {
+                                    !showInstall ?
+                                        <AiOutlinePlus size={40} onClick={() => setShowInstall(true)} style={{ transition: '0.3s' }} /> :
+                                        <AiOutlineMinus size={40} onClick={() => setShowInstall(false)} style={{ transition: '0.3s' }} />
+                                }
+                            </div>
+                            <div style={{ height: showInstall ? "auto" : 0, overflow: 'hidden', transition: "0.3s" }} className='accordian__answer'>
+                                <form style={{ margin: '20px auto' }} onSubmit={fetchInstallDocs}>
+                                    {
+                                        installDocmentStatus?.contract_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.contract_docs}</p>
+                                                <a href={installDocmentStatus?.contract_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Contract Documents" onChange={e => setContractDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.grid_approval_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.grid_approval_docs}</p>
+                                                <a href={installDocmentStatus?.grid_approval_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Grid Approval Documents" onChange={e => setGridApprovalDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.compliance_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.compliance_docs}</p>
+                                                <a href={installDocmentStatus?.compliance_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Compliance Documents" onChange={e => setComplianceDocs(e.target.files[0])} />
+                                    }
+
+                                    {
+                                        installDocmentStatus?.pv_site_info_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.pv_site_info_docs}</p>
+                                                <a href={installDocmentStatus?.pv_site_info_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Pv Site Info Documents" onChange={e => setPvSiteInfoDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.user_manual_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.user_manual}</p>
+                                                <a href={installDocmentStatus?.user_manual} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="User Mannual" onChange={e => setUserMannual(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.energy_yield_report_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.energy_yield_report_docs}</p>
+                                                <a href={installDocmentStatus?.energy_yield_report_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Energy Yield Report Documents" onChange={e => setEnergyYieldReportDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.safety_certificate_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.safety_certificate_docs}</p>
+                                                <a href={installDocmentStatus?.safety_certificate_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Safety Certificate Documents" onChange={e => setSafetyCertificateDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        installDocmentStatus?.noc_status === "Uploaded" ?
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: "100%", borderBottom: '1px solid #000', padding: '4px 0' }}>
+                                                <p style={{ margin: 'auto 0', }}>{installDocmentStatus?.noc_docs}</p>
+                                                <a href={installDocmentStatus?.noc_docs} className="p-1 rounded" style={{ color: '#fff', background: 'green' }} download target='_blank'>Download</a>
+                                            </div> : <Input type="file" placeholder="Noc Documents" onChange={e => setNocDocs(e.target.files[0])} />
+                                    }
+                                    {
+                                        (installDocmentStatus?.noc_status === "Uploaded" &&
+                                            installDocmentStatus?.safety_certificate_status === "Uploaded" &&
+                                            installDocmentStatus?.energy_yield_report_status === "Uploaded" &&
+                                            installDocmentStatus?.user_manual_status === "Uploaded" &&
+                                            installDocmentStatus?.pv_site_info_status === "Uploaded" &&
+                                            installDocmentStatus?.grid_approval_status === "Uploaded" &&
+                                            installDocmentStatus?.contract_status === "Uploaded" &&
+                                            installDocmentStatus?.compliance_status === "Uploaded") ? null : <Button type="submit" title="Submit" background="gray" width="100%" margin="10px 10px" />
+                                    }
+
+                                </form>
+                            </div>
+                        </div>
                 </div>
             </div>
         </>
@@ -486,3 +487,4 @@ function UpdateAssignedOrders() {
 }
 
 export default UpdateAssignedOrders
+

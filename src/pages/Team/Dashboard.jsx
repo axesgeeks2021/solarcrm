@@ -226,6 +226,7 @@ function Dashboard() {
                                 <th scope="col">Building Type</th>
                                 <th scope="col">Meter Phase</th>
                                 <th scope="col">Nmi Number</th>
+                                <th scope="col">Company</th>
                                 <th scope="col">Status</th>
                                 {/* <th scope="col">Budget</th> */}
                             </tr>
@@ -236,12 +237,12 @@ function Dashboard() {
                                     return (
                                         <tr key={idx} onClick={() => gotoPage(ele)}>
                                             <th >{ele?.project}</th>
-                                            <td >{ele?.to_address?.user?.first_name}</td>
+                                            <td >{ele?.to_address?.user?.first_name} {ele?.to_address?.user?.last_name}</td>
                                             <td >{ele?.building_Type}</td>
                                             <td >{ele?.meter_Phase}</td>
                                             <td >{ele?.nmi_no}</td>
+                                            <td >{ele?.company_Name === null ? "Solar 365" : ele?.company_Name}</td>
                                             <td >{ele?.order_status === "Completed" ? "Assigned" : ele?.order_status}</td>
-                                            
                                         </tr>
                                     )
                                 })

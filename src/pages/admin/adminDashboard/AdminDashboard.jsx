@@ -248,7 +248,9 @@ function AdminDashboard() {
             fetch("https://solar365.co.in/username_list/", requestOptions)
                 .then(response => response.json())
                 .then(result => {
+                    console.log('result', result)
                     setUserList(result)
+                    return
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -418,7 +420,7 @@ function AdminDashboard() {
                     <Button title="Create New Order For Non Admin" background="green" color="white" onclick={() => setShowNonAdminForm(!showNonAdminForm)} />
                 </div>
                 <ul className="responsive-table">
-                    <li className="table-header py-3">
+                    <li className="table-header py-3 py-2">
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Id</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Project</div>
                         <div className="col col-2 text-center text-slate-50 text-base font-bold">Customer Name</div>

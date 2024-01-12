@@ -64,8 +64,9 @@ function AssignedJobs() {
         }
     }
 
-    const gotNextPage = (data) => {
-        return navigate('update-orders', {state: {data}})
+    const gotNextPage = (companyname, url, data) => {
+        return navigate(companyname , url, {state: {data}})
+        // return navigate(companyname === null ? 'team/order-details' : 'update-orders', {state: {data}})
     }
 
     useEffect(() => {
@@ -81,9 +82,7 @@ function AssignedJobs() {
                 <div>
                     <TeamSideNavigation />
                 </div>
-
                 <div class="container__table">
-                    
                     <table class="responsive-table">
                         <thead>
                             <tr>
@@ -99,7 +98,7 @@ function AssignedJobs() {
                             {
                                 orderList.length < 1 ? <h2>There is no order available right now...</h2> : orderList.map((ele, idx) => {
                                     return (
-                                        <tr onClick={() => gotNextPage(ele)} key={idx} style={{cursor: 'pointer'}}>
+                                        <tr onClick={() => gotNextPage(ele?.company_Name !== null ? '/team/order-details' : 'update-orders', ele)} key={idx} style={{cursor: 'pointer'}}>
                                                 <th scope="row">{ele?.project}</th>
                                                 <td>{ele?.to_address?.user?.first_name}</td>
                                                 <td>{ele?.building_Type}</td>

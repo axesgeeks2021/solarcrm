@@ -745,109 +745,112 @@ function AdminOrders() {
                 </div>
               </div>
             </div>
-            <div className="completejobs__box">
-              <div className="header">
-                <p>Photos - View & Download</p>
-              </div>
-              <div className='content pb-2' style={{ flexDirection: 'row' }}>
-                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
-                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Packing Slip Photo</p>
+              {
+                (ordersDetails?.packing_slip?.length < 1 && ordersDetails?.switch_board?.length < 1 && ordersDetails?.western_power?.length < 1 && ordersDetails?.panel_layout?.length < 1) ? null :
+                <div className="completejobs__box">
+                  <div className="header">
+                    <p>Photos - View & Download</p>
                   </div>
-                  <div style={{ height: '75%', width: '100%' }}>
-                    {
-                      ordersDetails?.packing_slip?.map(ele => {
-                        return (
-                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        )
-                      })
-                    }
+                  <div className='content pb-2' style={{ flexDirection: 'row' }}>
+                    <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                      <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                        <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Packing Slip Photo</p>
+                      </div>
+                      <div style={{ height: '75%', width: '100%' }}>
+                        {
+                          ordersDetails?.packing_slip?.map(ele => {
+                            return (
+                              <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            )
+                          })
+                        }
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                        {
+                          ordersDetails?.packing_slip?.map(ele => {
+                            return (
+                              <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
+                    <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                      <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                        <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Western Power Photo</p>
+                      </div>
+                      <div style={{ height: '75%', width: '100%' }}>
+                        {
+                          ordersDetails?.western_power?.map(ele => {
+                            return (
+                              <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            )
+                          })
+                        }
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                        {
+                          ordersDetails?.western_power?.map(ele => {
+                            return (
+                              <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
+    
+    
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
-                    {
-                      ordersDetails?.packing_slip?.map(ele => {
-                        return (
-                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
-                        )
-                      })
-                    }
+                  <div className='content pb-2' style={{ flexDirection: 'row' }}>
+                    <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                      <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                        <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Panel Layout Photo</p>
+                      </div>
+                      <div style={{ height: '75%', width: '100%' }}>
+                        {
+                          ordersDetails?.panel_layout?.map(ele => {
+                            return (
+                              <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            )
+                          })
+                        }
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                        {
+                          ordersDetails?.panel_layout?.map(ele => {
+                            return (
+                              <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
+                    <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
+                      <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
+                        <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Switch Board Photo</p>
+                      </div>
+                      <div style={{ height: '75%', width: '100%' }}>
+                        {
+                          ordersDetails?.switch_board?.map(ele => {
+                            return (
+                              <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            )
+                          })
+                        }
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
+                        {
+                          ordersDetails?.switch_board?.map(ele => {
+                            return (
+                              <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
+                            )
+                          })
+                        }
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
-                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Western Power Photo</p>
-                  </div>
-                  <div style={{ height: '75%', width: '100%' }}>
-                    {
-                      ordersDetails?.western_power?.map(ele => {
-                        return (
-                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        )
-                      })
-                    }
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
-                    {
-                      ordersDetails?.western_power?.map(ele => {
-                        return (
-                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
-
-
-              </div>
-              <div className='content pb-2' style={{ flexDirection: 'row' }}>
-                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
-                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Panel Layout Photo</p>
-                  </div>
-                  <div style={{ height: '75%', width: '100%' }}>
-                    {
-                      ordersDetails?.panel_layout?.map(ele => {
-                        return (
-                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        )
-                      })
-                    }
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
-                    {
-                      ordersDetails?.panel_layout?.map(ele => {
-                        return (
-                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
-                <div style={{ width: '50%', height: '300px', overflow: 'hidden', flexDirection: 'column' }}>
-                  <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }}>
-                    <p style={{ background: "#003f91", width: "100%", padding: '4px 0', color: '#fff' }}>Switch Board Photo</p>
-                  </div>
-                  <div style={{ height: '75%', width: '100%' }}>
-                    {
-                      ordersDetails?.switch_board?.map(ele => {
-                        return (
-                          <img src={ele?.file} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        )
-                      })
-                    }
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', gap: '10px' }}>
-                    {
-                      ordersDetails?.switch_board?.map(ele => {
-                        return (
-                          <a href={ele?.file} style={{ width: '100%', padding: '4px 0', color: "#fff", textAlign: 'center', background: '#003f91' }} download target='_blank'>View & Download</a>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
+              }
           </div>
         </div>
         {

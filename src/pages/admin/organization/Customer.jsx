@@ -23,7 +23,7 @@ function Customer() {
     const [file, setFile] = useState(null)
     const [selectedValue, setSelectedValue] = useState([])
     const [othersBoolean, setOtherBoolean] = useState(false)
-    const [value, setValue] = useState({
+    const [text, setText] = useState({
         firstname: "",
         lastname: "",
         phone: "",
@@ -48,10 +48,10 @@ function Customer() {
         country: "Australia"
     })
 
-    const { firstname, lastname, phone, email, city, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, country, postcode, state, street } = value
+    const { firstname, lastname, phone, email, city, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, country, postcode, state, street } = text
 
     const handleChange = e => {
-        setValue({ value, [e.target.name]: e.target.value })
+        setText({ ...text, [e.target.name]: e.target.value })
         if (rooftype === 'Others') {
             return setOtherBoolean(true)
         }
@@ -71,7 +71,6 @@ function Customer() {
             return
         }
     }
-
 
     const registerCustomer = async (e) => {
         e.preventDefault()
@@ -118,10 +117,13 @@ function Customer() {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    setValue(prev => prev !== "" ? "" : "")
-                    toast.update(loadingId, { render: "Customer Registered successfully", autoClose: true, type: 'success', isLoading: false })
-                    setShowForm(false)
-                    return fetchData()
+                    if(result?.message === 'success'){
+                        setText(prev => prev !== "" ? "" : "")
+                        toast.update(loadingId, { render: "Customer Registered successfully", autoClose: true, type: 'success', isLoading: false })
+                        setShowForm(false)
+                        return fetchData()
+                    }
+                    return toast.update(loadingId, { render: result?.message, autoClose: true, type: 'warning', isLoading: false })
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -245,7 +247,7 @@ function Customer() {
                 <div style={{ width: '100%', padding: '20px 10px' }}>
                     <Button title="Create New Customer" background="green" margin="4px 0" color="white" onclick={() => setShowForm(!showForm)} />
                     <ul className="responsive-table">
-                        <li className="table-header">
+                        <li className="table-header py-2">
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Name</div>
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Email</div>
                             <div className="col col-2 text-center text-slate-50 text-base font-bold">Mobile</div>
@@ -257,7 +259,7 @@ function Customer() {
                             customerList?.map((ele, idx) => {
                                 return (
                                     <Link to="/admin/customer-profile" state={{ ele }}>
-                                        <li className="table-row" key={idx}>
+                                        <li className="table-row py-2" key={idx}>
                                             <div className={`col col-2 text-center`}>{ele?.to_address?.user?.first_name}</div>
                                             <div className={`col col-2 text-center`}>{ele?.to_address?.user?.email}</div>
                                             <div className={`col col-2 text-center`}>{ele?.to_address?.user?.phone}</div>
@@ -279,24 +281,24 @@ function Customer() {
                         </div>
                         <form style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center' }} onSubmit={registerCustomer}>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row' }}>
-                                <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" required={true}/>
-                                <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" required={true}/>
+                                <Input placeholder="First name" onChange={handleChange} value={firstname} name="firstname" required={true} />
+                                <Input placeholder="Last name" onChange={handleChange} value={lastname} name="lastname" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" required={true}/>
-                                <Input placeholder="Email" onChange={handleChange} value={email} name="email" required={true}/>
+                                <Input placeholder="Phone Number" onChange={handleChange} value={phone} name="phone" required={true} />
+                                <Input placeholder="Email" onChange={handleChange} value={email} name="email" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 {/*<UploadFile id="profilepic" name="profilepic" onchange={handlefile} label="Profile Pic" width="100%" />
                 <Input type="file" placeholder="Profile" onChange={handleChange} value={alternatephone} name="alternatephone" required={true}/>*/}
-                                <Input placeholder="Alternate Phone" onChange={handleChange} value={alternatephone} name="alternatephone" required={true}/>
-                                <Input placeholder="Looking For" onChange={handleChange} value={lookingfor} name="lookingfor" required={true}/>
+                                <Input placeholder="Alternate Phone" onChange={handleChange} value={alternatephone} name="alternatephone" required={true} />
+                                <Input placeholder="Looking For" onChange={handleChange} value={lookingfor} name="lookingfor" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Project Capacity" onChange={handleChange} value={projectcapacity} name="projectcapacity" required={true}/>
-                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" required={true}/>
+                                <Input placeholder="Project Capacity" onChange={handleChange} value={projectcapacity} name="projectcapacity" required={true} />
+                                <Input placeholder="Utility Bill" onChange={handleChange} value={utilitybill} name="utilitybill" width="50%" required={true} />
                             </div>
-                            
+
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 {/*<select name='supply' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={supply} onChange={handleChange}  >
                                     <option>Select Supply</option>
@@ -304,8 +306,8 @@ function Customer() {
                                     <option value="Double Phase">Double Phase</option>
                                     <option value="Three Phase">Three Phase</option>
                                     </select>*/}
-                                <Input placeholder="Remarks" onChange={handleChange} value={remarks} name="remarks" required={true}/>
-                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange}  required>
+                                <Input placeholder="Remarks" onChange={handleChange} value={remarks} name="remarks" required={true} />
+                                <select name='buyingoptions' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={buyingoptions} onChange={handleChange} required>
                                     <option value="">Choose Buying Option</option>
                                     <option value="Cash">Cash</option>
                                     <option value="Card">Card</option>
@@ -342,15 +344,15 @@ function Customer() {
                                     <option value="Direct Call">Direct Call</option>
                                     <option value="Refrence">Refrence</option>
                                 </select>
-                                <Input placeholder="Follow up 2" onChange={handleChange} value={followsup2} name="followsup2" required={true}/>
+                                <Input placeholder="Follow up 2" onChange={handleChange} value={followsup2} name="followsup2" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Street" onChange={handleChange} value={street} name="street" required={true}/>
-                                <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true}/>
+                                <Input placeholder="Address Line" onChange={handleChange} value={addressline} name="addressline" required={true} />
+                                <Input placeholder="Street" onChange={handleChange} value={street} name="street" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Address Line" onChange={handleChange} value={addressline} name="addressline" required={true}/>
-                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange}  required>
+                                <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true} />
+                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange} required>
                                     <option value="" selected>Select State</option>
                                     <option value="Queensland">Queensland</option>
                                     <option value="New South Wales">New South Wales</option>
@@ -359,8 +361,8 @@ function Customer() {
                                 </select>
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
-                                <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true}/>
-                                <Input placeholder="Country" onChange={handleChange} value={country} name="country" required={true}/>
+                                <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true} />
+                                <Input placeholder="Country" onChange={handleChange} value={country} name="country" required={true} />
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "flex-end", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Button title="Submit" background="orange" type="submit" />

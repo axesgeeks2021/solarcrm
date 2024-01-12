@@ -172,14 +172,14 @@ function InverterOrders() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Manufacturer" value={inverterData?.manufacturer} />
-                        <Line title="Product Warranty" value={inverterData?.product_warranty} />
+                        <Line title="Product Warranty" value={`${inverterData?.product_warranty} years`} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Inverter Type" value={inverterData?.inverter_type} />
                         <Line title="Rated Output Power" value={inverterData?.rated_output_power} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Additional part warranty" value={inverterData?.additional_part_warranty} />
+                        <Line title="Additional part warranty" value={`${inverterData?.additional_part_warranty} years`} />
                         <Line title="Price" value={inverterData?.inverter_price} />
                         <Line title="Quantity" value={inverterData?.total_quantity} />
                     </div>

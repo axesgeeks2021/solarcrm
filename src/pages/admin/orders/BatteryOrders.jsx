@@ -171,7 +171,7 @@ function BatterOrders() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Manufacturer" value={batteryData?.manufacturer} />
-                        <Line title="Product Warranty" value={batteryData?.product_warranty} />
+                        <Line title="Product Warranty" value={`${batteryData?.product_warranty} years`} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Total Energy" value={batteryData?.total_energy} />

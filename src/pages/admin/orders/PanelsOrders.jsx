@@ -173,8 +173,8 @@ function PanlesOrders() {
                         <Line title="Title" value={panelsData?.title} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
-                        <Line title="Product Warranty" value={panelsData?.product_warranty} />
-                        <Line title="Performance Warranty" value={panelsData?.performance_warranty} />
+                        <Line title="Product Warranty" value={`${panelsData?.product_warranty} years`} />
+                        <Line title="Performance Warranty" value={`${panelsData?.performance_warranty} years`} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', margin: "10px 0" }}>
                         <Line title="Price" value={panelsData?.panel_price} />
