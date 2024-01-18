@@ -45,7 +45,7 @@ function Customer() {
         city: "",
         addressline: "",
         postcode: "",
-        country: "Australia"
+        country: ""
     })
 
     const { firstname, lastname, phone, email, city, alternatephone, lookingfor, projectcapacity, utilitybill, assignto, supply, rooftype, floor, remarks, buyingoptions, followsup1, followsup2, addressline, country, postcode, state, street } = text
@@ -352,13 +352,14 @@ function Customer() {
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="City" onChange={handleChange} value={city} name="city" required={true} />
-                                <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange} required>
+                                <Input placeholder="State" onChange={handleChange} value={state} name="state" required={true} />
+                                {/*<select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} value={state} onChange={handleChange} required>
                                     <option value="" selected>Select State</option>
                                     <option value="Queensland">Queensland</option>
                                     <option value="New South Wales">New South Wales</option>
                                     <option value="Victoria">Victoria</option>
                                     <option value="Western Australia">Western Australia</option>
-                                </select>
+                                </select>*/}
                             </div>
                             <div style={{ width: "100%", display: 'flex', justifyContent: "center", alignItems: 'center', flexDirection: 'row', margin: '5px' }}>
                                 <Input placeholder="Postcode" onChange={handleChange} value={postcode} name="postcode" required={true} />
