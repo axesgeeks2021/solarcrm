@@ -7,6 +7,7 @@ function OrderList(props) {
       <div className={`col col-2 text-center`}>{props.Id}</div>
       <div className={`col col-2 text-center`}>{props.Project}</div>
       <div className={`col col-2 text-center`}>{props.CustomerName}</div>
+      <div className={`col col-2 text-center`}>{props.systemSize}</div>
       <div className={`col col-2 text-center`}>{props.BuildingType}</div>
       <div className={`col col-2 text-center`}>{props.NmiNo}</div>
       {/*<div className={`col col-2 text-center`}>{props.SystemSize}</div>*/}

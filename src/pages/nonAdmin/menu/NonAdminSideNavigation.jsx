@@ -57,6 +57,11 @@ function NonAdminSideNavigation() {
         elemBefore: () => <CgProfile />,
       },
       {
+        title: 'Other Component Request',
+        itemId: '/non-admin/other-component-request-list',
+        elemBefore: () => <CgProfile />,
+      },
+      {
         title: 'Profiles',
         itemId: "/non-admin-profile",
         elemBefore: () => <HiBuildingOffice2 />,

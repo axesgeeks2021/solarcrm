@@ -88,6 +88,11 @@ function AdminSideNavigation() {
         elemBefore: () => <AiFillMinusSquare />
       },
       {
+        title: 'Other Component Request',
+        itemId: "/admin/other-component-request",
+        elemBefore: () => <AiFillMinusSquare />
+      },
+      {
         title: 'Installer Availability',
         itemId: "/admin/installer-availability",
         elemBefore: () => <AiFillMinusSquare />

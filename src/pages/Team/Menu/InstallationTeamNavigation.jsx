@@ -34,6 +34,11 @@ function TeamSideNavigation() {
         elemBefore: () => <BiUserCheck />
       },
       {
+        title: "Other Component Request",
+        itemId: '/team/other-component-request-team',
+        elemBefore: () => <BiUserCheck />
+      },
+      {
         title: 'Completed Jobs',
         itemId: '/team/completed-jobs',
         elemBefore: () => <BiUserCheck />

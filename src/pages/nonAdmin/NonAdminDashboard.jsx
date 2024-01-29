@@ -56,7 +56,7 @@ function NonAdminDashboard() {
         addressline: "",
         city: "",
         postcode: "",
-        country: "Australia",
+        country: "",
         descritpion: '',
         meterPhase: "",
         panels: "",
@@ -237,14 +237,14 @@ function NonAdminDashboard() {
                 .then(response => response.json())
                 .then(result => {
                     console.log(result)
-                    if (result?.error === true) {
-                        toast.update(loadingId, { render: "Please try again!", isLoading: false, type: 'error', autoClose: true })
-                        return
+                    if (result?.status === true) {
+                        toast.update(loadingId, { render: "Customer created successfully...", isLoading: false, type: 'success', autoClose: true })
+                        setShowForm(false)
+                        setText(prev => prev !== "" ? "" : "")
+                        return fetchOrder()
                     }
-                    toast.update(loadingId, { render: "Customer created successfully...", isLoading: false, type: 'success', autoClose: true })
-                    setShowForm(false)
-                    setText(prev => prev !== "" ? "" : "")
-                    return fetchOrder()
+                    toast.update(loadingId, { render: "Please try again!", isLoading: false, type: 'error', autoClose: true })
+                    return
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -406,13 +406,14 @@ function NonAdminDashboard() {
                         </div>
 
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange} required={true}>
+                        <Input placeholder="State" value={state} name="state" onChange={handleChange} required={true} />
+                            {/*<select name='state' style={{ width: '100%', padding: '5px 10px', border: '2px solid gray' }} value={state} onChange={handleChange} required={true}>
                                 <option value="" selected>Select State</option>
                                 <option value="Queensland">Queensland</option>
                                 <option value="New South Wales">New South Wales</option>
                                 <option value="Victoria">Victoria</option>
                                 <option value="Western Australia">Western Australia</option>
-                            </select>
+                        </select>*/}
                             <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>

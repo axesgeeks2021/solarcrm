@@ -86,6 +86,12 @@ import InstallerAvailability from "./pages/admin/Installer/InstallerAvailability
 import ListofInstaller from "./pages/admin/Installer/ListofInstaller";
 import AdminUpdateAssignedOrders from "./pages/admin/AdminAssignedJobs/AdminUpdateAssignedOrders";
 import TeamProfile from "./pages/Team/TeamProfile";
+import RequestForOtherComponent from "./pages/admin/Request/RequestForOtherComponent";
+import ApproveRequestForOtherComponent from "./pages/admin/Request/ApproveRequestForOtherComponent";
+import RequestForOtherComponentNonAdmin from "./pages/nonAdmin/Request/RequestForOtherComponentNonAdmin";
+import ApproveNonAdminOthercomponent from "./pages/nonAdmin/Request/ApproveNonAdminOthercomponent";
+import RequestforOthercomponent from "./pages/Team/Request/RequestforOthercomponent";
+import ApproveOtherComponentTeam from "./pages/Team/Request/ApproveOtherComponentTeam";
 
 function App() {
 
@@ -205,6 +211,8 @@ function App() {
           <Route path="/admin/admin-assigned-jobs/update-orders" element={<AdminUpdateAssignedOrders />} />
           <Route path="/admin/installer-availability" element={<InstallerAvailability />} />
           <Route path="/admin/list-of-installer-electrician" element={<ListofInstaller />} />
+          <Route path="/admin/other-component-request" element={<RequestForOtherComponent />} />
+          <Route path="/admin/approve-request-for-other-component" element={<ApproveRequestForOtherComponent />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </>
@@ -225,6 +233,8 @@ function App() {
         <Route path="/register-non-admin" element={<RegisterNonAdmin />} />
         <Route path="/non-admin/register-customer" element={<NonAdminCustomer />} />
         <Route path="/non-admin/orders" element={<NonAdminOrders />} />
+        <Route path="/non-admin/other-component-request-list" element={<RequestForOtherComponentNonAdmin />} />
+        <Route path="/non-admin/approve-non-admin-other-component" element={<ApproveNonAdminOthercomponent />} />
         <Route path="/non-admin/calendar" element={<Calendar />} />
         <Route path="/non-admin/update-profile" element={<NonAdminUpdateProfile />} />
         <Route path="/non-admin/practice" element={<Pract />} />
@@ -248,6 +258,8 @@ function App() {
         <Route path="/team/completed-jobs" element={<CompletedJobs />} />
         <Route path="/team/completed-jobs-details" element={<TeamCompleteJobDetails />} />
         <Route path="/team/order-details" element={<TeamOrderDetails />} />
+        <Route path="/team/other-component-request-team" element={<RequestforOthercomponent />} />
+        <Route path="/team/approve-other-component-approve" element={<ApproveOtherComponentTeam />} />
         <Route path="/team/profile" element={<TeamProfile />} />
         <Route path="/login" element={<Login />} />
       </Routes>
