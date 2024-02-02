@@ -42,6 +42,7 @@ function AdminDashboard() {
     const [switchBoardFile, setswitchBoardFile] = useState(null)
     const [panelLayoutFile, setpanelLayoutFile] = useState(null)
     const [extrasFile, setextrasFile] = useState(null)
+    const [showInputField, setShowInputField] = useState(false)
 
     const [text, setText] = useState({
         firstname: '',
@@ -468,21 +469,29 @@ function AdminDashboard() {
                                 </select>
                             </div>
                             <div style={{ width: '50%' }}>
-                                <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true}/>
+                            
+                                <select name='systemSize' value={systemSize} onChange={handleChange} style={{ border: '2px solid gray', width: '100%', padding: '5px 0', margin: '0 4px' }} required>
+                                    <option style={{ textAlign: 'center' }} disabled value="">Select System Size</option>
+                                    <option style={{ textAlign: 'center' }} value="6.6KW">6.6KW</option>
+                                    <option style={{ textAlign: 'center' }} value="7.7KW">7.7KW</option>
+                                    <option style={{ textAlign: 'center' }} value="10KW">10KW</option>
+                                    <option style={{ textAlign: 'center' }} value="13.2KW">13.2KW</option>
+                                    <option style={{ textAlign: 'center' }} value="other">Other</option>
+                                </select>
                             </div>
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} required={true}/>
-                            <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} required={true}/>
+                            <Input placeholder="Nmi Number" value={nmiNo} name="nmiNo" onChange={handleChange} required={true} />
+                            <Input placeholder="Roof Angle" value={roofAngle} name="roofAngle" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <select value={buildingType} name="buildingType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} required>
-                            <option value="">Select Floor Type</option>
+                                <option value="">Select Floor Type</option>
                                 <option value="Single Storey">Single Storey</option>
                                 <option value="Double Storey">Double Storey</option>
                                 <option value="Multi Storey">Multi Storey</option>
                             </select>
-                            <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}  required>
+                            <select value={roofType} name="roofType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} required>
                                 <option value="">Select Roof Type</option>
                                 <option value="Tin">Tin</option>
                                 <option value="Tilt">Tilt</option>
@@ -500,7 +509,7 @@ function AdminDashboard() {
                                 <option value="2 Phase">2 Phase</option>
                                 <option value="3 Phase">3 Phase</option>
                             </select>
-                            <select value={installationType} name="installationType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }}   required>
+                            <select value={installationType} name="installationType" onChange={handleChange} style={{ width: '100%', padding: '5px 10px', border: '2px solid gray', margin: '0 4px' }} required>
                                 <option value="">Select Installation Type</option>
                                 <option value="new">New</option>
                                 <option value="old">Old</option>
@@ -634,28 +643,28 @@ function AdminDashboard() {
                                     })
                                 }
                             </select>
-                            <Input placeholder="Customer name" value={firstname} name="firstname" onChange={handleChange} required={true}/>
-                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} required={true}/>
+                            <Input placeholder="Customer name" value={firstname} name="firstname" onChange={handleChange} required={true} />
+                            <Input placeholder="Email" value={email} name="email" onChange={handleChange} required={true} />
                         </div>
                         {/* </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} required={true}/>
-                            <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true}/>
+                            <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} required={true} />
+                            <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} required={true}/>
-                            <Input placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} required={true}/>
+                            <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} required={true} />
+                            <Input placeholder="NMI No" value={nmiNo} name="nmiNo" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input type="file" placeholder="Packing Slip" onChange={e => setPackingSlipFile(e.target.files[0])} width="100%" required={true}/>
-                            <Input type="file" placeholder="Western Power Approval" onChange={e => setwesternPowerFile(e.target.files[0])} width="100%" required={true}/>
+                            <Input type="file" placeholder="Packing Slip" onChange={e => setPackingSlipFile(e.target.files[0])} width="100%" required={true} />
+                            <Input type="file" placeholder="Western Power Approval" onChange={e => setwesternPowerFile(e.target.files[0])} width="100%" required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input type="file" placeholder="Switch Board" onChange={e => setswitchBoardFile(e.target.files[0])} width="100%" required={true}/>
-                            <Input type="file" placeholder="Panels Layout" onChange={e => setpanelLayoutFile(e.target.files[0])} width="100%" required={true}/>
+                            <Input type="file" placeholder="Switch Board" onChange={e => setswitchBoardFile(e.target.files[0])} width="100%" required={true} />
+                            <Input type="file" placeholder="Panels Layout" onChange={e => setpanelLayoutFile(e.target.files[0])} width="100%" required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input type="file" placeholder="Extras" onChange={e => setextrasFile(e.target.files[0])} width="100%" required={true}/>
+                            <Input type="file" placeholder="Extras" onChange={e => setextrasFile(e.target.files[0])} width="100%" required={true} />
                             <Input placeholder="Packing Slip Reason" value={packingSlipReason} name="packingSlipReason" onChange={handleChange} required={packingSlipFile === null ? true : false} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
@@ -664,11 +673,11 @@ function AdminDashboard() {
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Panel Layout Reason" value={panelLayoutReason} name="panelLayoutReason" onChange={handleChange} required={panelLayoutFile === null ? true : false} />
-                            <Input placeholder="Address" value={addressline} name="addressline" onChange={handleChange} required={true}/>
+                            <Input placeholder="Address" value={addressline} name="addressline" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Street" value={street} name="street" onChange={handleChange} required={true}/>
-                            <Input placeholder="City" value={city} name="city" onChange={handleChange} required={true}/>
+                            <Input placeholder="Street" value={street} name="street" onChange={handleChange} required={true} />
+                            <Input placeholder="City" value={city} name="city" onChange={handleChange} required={true} />
                         </div>
 
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
@@ -679,10 +688,10 @@ function AdminDashboard() {
                                 <option value="Victoria">Victoria</option>
                                 <option value="Western Australia">Western Australia</option>
                             </select>
-                            <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} required={true}/>
+                            <Input placeholder="Postcode" value={postcode} name="postcode" onChange={handleChange} required={true} />
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
-                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} required={true}/>
+                            <Input placeholder="Country" value={country} name="country" onChange={handleChange} required={true} />
                             <select value={meterPhase} name='meterPhase' onChange={handleChange} style={{ width: '100%', border: '2px solid #99A3BA', padding: '5px 0' }} required={true}>
                                 <option value="">Select Meter Phase</option>
                                 <option value="Single Phase">Single Phase</option>

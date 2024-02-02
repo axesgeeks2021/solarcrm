@@ -374,7 +374,15 @@ function NonAdminDashboard() {
                         {/* </div> */}
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Mobile Number" value={phone} name="phone" onChange={handleChange} required={true} />
-                            <Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true} />
+                            <select name='systemSize' value={systemSize} onChange={handleChange} style={{ border: '2px solid gray', width: '100%', padding: '5px 0', margin: '0 4px' }} required>
+                                    <option style={{ textAlign: 'center' }} disabled value="">Select System Size</option>
+                                    <option style={{ textAlign: 'center' }} value="6.6KW">6.6KW</option>
+                                    <option style={{ textAlign: 'center' }} value="7.7KW">7.7KW</option>
+                                    <option style={{ textAlign: 'center' }} value="10KW">10KW</option>
+                                    <option style={{ textAlign: 'center' }} value="13.2KW">13.2KW</option>
+                                    <option style={{ textAlign: 'center' }} value="other">Other</option>
+                                </select>
+                            {/*<Input placeholder="System Size" value={systemSize} name="systemSize" onChange={handleChange} required={true} />*/}
                         </div>
                         <div style={{ width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px 0' }}>
                             <Input placeholder="Meter Number" value={meterNumber} name="meterNumber" onChange={handleChange} required={true} />

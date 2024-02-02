@@ -4,12 +4,15 @@ import AdminSideNavigation from '../menu/AdminSideNavigation'
 import OrderList from '../../../components/orders/OrderList'
 import { BiLogOut } from 'react-icons/bi'
 import Button from '../../../components/Button/Button'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Heading from '../../../components/heading/Heading'
 import Input from '../../../components/inputsfield/Input'
+import { toast } from 'react-toastify'
 
 
 function ApproveRequestForOtherComponent() {
+
+    const navigate = useNavigate()
 
     const location = useLocation()
     const [cookies, removeCookies] = useCookies()
@@ -30,7 +33,6 @@ function ApproveRequestForOtherComponent() {
 
     const fetchOrder = async () => {
         try {
-            console.log('hello',location?.state?.ele?.id)
             setLoading(true)
             const url = `https://solar365.co.in/order/${location?.state?.ele?.id}/`
             const headers = new Headers()
@@ -52,6 +54,7 @@ function ApproveRequestForOtherComponent() {
     const fetchApproveComponent = e => {
         e.preventDefault()
         try {
+            const loadingId = toast.loading('Please wait')
             const myHeaders = new Headers();
             myHeaders.append('Authorization', `Token ${cookies.Authorization}`)
             myHeaders.append("Cookie", "csrftoken=2PklrXNiKgPPd0MAT9LAzUQyvHEcqxK3");
@@ -59,6 +62,7 @@ function ApproveRequestForOtherComponent() {
             const formdata = new FormData();
             formdata.append("special_discount", specialDiscount);
             formdata.append("is_approve", approve);
+            
 
             const requestOptions = {
                 method: 'PUT',
@@ -71,11 +75,13 @@ function ApproveRequestForOtherComponent() {
                 .then(response => response.json())
                 .then(result => {
                     if (result?.status === true) {
+                        toast.update(loadingId, {render: result?.message, autoClose: true, isLoading: false, type: 'success'})
                         console.log(result)
                         setShowModal(false)
-                        return fetchOrder()
+                        fetchOrder()
+                        return navigate(-1)
                     }
-                    return alert(result?.message)
+                    return toast.update(loadingId, {render: result?.message, autoClose: true, isLoading: false, type: 'error'})
                 })
                 .catch(error => console.log('error', error));
         } catch (error) {
@@ -166,7 +172,7 @@ function ApproveRequestForOtherComponent() {
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.code}</div>
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.title}</div>
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.quantity}</div>
-                                        <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.price}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{+ele?.price * +ele?.quantity}</div>
                                     </li>
                                 </Link>
                             )

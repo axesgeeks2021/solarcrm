@@ -164,7 +164,7 @@ function ApproveOtherComponentTeam() {
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.code}</div>
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.title}</div>
                                         <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.quantity}</div>
-                                        <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.price}</div>
+                                        <div className="col col-2 text-center text-slate-50 text-base font-bold" style={{ color: '#000' }}>{ele?.price * ele?.quantity}</div>
                                     </li>
                                 </Link>
                             )
